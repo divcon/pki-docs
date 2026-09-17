@@ -8,6 +8,7 @@ Global과 CN이 공유하는 플랫폼 Root를 운영하고, C2PA를 첫 적용 
 
 | 문서 | 내용 |
 |---|---|
+| [Root Key Management System 설계 시작 가이드](design-start-guide.md) | 설계 문서의 역할과 골격, 외부 요구사항과 팀 결정의 구분, 첫 작업과 회의 목표 |
 | [초기 메모](rough_requirements.md) | 사용자가 작성한 원문 |
 | [요구사항과 결정 상태](requirements.md) | 추가 결정, 범위, 보류 및 검증 과제 |
 | [운영 모델](operating-model.md) | CA 계층, Global/CN 흐름, TSA 인계, OCSP, 수명주기·복구 |
@@ -15,6 +16,7 @@ Global과 CN이 공유하는 플랫폼 Root를 운영하고, C2PA를 첫 적용 
 | [2인 통제 대안](dual-control-options.md) | 세 가지 방식, 권고안, 우회 경로와 검증 기준 |
 | [신뢰 앵커 교체와 양자내성 전환](trust-anchor-migration.md) | 기존 단말 FOTA, 별도 신뢰 목록 갱신, 정상 교체·침해 복구·PQC |
 | [원문 자료 목록](../references/root-key-sources.md) | 적용 원문, 버전, 확인일 및 범위 |
+| [Root·ICA C2PA 요구사항 분석 보고서](conformance-analysis/README.md) | 키·인증서, 운영, 세레모니, 등록 증거의 요구사항과 공식 근거, 설계 반영 후보 및 검토 결과 |
 
 ## 우선 제안
 

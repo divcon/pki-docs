@@ -1,0 +1,216 @@
+{
+  "checked_on": "2026-09-17",
+  "description": "Official source document identifiers and SHA-256 digests. Source coverage is defined in the report; inclusion does not mean that every clause applies to Root or Intermediate CAs.",
+  "sources": [
+    {
+      "document_title": "C2PA Certificate Policy.md",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md",
+      "sha256": "124fad3e3d578f40867557719f5599110a57be010e6aa4d3a3408695afdae77b"
+    },
+    {
+      "document_title": "C2PA Conformance Program.md",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md",
+      "sha256": "23c8dedd6e39238b3f4d0b8b2ba0bad38fe717a683146440f6354c6a58e50586"
+    },
+    {
+      "document_title": "C2PA Governance Framework.md",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Governance%20Framework.md",
+      "sha256": "30e0174ae604623c729e9b1197987bfcdc1803fc3f20c6f68287d65a50ea9302"
+    },
+    {
+      "document_title": "Additional Conformance Requirements Against the Content Credentials Specification.md",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/Additional%20Conformance%20Requirements%20Against%20the%20Content%20Credentials%20Specification.md",
+      "sha256": "f9c71590f2f105962d86c932963c5e1a6739a10100e2afa87a3067a9e3ac2a34"
+    },
+    {
+      "document_title": "C2PA Generator Product Security Requirements.md",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Generator%20Product%20Security%20Requirements.md",
+      "sha256": "4275064eebf01025ac0d7596f1a25a207b90d8cb921f3cbcd3327f7ec78c3a95"
+    },
+    {
+      "document_title": "claimSigningIssuingCA.cert.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.cert.schema.json",
+      "sha256": "9b1e0953a5c5657d99fdf68e8d5418cea26e4b344699d30937aec5c726f18751"
+    },
+    {
+      "document_title": "claimSigningIssuingCA.cert.yaml",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.cert.yaml",
+      "sha256": "96c2a5612c330a5eb03a2cf4b21891eb6db5f3174a59ba3cf8d66f1664a77192"
+    },
+    {
+      "document_title": "claimSigningIssuingCA.csr.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.csr.schema.json",
+      "sha256": "bd3f90b1f8688acd0929ca60b3719bdc503da91dbf8d0df8e9da3cd818a0a236"
+    },
+    {
+      "document_title": "claimSigningLeaf.al1.cert.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.schema.json",
+      "sha256": "8e7470d0a4f282ba88d017a3b3d864c757e4104e7d4b77657c560beaa0e4a50b"
+    },
+    {
+      "document_title": "claimSigningLeaf.al1.cert.yaml",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.yaml",
+      "sha256": "bc83f33e1b7947f6cd40a1a715ccd737f9c52cfccdb11af22810b74c3f7c1831"
+    },
+    {
+      "document_title": "claimSigningLeaf.al1.csr.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.csr.schema.json",
+      "sha256": "89487e5ae29099f1c4f799dee03f1a363c582b8eb8912150702ffe2b8d5c7919"
+    },
+    {
+      "document_title": "claimSigningLeaf.al2.cert.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.schema.json",
+      "sha256": "c0971eae5df9724b3c1c8bc51af809eb462f07540833c0bd30d8c442ab212e06"
+    },
+    {
+      "document_title": "claimSigningLeaf.al2.cert.yaml",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.yaml",
+      "sha256": "b2d5ac631e4aeaa92f08840d5d9c6446584e28d6a6234d35f19902d648ce840a"
+    },
+    {
+      "document_title": "claimSigningLeaf.al2.csr.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.csr.schema.json",
+      "sha256": "5bbb03a4ca7614e66c6d15d3fb2ef2e767b523bb2b23f6e019ffa0c984258b44"
+    },
+    {
+      "document_title": "intermediateCA.cert.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCA.cert.schema.json",
+      "sha256": "036798fdedd1f44659532a7bcd556805519cab7cf23e6ea4e8d2a07c880bc8d8"
+    },
+    {
+      "document_title": "intermediateCA.csr.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCA.csr.schema.json",
+      "sha256": "26836ba390da8b39d9634e4117c1567193066b958cc5436516c6cd8bf230f645"
+    },
+    {
+      "document_title": "intermediateCa.cert.yaml",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCa.cert.yaml",
+      "sha256": "0162741e4f074e498416570f975ec0a7dd4c48daf89fd99958990b1978765586"
+    },
+    {
+      "document_title": "ocspResponderLeaf.cert.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/ocspResponderLeaf.cert.schema.json",
+      "sha256": "8d267b5d8b553de619d07c84aff9480559698a330493a63a2769f4c74b9b9d23"
+    },
+    {
+      "document_title": "ocspResponderLeaf.cert.yaml",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/ocspResponderLeaf.cert.yaml",
+      "sha256": "c55cc538ef1dd174d38f2187cbbb118e1b2bc2bb86a3e1316c1403c0ae8cfc6c"
+    },
+    {
+      "document_title": "ocspResponderLeaf.csr.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/ocspResponderLeaf.csr.schema.json",
+      "sha256": "0f433fe402470b92eff00c94ca46255bb622eebd1c2f474c6ac29f99908f4e4e"
+    },
+    {
+      "document_title": "rootCA.cert.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/rootCA.cert.schema.json",
+      "sha256": "e900db38176319baa7900a34ad59e616d03aeba16455fd765c6f48e8d0011ce2"
+    },
+    {
+      "document_title": "rootCA.cert.yaml",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/rootCA.cert.yaml",
+      "sha256": "09152450a95f436fe46263db9d93bd8b35cc197a24236288565d52825fe7107d"
+    },
+    {
+      "document_title": "rootCA.csr.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/rootCA.csr.schema.json",
+      "sha256": "b9957bd7c403ee1210fd614c2faddf262906e39b82bc6bfdd96a4ef60693352a"
+    },
+    {
+      "document_title": "tsaIssuingCA.cert.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.schema.json",
+      "sha256": "fe548cf85626e97dc5238f2942c1676f78b296b0147ed0f5ebb4d3b3c5493057"
+    },
+    {
+      "document_title": "tsaIssuingCA.cert.yaml",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.yaml",
+      "sha256": "e9bbfe720250c1189b9364807817cc2a094fe7e2994a6da0d7644bb30a6ec0d5"
+    },
+    {
+      "document_title": "tsaIssuingCA.csr.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.csr.schema.json",
+      "sha256": "f68b60822c60c0827ddff25ba5c86944ef7441cdd40e1ad732917b623cabf35b"
+    },
+    {
+      "document_title": "tsaLeaf.cert.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaLeaf.cert.schema.json",
+      "sha256": "dcd99637469e871765e33dfec05e1ec5850fde365822a9171019444fe743c39a"
+    },
+    {
+      "document_title": "tsaLeaf.cert.schema.yaml",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaLeaf.cert.schema.yaml",
+      "sha256": "7d16d8e5fb44d0dc07c56ee6b8e3b32cd25637f2192e5280ffc08845f357b028"
+    },
+    {
+      "document_title": "tsaLeaf.csr.schema.json",
+      "repository_url": "https://github.com/c2pa-org/conformance-public",
+      "revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "document_url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaLeaf.csr.schema.json",
+      "sha256": "3026be2b88148d3f6e1a0f721da9ef527a3cd0eac4c44691ee97ac25aa6ff58e"
+    },
+    {
+      "document_title": "C2PA_Specification.html",
+      "repository_url": "https://github.com/c2pa-org/specifications",
+      "revision": "9c58c8c27044e44e8601f6ab13f1bcac1376eb1f",
+      "document_url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html",
+      "sha256": "d55caebd96206f0de667962a4bab7098c6b6468fba68f8b55bcdd3a12d1ed26d"
+    }
+  ]
+}
