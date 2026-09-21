@@ -162,6 +162,8 @@ CP는 BCP 14를 all-caps keyword에만 적용한다고 선언한다(CP:10-12). C
 
 ## 8. 문서 지도
 
+CSR Subject의 형식 검사, 발급 전 제품/CPL·권한 확인과 최종 Subject 구성을 구분하는 기준은 [02 §3.1.1](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification)에 있다. 모든 CSR의 등록 DN 일치를 강제하던 프로젝트 선검사를 일반화했으며, 식별 입력 위치와 DN 차이 처리는 CA 절차의 선택으로 명시한다. CSR PoP·필수 확장·제품 적합성과 최종 CPL DN 조건은 유지한다.
+
 - [01 — Enrollment Request Body](01-Enrollment-Request-Body.md)
 - [02 — CSR and Dynamic Evidence Requirements](02-CSR-and-Dynamic-Evidence-Requirements.md)
 - [Android — O.1~O.4 필드 매핑·체인·CSR 결속](02-CSR-and-Dynamic-Evidence-Requirements.md#android-key-attestation)

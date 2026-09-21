@@ -30,7 +30,7 @@ CertificationRequest ::= SEQUENCE {
 - trailing bytes, BER-only encoding, duplicate/unknown 구조를 허용하지 않는 strict DER
 - `CertificationRequestInfo` 원본 DER에 대한 CSR signature
 - 허용된 RSA/ECDSA algorithm, key size/curve 및 parameter 규칙
-- server registry의 authoritative TSA Subject와 CSR Subject 일치
+- CSR Subject의 ASN.1 Name 구조와 공식 schema의 C/O/CN 포함 조건; 서비스 식별·Subject 불일치 처리는 §2.1에서 별도 판단
 - 공식 `tsaLeaf.csr.schema.json`에 부합하는 requested extension
 - `K_tsu` 공개키 재사용 금지 등 project lifecycle policy
 
@@ -38,7 +38,17 @@ CSR signature 검증은 C2PA가 요구하는 key ownership 확인을 구현하�
 
 ### 2.1 Subject
 
-공식 TSA Leaf profile은 TSA service의 unique Subject에 `C`, `O`, `CN`을 요구한다. 세부 문자열 canonicalization과 API 전달 방식은 CA가 고정하되 client가 임의 Subject로 권한을 만들 수 없게 한다.
+공식 TSA CSR schema는 Subject의 구조와 `C`, `O`, `CN` 포함을 요구한다(`tsaLeaf.csr.schema.json:692-740`). 최종 TSA Leaf Subject는 해당 TSA service를 식별하는 unique name이며 C/O/CN을 포함한다(CP:1347). 최종 Subject 조건과 원본 CSR의 등록 DN 일치 조건을 동일하게 취급하지 않는다.
+
+CP:517은 TSA 발급에 CA business practices의 identification/authentication/verification 절차를 요구한다. CPL은 Generator Product의 기준이며 TSA 서비스 DN을 대조하는 목록이 아니다. CA는 CSR Subject, 별도 신청정보의 서비스 식별자 또는 인증 계정에 연결된 등록정보로 대상을 식별하도록 절차를 정할 수 있다. 이들은 가능한 설계 예시이며 C2PA가 지정한 wire field가 아니다.
+
+- **식별:** 어느 TSA 운영기관·서비스의 요청인지 확인한다. CSR Subject는 조회용 이름으로 사용할 수 있다.
+- **인증:** 등록된 신청자가 실제로 요청하는지 secure credential로 확인한다. Subject 문자열은 인증수단이 아니다.
+- **검증:** 해당 TSA를 위한 발급 권한, 발급 대상 키 소유와 인증서에 넣을 정보의 정확성을 확인한다. CSR signature/PoP는 key ownership을 확인하는 방법이며 운영기관·서비스의 신원을 대신 증명하지 않는다(CP:471-473,1542-1556).
+
+CSR C/O/CN 누락·구조 부적합은 CSR profile 실패다. 등록 TSA DN과 다른 문자열이 들어왔다는 사실만으로 모든 요청을 자동 거부하거나 수락하지 않는다. CA의 문서화된 절차가 거부·보완 요청·독립적으로 검증된 식별정보 사용을 정한다. CSR Subject로 식별하는데 대상이 확인되지 않으면 보완 전에는 발급하지 않는다. 별도 정보로 대상을 확인한 경우에도 요청의 정확성·권한·키와의 관계 및 Subject 불일치 처리 근거를 확인·기록한다. 확인되지 않은 서비스에 임의의 Subject를 붙여 승인하는 절차가 아니다.
+
+원본 CSR의 서명 bytes는 변경하지 않는다. CSR 변경이 필요하면 신청자가 다시 서명한다. 최종 Subject는 확인된 TSA 서비스와 인증서 profile에 따라 구성한다. [01의 서비스 ID 기반 API](01-Enrollment-Request-Contract.md)는 이 식별 방식의 한 예이며, 원문이 CSR Subject의 일괄 무시·덮어쓰기를 명시적으로 허용했다고 해석하지 않는다.
 
 ### 2.2 SPKI
 

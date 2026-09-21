@@ -22,7 +22,7 @@ RFC 2986 v1.7의 request는 `CertificationRequestInfo`, signature algorithm과 s
 
 1. canonical base64를 decode하고 exactly one strict DER PKCS#10 object인지 확인한다.
 2. `CertificationRequestInfo.version == 0`인지 확인한다.
-3. Subject, SPKI와 extensionRequest를 AL별 official schema 및 authoritative state와 확인한다.
+3. Subject의 구조·C/O/CN, SPKI와 extensionRequest를 AL별 official schema로 확인한다. 제품 식별과 CSR Subject 불일치 처리는 §3.1.1에 따라 별도로 판단하고 요청 extension을 확인된 profile/record와 대조한다.
 4. outer signature algorithm/parameters가 `OD-ALG-01`의 승인값인지 확인한다.
 5. CSR SPKI로 exact `CertificationRequestInfo` signature를 cryptographically verify한다. 이것이 PoP다.
 6. CSR에 requested value가 있어도 최종 TBS certificate는 server-authoritative template로 다시 만든다.
@@ -38,7 +38,7 @@ AL1과 AL2 CSR schema는 title/definition name과 requested `c2pa-al` value 외�
 | field | cardinality / predicate | authority · modality | locator |
 |---|---|---|---|
 | `version` | exactly `0` | `RFC`, required syntax | RFC 2986 §4.1 |
-| Subject | C, O, CN each present. 추가로 CSR의 full DN을 authoritative CPL record와 일치시키고, CPL에 OU가 있으면 동일하게 요구하며, all value plain ASCII·unique instance ID 금지를 선검사 | C/O/CN 존재는 `C2PA REQUIRED`; 최종 certificate의 CPL DN 제약을 CSR에도 적용하는 것은 `PROJECT` 강화 | AL1 CSR/AL2 CSR:692-740; 최종 Subject 근거 CP:383-395 |
+| Subject | ASN.1 Name 구조와 C/O/CN 포함 조건. CSR DN과 CPL DN의 불일치는 §3.1.1의 대상 식별·CA 절차로 판단 | C/O/CN은 공식 CSR schema 요구; 모든 CSR에 CPL DN exact-match를 요구하는 원문 조건은 확인되지 않음 | AL1 CSR/AL2 CSR:692-740; 제품 식별 CP:461-503; 최종 Subject CP:383-395 |
 | SPKI RSA | `rsaEncryption`, modulus ≥2048 | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:798-823; CP:1218-1222,1283-1287 |
 | SPKI EC | `id-ecPublicKey`, P-256/P-384/P-521 | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:758-795; CP:1218-1222,1283-1287 |
 | SPKI EdDSA | Ed25519 only | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:825-866; CP:1218-1222,1283-1287 |
@@ -52,7 +52,19 @@ AL1과 AL2 CSR schema는 title/definition name과 requested `c2pa-al` value 외�
 | CDP if requested | non-critical; fullName HTTP URI under schema | `C2PA REQUIRED when present` | AL1 CSR/AL2 CSR:1258-1336 |
 | outer CSR signature | cryptographically valid; allow-list/parameters from approved policy | `RFC` PoP + `PROJECT/CA-CPS` algorithm choice | RFC 2986 §4.2; CP:473 |
 
-“contains” 기반 official schema가 extra Subject RDN, duplicate extension 또는 unrecognized extension을 모두 배제한다고 가정하지 않는다. 이 프로젝트 parser는 exact authoritative DN, required-extension uniqueness와 `OD-ALG-01`의 unknown attribute/extension policy를 추가 검사한다.
+“contains” 기반 official schema가 extra Subject RDN, duplicate extension 또는 unrecognized extension을 모두 배제한다고 가정하지 않는다. Subject의 추가 RDN·등록값 불일치는 아래 절차로 판단하며, required-extension uniqueness와 `OD-ALG-01`의 unknown attribute/extension policy는 별도로 적용한다.
+
+<a id="csr-subject-identification"></a>
+
+### 3.1.1 Subject 입력과 제품 식별의 분리
+
+CA는 발급 전에 신청 제품의 CPL record·DN·적합성과 신청자의 권한을 확인한다(CP:405-455,461-467,491-509). 기준 DN은 CPL `product.DN`이며 서명된 Notice에도 해당 record가 포함된다. CSR Subject의 값이나 PoP만으로 이 확인을 대신하지 않는다.
+
+CP는 제품 식별정보를 반드시 `CSR.subject`에서 읽도록 정하지 않는다. CSR Subject, 별도 신청정보 또는 인증된 계정의 등록정보를 사용하는 것은 가능한 CA 절차의 선택이다. 현재 [요청 body](01-Enrollment-Request-Body.md)의 `cplRecordId`는 제품 레코드 조회를 위한 프로젝트 입력이며, 그 값 자체가 권한을 증명하지 않는다. CA는 레코드를 인증된 Subscriber·GP instance·현재 요청과 결속하고 DN을 확인한다. CSR-only 조회나 다른 wrapper를 채택하더라도 제품/CPL record 정보 제공 및 신원·적합성 검증은 유지해야 한다.
+
+CSR의 C/O/CN 누락·구조 부적합은 CSR profile 실패다. 반면 등록 DN과의 문자열 불일치, CPL에 없는 추가 RDN 또는 CSR OU의 차이만으로 모든 요청을 자동 거부하도록 일반화하지 않는다. CA는 문서화한 절차에 따라 거부·보완 요청·독립적으로 검증된 식별정보 사용을 정한다. CSR Subject를 식별에 사용하는데 대상이 확인되지 않으면 보완 전에는 발급하지 않는다. 별도 정보로 대상을 확인한 경우에도 제출정보의 정확성과 불일치 처리 근거를 확인·기록하며, 다른 제품의 신원·권한으로 바꾸어 통과시키지 않는다(CP:501-503,1542-1556,1568-1570).
+
+최종 인증서 DN은 해당 CPL DN·ASCII·개별 instance 식별 금지 조건을 만족해야 한다(CP:387-399,1217,1282). 이 조건을 모든 원본 CSR의 exact-match 검사로 옮기지 않는다. 원본 CSR의 서명 bytes와 PoP 검증 결과를 보존하고, CSR 변경이 필요하면 새로 서명한 요청을 받는다. 최종 Subject 구성은 검증된 정보에 근거하며, 원문이 잘못된 CSR Subject의 일괄 무시·덮어쓰기를 명시적으로 허용했다고 주장하지 않는다.
 
 ### 3.2 Profile 차이
 
@@ -73,7 +85,7 @@ AL1과 AL2 CSR schema는 title/definition name과 requested `c2pa-al` value 외�
 |---|---|---|
 | `CertificationRequest` | `SEQUENCE`의 세 필수 member: `certificationRequestInfo`, `signatureAlgorithm`, `signature` | RFC 2986 §4.2 |
 | `certificationRequestInfo` | `SEQUENCE`: `version INTEGER = 0`, `subject Name`, `subjectPKInfo SubjectPublicKeyInfo`, `attributes [0] IMPLICIT SET OF Attribute`가 순서대로 존재 | RFC 2986 §4.1, Appendix A |
-| `subject` | C `2.5.4.6`, O `2.5.4.10`, CN `2.5.4.3` 필수; OU `2.5.4.11`은 authoritative CPL에 있으면 같은 값. ASN.1 Name/RDN 구조를 파싱하고 §3.1의 존재 조건 및 project DN 선검사를 구분 | CSR:692-740; RFC 5280 §4.1.2.4; CP:387-395 |
+| `subject` | C `2.5.4.6`, O `2.5.4.10`, CN `2.5.4.3` 필수. ASN.1 Name/RDN 구조를 파싱한다. CSR OU `2.5.4.11`의 CPL 일치는 공통 입력 필수조건으로 추가하지 않으며, DN 차이는 §3.1.1에 따라 처리 | CSR:692-740; RFC 2986 §4.1; 최종 certificate DN은 CP:387-395 |
 | `attributes`의 `extensionRequest` | Attribute type OID `1.2.840.113549.1.9.14`; `values SET OF` 안에 **정확히 한 `Extensions` 값**. 이 profile에서는 해당 attribute도 정확히 한 개 요구 | value 단일성 RFC 2985 §5.4.2, Appendix A; attribute 존재/중복 거부는 CSR profile + `PROJECT` |
 | 각 requested `Extension` | `SEQUENCE { extnID OBJECT IDENTIFIER, critical BOOLEAN DEFAULT FALSE, extnValue OCTET STRING }`; `extnValue` 내용은 아래 inner type의 DER 한 개 | RFC 5280 §4.1, §4.2; RFC 2985 §5.4.2 |
 | `signatureAlgorithm`, `signature` | 각각 `AlgorithmIdentifier`, `BIT STRING`; 승인된 outer signature OID/parameters로 exact DER 정보부의 signature 검증. SPKI OID를 outer signature OID로 대신 사용하지 않음 | RFC 2986 §4.2; `OD-ALG-01` |

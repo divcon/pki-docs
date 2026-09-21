@@ -25,7 +25,9 @@ C2PA CP가 직접 요구하는 것은 secure enrollment credential과 key-pair o
 - service/profile별 authorization
 - 변경 요청의 `Idempotency-Key`
 - strict JSON parsing, size/rate limit과 stable error code
-- client가 보낸 Subject/TSU/issuer policy를 신뢰하지 않고 server registry와 비교
+- client가 보낸 서비스/TSU/issuer 선택을 인증된 caller의 권한과 대조. CSR Subject는 구조·C/O/CN을 검사하고 서비스 식별과의 관계·불일치를 [02 §2.1](02-CSR-and-Attestation-Requirements.md#21-subject)의 CA 절차로 처리
+
+이 API는 인증된 operator와 별도 `tsaServiceId`/`tsuInstanceId`를 이용해 대상을 식별하는 예다. Subject로 서비스를 조회하거나 계정에 연결된 등록정보를 쓰는 다른 절차도 가능하지만, 원문이 특정 wire field를 정한 것은 아니다. 어느 방식도 Subject 문자열만으로 인증·권한을 대신하지 않는다.
 
 ## 3. Enrollment 시작
 
@@ -74,10 +76,12 @@ CP는 re-key를 신규 신청과 동일하게 처리하고 같은 identity valid
 
 기본 profile에서는 `challenge`, `audience`, `evidenceProfile` 및 `evidenceProfileVersion`을 TSA attestation 용도로 반환할 이유가 없다. Idempotency나 PoP protocol 자체에 challenge를 쓰는 별도 API 설계는 가능하지만, 그것을 C2PA TSA attestation 요구라고 부르지 않는다.
 
+`canonicalTsaSubjectDn`은 서버가 확인한 TSA 서비스의 기준 DN을 전달하는 이 API의 선택 필드다. 이를 안내했다는 사실이 모든 CSR Subject의 동일값 강제나 불일치 자동 거부를 뜻하지는 않는다. 요청과 기준 DN의 관계는 02 §2.1의 CA 절차로 확인한다.
+
 ## 4. CSR 생성
 
 1. 승인된 On-Device TSA 구현은 `K_tsu`를 TEE 안에서 생성·보관한다.
-2. CSR Subject는 server-authoritative TSA service Subject를 사용한다.
+2. CSR Subject는 ASN.1 Name과 공식 CSR schema의 C/O/CN 조건을 만족하도록 작성한다. 확인된 TSA service DN을 사용하는 것은 불일치를 줄이는 작성 방법이며, 모든 요청에 동일값을 강제하는 C2PA 규칙으로 두지 않는다.
 3. [02 §2.3](02-CSR-and-Attestation-Requirements.md#23-requested-extensions)에 따른 `extensionRequest`를 포함한 PKCS#10 `CertificationRequestInfo`에 `K_tsu`로 서명한다.
 4. private key는 enrollment client나 Certificate Platform으로 내보내지 않는다.
 
@@ -147,7 +151,7 @@ HSM/CA 서명 전 기본 gate는 다음과 같다.
 2. transaction ownership, operation과 idempotency
 3. CA business practices가 정한 applicant identification/authentication/verification
 4. 발급 대상 key ownership
-5. strict CSR signature/DER/SPKI/Subject/requested-extension 검증
+5. strict CSR signature/DER/SPKI/Subject 구조·C/O/CN/requested-extension 검증 및 02 §2.1의 Subject 불일치 처리
 6. server-controlled TSA Leaf template 및 issuer 상태
 7. key/serial uniqueness와 atomic issuance 기록 같은 project invariants
 

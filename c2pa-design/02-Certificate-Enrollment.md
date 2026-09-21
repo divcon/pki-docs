@@ -135,12 +135,37 @@ Certificate Platform이 발급하는 Leaf는 아래 두 종류다. Claim Signing
 
 ### 3.3 CSR 값과 최종 인증서 값의 관계
 
-CSR의 Subject와 `extensionRequest`는 신청자의 요청값이다. CA는 이를 검증 없이 최종 인증서에 복사하지 않는다.
+CSR의 Subject와 `extensionRequest`는 신청자의 요청값이다. CA는 이를 검증 없이 최종 인증서에 복사하지 않는다. CSR Subject의 입력 적합성, 발급 대상의 식별·인증·권한 확인, 최종 인증서 Subject의 정확성을 별도로 판단한다.
+
+<a id="csr-subject-identification"></a>
+
+#### CSR Subject와 발급 대상 식별
+
+| 판단 대상 | Claim Signing Leaf | TSA Leaf | 원문 근거 |
+|---|---|---|---|
+| CSR Subject 입력 | ASN.1 Name 구조와 공식 CSR schema의 C/O/CN 포함 조건 | 동일 | AL1/AL2/TSA CSR schemas:692-740; RFC 2986 §4.1 |
+| 발급 대상 확인 | 신청 제품·CPL record와 DN, 적합성, 신청자 권한을 확인 | CA business practices에 정한 TSA 신청자·서비스의 식별·인증·검증 | CP:405-455,461-473,491-517 |
+| 최종 Subject | 해당 CPL 제품 DN과 일치; ASCII 및 개별 instance 식별 금지 | 해당 TSA 서비스를 식별하는 unique C/O/CN | CP:387-399,1217,1282,1347 |
+
+공식 CSR schema에는 CSR Subject와 등록 DN의 일치를 검사하는 조건이 없다. CP의 제품 식별·CPL 대조 의무도 그 입력을 반드시 `CSR.subject`에서 읽도록 고정하지 않는다. 그렇다고 제출정보의 정확성 검증이나 발급 대상 확인을 생략해도 된다는 뜻은 아니다(CP:501-503,1542-1556,1568-1570).
+
+**CA가 정할 수 있는 식별 방식의 예:** CSR Subject로 대상을 조회하거나, 별도 신청정보의 제품/CPL record 번호·TSA service 식별자 또는 인증된 계정에 연결된 등록정보로 대상을 확인한다. 이는 원문 요구를 충족하기 위한 설계 선택이며, C2PA가 특정 API 필드나 CSR Subject 덮어쓰기를 명시적으로 허용한 절차가 아니다. 선택한 정보는 인증된 신청자 및 이번 요청의 발급 대상 키와 결속해야 한다. Subject 문자열이나 CSR PoP만으로 신청자 신원·발급 권한을 증명하지 않는다.
+
+Claim의 기준 DN은 CPL `product.DN`이며 서명된 Notice도 해당 CPL record를 담는다(CP:461-463). 신청 시 제품 정보와 CPL record 번호를 제출한다(CP:491-493). 기존 CPL/Notice의 적합성·상태 확인 절차를 유지하며, 최종 인증서 DN만 맞춰 넣는 것으로 발급 전 제품 확인을 대신하지 않는다. TSA에는 CPL 제품 DN 대조 의무가 없고 CA가 확인한 TSA 서비스 정보를 사용한다(CP:517).
+
+| CSR Subject 상태 | 처리 원칙 |
+|---|---|
+| 필수 C/O/CN 누락 또는 구조·형식 부적합 | 해당 CSR profile 검증 실패. 최종 인증서 보충으로 원본 CSR의 적합성을 대신하지 않음 |
+| 등록 DN과 문자열·필드 구성이 다름 | 차이 자체를 모든 요청의 자동 거부 또는 자동 수락 조건으로 고정하지 않음. CA가 문서화한 절차에 따라 거부·보완 요청·독립적으로 검증된 식별정보의 사용 여부를 결정 |
+| CSR Subject를 대상 식별에 사용하는데 대상을 확인할 수 없음 | 일치 여부나 보완 정보를 확인하여 대상·권한을 확정하기 전까지 발급하지 않음 |
+| 별도 정보로 대상이 확인되지만 CSR Subject가 다름 | 제출정보의 정확성과 해당 요청과의 관계를 확인하고 불일치 처리 근거를 남김. 다른 제품·서비스의 권한을 대신 사용하거나 확인되지 않은 값을 임의 보정하지 않음 |
+
+원본 CSR의 서명 대상 bytes를 고쳐 검증하거나 바뀐 값으로 원본이 유효했다고 판단하지 않는다. CSR 수정이 필요하면 신청자가 새로 서명한 CSR을 제출한다. 최종 Subject는 확인된 대상과 해당 인증서 profile에 따라 구성하고, CSR 원본·식별 근거·불일치 처리·최종 Subject의 관계를 발급 기록에서 추적한다.
 
 #### 구현 시 확인할 것
 
-- Claim Subject는 authoritative CPL/서명된 Notice의 product DN과 비교한다.
-- TSA Subject는 CA가 등록한 unique TSA service name과 비교한다.
+- Claim 발급 대상과 최종 Subject는 authoritative CPL/서명된 Notice의 product DN에 결속한다. CSR Subject의 대조·불일치 처리는 위 식별 절차를 따른다.
+- TSA 발급 대상과 최종 Subject는 CA가 확인한 unique TSA service에 결속한다. CSR Subject를 반드시 그 서비스의 사전 등록 DN과 같게 요구하지 않는다.
 - 요청된 Basic Constraints, Key Usage, EKU, Certificate Policies, C2PA AL과 CPL extension을 profile과 비교한다.
 - Issuer, serial, validity, SKI, AKI, AIA와 CRL Distribution Points는 CA-controlled template에서 만든다.
 - serial은 양수이고 20 octets 이하이며, 같은 Issuing CA가 발급한 모든 인증서 사이에서 유일해야 한다. C2PA profile은 high entropy serial을 권장한다.
@@ -149,7 +174,8 @@ CSR의 Subject와 `extensionRequest`는 신청자의 요청값이다. CA는 이�
 #### 발급을 거부해야 하는 경우
 
 - CSR의 필수 extension, 값 또는 criticality가 선택한 공식 CSR schema와 다름
-- Claim CSR의 DN·AL·CPL record가 authoritative record와 다름
+- Claim 발급 대상의 신원·권한·적합성을 확인할 수 없거나, CSR의 AL·CPL record extension이 확인된 요청 profile/record와 다름. CSR Subject의 단순 불일치는 위 식별 절차로 판단
+- TSA 신청자·서비스의 신원·권한 또는 최종 Subject의 정확성을 확인할 수 없음
 - TSA CSR에 C2PA AL 또는 CPL record extension이 있음
 - TSA CSR의 EKU가 critical인 `id-kp-timeStamping` 정확히 하나가 아님
 
@@ -537,7 +563,8 @@ TSA-only로 C2PA Conformance를 신청하는 모델도 허용되지 않는다. c
 #### 구현 시 확인할 것
 
 - 신청자가 승인된 TSA 운영자인지
-- 요청 Subject가 CA가 등록·확인한 unique TSA service name인지
+- CSR Subject, 별도 신청정보 또는 인증된 등록정보 중 CA 절차가 사용하는 정보로 TSA 서비스를 식별하고 요청자의 권한을 확인했는지
+- 최종 Subject가 그 확인된 TSA 서비스를 식별하는지. CSR Subject의 입력 검사와 불일치 처리는 [3.3절](#csr-subject-identification)을 따름
 - CSR key가 TSA Leaf profile에 맞는지
 - key가 timestamp 외 용도로 사용되지 않도록 제품과 운영 절차가 보장하는지
 
@@ -640,7 +667,7 @@ Evidence signature를 검증하는 attestation signer 공개키와, 인증서를
 
 | 항목 | AL1 | AL2 |
 |---|---|---|
-| Subject | CPL DN과 일치하는 C/O/CN, CPL에 OU가 있으면 동일 OU | 동일 |
+| Subject | ASN.1 Name 구조·C/O/CN 포함; 제품 식별과 DN 차이 처리는 [§3.3](#csr-subject-identification) 참조 | 동일 |
 | SPKI | RSA 2048+, EC P-256/P-384/P-521, Ed25519 | 동일 |
 | Basic Constraints | critical, `cA=false` | 동일 |
 | Key Usage | critical, 정확히 `digitalSignature` + `contentCommitment` | 동일 |
@@ -657,7 +684,7 @@ AL1과 AL2 CSR profile의 핵심 차이는 C2PA Assurance Level 값이다.
 
 | 항목 | 요구 |
 |---|---|
-| Subject | unique TSA service를 식별하는 C/O/CN |
+| Subject | ASN.1 Name 구조·C/O/CN 포함; 서비스 식별과 DN 차이 처리는 [§3.3](#csr-subject-identification) 참조 |
 | SPKI | RSA 2048+ 또는 EC P-256/P-384/P-521; Ed25519 금지 |
 | Basic Constraints | critical, `cA=false` |
 | Key Usage | critical, 정확히 `digitalSignature` + `contentCommitment` |
@@ -677,7 +704,7 @@ AL1과 AL2 CSR profile의 핵심 차이는 C2PA Assurance Level 값이다.
 5. SPKI algorithm/parameters는 C2PA CSR profile로, outer CSR signature algorithm/parameters는 CA의 secure PoP policy로 확인
 6. CSR signature로 PoP 확인
 7. decoded CSR을 선택한 공식 CSR schema로 검증
-8. authoritative CPL/TSA service 값과 비교
+8. CSR Subject의 형식 검사와 별도로 [3.3절](#csr-subject-identification)의 대상 식별·권한 검증을 수행하고, 해당 CSR extension을 확인된 profile/record와 비교
 
 ## 8. 최종 Leaf certificate profile
 

@@ -84,6 +84,8 @@ CP는 re-key 요청을 신규 신청과 동일한 identity validation으로 처�
 
 ## 5. 문서 구성
 
+CSR Subject의 구조·C/O/CN 검사와 TSA 운영기관·서비스의 식별·인증·권한 확인은 [02 §2.1](02-CSR-and-Attestation-Requirements.md#21-subject)에서 분리한다. Subject 또는 별도 신청·등록정보를 사용하는 방식과 DN 차이 처리는 CA 절차가 정한다. 모든 CSR에 등록 TSA DN 일치를 요구하거나 임의 Subject를 무조건 수락하는 공통 규칙으로 일반화하지 않는다.
+
 - [01-Enrollment-Request-Contract.md](01-Enrollment-Request-Contract.md): 기본 TSA API와 선택적 확장 경계
 - [02-CSR-and-Attestation-Requirements.md](02-CSR-and-Attestation-Requirements.md): CSR 필수 범위와 optional attestation 규칙
 - [03-Server-Validation-Traceability-and-Gaps.md](03-Server-Validation-Traceability-and-Gaps.md): 서버 validation gate, 원문 추적, 정정된 gap 분류

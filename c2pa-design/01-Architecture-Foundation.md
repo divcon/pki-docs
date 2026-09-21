@@ -222,6 +222,8 @@ untrusted input
 
 필수 predicate가 모두 성공한 뒤에만 제한된 issuance authorization이 CA orchestrator에 전달된다. CSR extension, Subject, validity 또는 AIA/CRL 값은 요청에서 그대로 복사하지 않고 CA가 고정한 template과 policy로 구성한다.
 
+CSR Subject의 구조·C/O/CN 검사와 발급 대상의 식별·인증·권한 확인은 별개다. 식별정보를 CSR Subject, 별도 신청정보 또는 인증된 등록정보에서 확인하는 방식은 CA 절차가 정하며, 원문이 모든 CSR Subject의 등록 DN 일치나 불일치 자동 거부를 고정한 것은 아니다. 단순 불일치를 처리하는 절차가 대상·권한 확인, 원본 CSR PoP 또는 최종 Subject의 정확성을 우회해서는 안 된다. [공통 Subject 원칙](02-Certificate-Enrollment.md#csr-subject-identification)에 따른다.
+
 ## 5. 시스템 컨텍스트
 
 ### 5.1 Level-0 컨텍스트

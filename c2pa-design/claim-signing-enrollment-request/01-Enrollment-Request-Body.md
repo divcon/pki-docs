@@ -21,6 +21,8 @@ Enrollment에서 “인증”은 다음 여섯 predicate를 합친 말이다. �
 
 CSR PoP가 Subscriber identity나 GP instance 적격성을 증명하지 않는다. 반대로 credential 또는 attestation만으로 CSR signature 검증을 생략할 수 없다. AL2 attestation signer key와 발급 대상 subject key도 서로 다른 키일 수 있으므로, signed Evidence가 가리키는 subject key를 CSR SPKI에 명시적으로 결속한다.
 
+제품 식별정보의 입력 위치는 C2PA가 하나로 고정하지 않는다. CSR Subject, 별도 신청정보 또는 인증된 등록정보를 사용하는 것은 가능한 CA 절차의 선택이다. 이 body는 `cplRecordId`로 제품을 조회하는 방식을 택한다. 서버는 그 record를 인증된 Subscriber·GP instance와 결속해 DN·적합성·권한을 확인하며, CSR Subject의 기본 입력 검사와 등록 DN 불일치 처리는 [02 §3.1.1](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification)로 분리한다. 이 선택이 다른 식별 방식의 금지나 CSR Subject의 임의 무시를 뜻하지는 않는다.
+
 ## 3. 최소 request body
 
 ### 3.1 AL1 INITIAL 예시
@@ -181,7 +183,7 @@ Android는 `.17`의 signed `attestationChallenge`와 CA가 보관한 요청 범�
 1. Body byte/depth/count limit을 적용하고 JSON을 strict parse한다.
 2. Unknown/duplicate field와 operation/profile별 cardinality를 검사한다.
 3. Server-authoritative Subscriber/CPL/profile approval을 조회한다.
-4. CSR을 strict DER parse하고 signature/PoP, Subject, SPKI와 extension profile을 검사한다.
+4. CSR을 strict DER parse하고 signature/PoP, Subject 구조·C/O/CN, SPKI와 extension profile을 검사한다. Subject와 식별된 제품 DN의 차이는 02 §3.1.1의 CA 절차로 판단한다.
 5. AL1은 Evidence field 부재를 확인한다.
 6. AL2는 provider schema/signature/chain/status/freshness/binding과 O.1~O.4 각각을 검사한다.
 7. 발급 직전에 current I/A/V, Agreement, credential/instance, CPL/provider/reference, same-key history, issuer와 final certificate template를 다시 검사한다.

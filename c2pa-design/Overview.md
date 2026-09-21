@@ -226,6 +226,8 @@ TSA Signing Leaf는 TSA TA의 `K_tsu`에 발급한다.
 
 TSA 요청자는 임의 Subscriber가 아니라 해당 CA Applicant의 TSA governance, business practices와 계약 아래 사전 승인된 TSA operator여야 한다. 서버는 operator에 불변 `tsaServiceId`를 등록하고, 별도 권한·quota 검사를 거쳐 TSU slot의 `tsuInstanceId`와 최종 Subject DN을 서버 측에서 결정한다. 요청자가 임의로 만든 TSA/TSU 식별자나 Subject DN은 발급 권한 또는 단일 활성키 판정에 사용하지 않는다.
 
+위 service/TSU ID는 이 API의 식별 방식이다. C2PA는 발급 대상 식별정보를 반드시 CSR Subject에서 읽도록 정하지 않는다. CSR Subject, 별도 신청정보 또는 인증된 등록정보의 사용은 CA 절차의 선택이며, CSR Subject 문자열은 신원·권한 증명이 아니다. Claim/TSA 모두 CSR Subject의 구조·C/O/CN 조건과 대상 식별·인증·권한 확인을 분리하고, 등록 DN과의 차이는 문서화한 CA 절차로 처리한다. 최종 Claim DN=CPL 및 최종 TSA DN=확인된 서비스 조건은 유지한다. [공통 Subject 원칙](02-Certificate-Enrollment.md#csr-subject-identification)을 따른다.
+
 ```text
 1. 서버가 승인된 TSA operator와 `tsaServiceId`, 앞서 발급한 `tsuInstanceId`/TSA-service-wide unique `serialNamespace` slot을 확인해 enrollment transaction에 바인딩
 2. TSA TA가 TEE 내부에서 K_tsu 생성
@@ -409,7 +411,7 @@ Evidence의 `tsaServiceId`와 `tsuInstanceId`는 enrollment 응답에서 받은 
 3. Claim Evidence-required profile은 승인된 freshness/replay predicate와 request-context binding을 확인하고, challenge-using profile만 expected challenge의 유효성과 미사용 여부를 추가 확인한다. TSA transaction expiry는 §6의 TSA-only 계약으로 확인한다.
 4. 요청 크기, 항목 수, DER/CBOR/COSE 중첩 깊이 제한을 적용한다.
 5. CSR을 strict parser로 해석하고, Evidence-required profile이면 Evidence에도 strict parser를 적용한다. Trailing data, duplicate field 및 비정규 encoding을 거부한다.
-6. 요청 profile에 대응하는 공식 `*.csr.schema.json`으로 CSR Subject, SPKI algorithm과 `extensionRequest`를 검증한다. 요청 extension은 존재·값을 검증하지만 최종 인증서에 그대로 복사하지 않는다.
+6. 요청 profile에 대응하는 공식 `*.csr.schema.json`으로 CSR Subject 구조·C/O/CN, SPKI algorithm과 `extensionRequest`를 검증한다. CSR DN과 등록 DN의 차이는 대상 식별·권한 검증 및 문서화한 CA 절차로 판단한다. 요청 extension은 존재·값을 검증하지만 최종 인증서에 그대로 복사하지 않는다.
 7. CSR `CertificationRequestInfo` 서명을 검증하여 Proof of Possession을 확인한다.
 8. Claim Signing 요청이면 signed Notice를 onboarding에 사용한 경우 그 record를 검증하고, 그와 별도로 current public CPL status, Subscriber·DN, Max Assurance Level과 허용 `attestationMethods`를 확인한다. 현재 interim rule에서 Notice alone은 issuance eligibility가 아니다.
 9. AL1은 O.1의 secure enrollment authentication과 CSR PoP를 평가하며 현재 Claim Signing contract에서는 `evidenceItems`를 금지한다. 향후 CA가 AL1 CPS attestation 확장을 채택하려면 현재 AL1 profile에 암묵적으로 추가하지 않고 별도 versioned profile과 Operations Decision 승인을 정의한다.
@@ -757,7 +759,7 @@ Base Claim/TSA 발급은 다음 중 하나라도 발생하면 거부한다.
 - 알 수 없거나 권한 없는 Subscriber/TSA operator/service 또는 issuer
 - Claim Signing 요청에서 알 수 없는 CPL record, 잘못된 CPL status 또는 Max Assurance Level 불일치
 - key ownership/CSR 서명 실패, unsupported key 또는 CSR/profile 불일치
-- 요청자가 선택한 TSA/TSU identity 또는 승인되지 않은 Subject DN
+- 확인되지 않거나 권한 없는 TSA/TSU identity, 또는 최종 인증서 Subject를 확인된 대상에 결속할 수 없음. CSR Subject의 단순 등록값 불일치는 공통 자동 거부 조건으로 삼지 않고 공통 Subject 원칙에 따라 처리
 - 승인된 `keyReuseIdentity` profile에서 과거 발급 또는 issuance reservation과 같은 public key로 판정된 요청
 - 발급 후 인증서 profile self-check 실패
 
@@ -803,7 +805,8 @@ TEE 실행·TEE key 보관·timestamp 전용·single-active-key의 runtime accep
 - AL1/AL2 정상 발급
 - AL1 기본 profile에서 Evidence 없는 정상 발급과 unexpected Evidence 거부
 - AL2에서 C2PA semantic O.1~O.4와, 승인된 provider profile이 정한 프로젝트 wrapper `evidenceItems=1..N_p` 조건 적용
-- CPL status, DN, Max AL 및 attestation method 불일치
+- 신청 제품과 CPL record/DN·status·권한·Max AL 및 attestation method 확인 실패, 또는 최종 Subject의 CPL DN 불일치
+- CSR C/O/CN 누락과, CA가 선택한 제품 식별 방식별 CSR DN 차이 처리를 구분
 - CSR PoP 실패와 CSR/Evidence key mismatch
 - challenge replay/expiry/cross-Subscriber 사용
 - O.1~O.4 일부 누락 또는 `NOT_PROVEN`
@@ -814,7 +817,8 @@ TEE 실행·TEE key 보관·timestamp 전용·single-active-key의 runtime accep
 ### 18.2 Base TSA Signing Leaf 발급 시험
 
 - secure enrollment credential과 CA business practices에 따른 현재 I/A/V 승인 확인
-- CSR 서명에 의한 `K_tsu` ownership/PoP, Subject와 서버 발급 `tsaServiceId`/`tsuInstanceId` binding 검증
+- CSR 서명에 의한 `K_tsu` ownership/PoP, CSR Subject 구조·C/O/CN, 인증된 operator와 `tsaServiceId`/`tsuInstanceId` 및 최종 Subject의 결속 검증
+- CSR Subject로 서비스가 확인되지 않는 경우와 별도 서비스 정보로 확인되는 경우의 DN 차이 처리를 구분하고, CA 절차 및 요청정보의 정확성 검증 확인
 - `INITIAL`과 `REKEY`에서 Evidence 없는 정상 발급과 unexpected Evidence 거부
 - `REKEY`의 새 key·새 CSR, current-certificate binding과 같은 key 재사용 거부
 - 같은 요청의 동시 재시도에서 단일 인증서만 발급

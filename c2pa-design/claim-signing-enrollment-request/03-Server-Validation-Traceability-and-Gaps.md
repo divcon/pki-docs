@@ -34,7 +34,7 @@ Locator의 CP/GSPR/Program은 `conformance-public@2466172859fad1215f7aaf7e3768b4
 | `REQ-CPL-01` | CPL product type/status/DN/record/max AL과 조건부 method | CP:457-467,491-527; CPL schema:24-110,554-562 | `RB-02,RB-04,SG-03,SG-08` |
 | `REQ-ALSET-01` | 수용 product에는 CPL maximum 이하 Claim AL 경로 제공 | CP:465-467; Program:440-445 | profile enablement gate |
 | `REQ-POP-01` | requested key ownership과 CSR signature/PoP | CP:471-473; RFC 2986 §3,§4.1-4.2 | `RB-07..RB-10,SG-04,SG-08` |
-| `REQ-DN-01` | CSR의 C/O/CN 존재는 CSR schema 요구. 최종 Subject의 authoritative CPL DN·ASCII·unique instance ID 금지를 CSR에도 선검사하는 것은 `PROJECT` 강화 | 최종 cert CP:381-399; CSR schemas:692-740; 02 §3.1/§3.3 | `RB-10,SG-04,SG-07` |
+| `REQ-DN-01` | CSR의 구조·C/O/CN, 발급 전 제품/CPL DN·권한 확인과 최종 Subject의 CPL DN·ASCII·unique instance ID 금지를 분리. 식별 입력 위치 및 CSR DN 불일치 처리는 CA 절차의 선택이며 공통 exact-match gate로 고정하지 않음 | CSR schemas:692-740; CP:381-405,461-509,1542-1556; [02 §3.1.1](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification) | `RB-04,RB-10,SG-02,SG-03,SG-04,SG-07` |
 | `REQ-AL1-01` | AL1은 secure credential 기반 GP instance 인증; hardware Evidence count 미규정 | CP:1686-1695; GSPR:330-358 | `RB-11,SG-01` |
 | `REQ-AL2-O1` | hardware-backed GP product-instance identity | CP:1712-1714; GSPR:360-376; Android CP:1799-1801,1812-1814 | `RB-12..RB-14,SG-06`; 02 §13의 `AK-04..AK-06,AK-17..AK-19` 및 공통 검증 |
 | `REQ-AL2-O2` | requested key의 hardware generation/storage/possession | CP:1716-1718; GSPR:422-472; Android CP:1808 | `RB-12..RB-14,SG-06`; `AK-13` 및 hardware security level·증명키/CSR/PoP 결속 |
@@ -57,8 +57,8 @@ Locator의 CP/GSPR/Program은 `conformance-public@2466172859fad1215f7aaf7e3768b4
 |---|---|---|---|
 | `SG-01` | credential + instance | 승인된 secure credential이 Subscriber와 적격 GP instance에 결속되고 현재 유효함 | `OD-AUTH-01` |
 | `SG-02` | onboarding authority | Subscriber/representative I/A/V, ≤398일 재인증과 legally valid/current Agreement가 유효함 | `OD-IAV-01` |
-| `SG-03` | conformance/CPL | authenticated current CPL이 exact applicant, `generatorProduct`, `conformant`, DN, record ID, `minVersion`, max AL과 조건부 attestation method를 만족하고 silent downgrade가 없음 | `OD-CPL-01`, `OD-DOWNGRADE-01[AL2]`, `OD-REVOCATION-01` |
-| `SG-04` | CSR | strict DER PKCS#10 한 개, 02 §3.3~§3.4 필수 member/OID/type/parameters/criticality/value, signature/PoP, Subject 및 SPKI/extension profile이 모두 유효함 | `OD-SOURCE-01`, `OD-LIMIT-01`, `OD-ALG-01` |
+| `SG-03` | conformance/CPL | 인증된 신청자·GP instance와 발급 대상 제품을 결속하고 authenticated current CPL의 applicant, `generatorProduct`, `conformant`, DN, record ID, `minVersion`, max AL과 조건부 method를 확인. CSR Subject가 유일한 식별 입력이라고 가정하지 않으며 silent downgrade가 없음 | `OD-CPL-01`, `OD-DOWNGRADE-01[AL2]`, `OD-REVOCATION-01` |
+| `SG-04` | CSR | strict DER PKCS#10 한 개, 02 §3.3~§3.4 필수 member/OID/type/parameters/criticality/value, signature/PoP, Subject 구조·C/O/CN 및 SPKI/extension profile이 유효함. CSR DN 차이는 02 §3.1.1의 절차로 처리하고 SG-03의 대상·권한 확인을 우회하지 않음 | `OD-SOURCE-01`, `OD-LIMIT-01`, `OD-ALG-01`, `OD-CPL-01` |
 | `SG-05` | lifecycle/key | INITIAL/REKEY 의미와 server issuance history가 일치하고 승인된 same-public-key 판별 정책에서 새 key임 | `OD-BODY-01`, `OD-KEY-01`, `OD-LIFECYCLE-01[REKEY]` |
 | `SG-06` | AL2 Evidence | provider parser/signature/chain/status/freshness/audience/subject-key binding과 O.1/O.2/O.3/O.4 각각이 PASS; Android는 02 §13의 `AK-01..AK-21`, §13.6의 필수 구조·타입·조건부 provider 필드, root-nearest 확장 및 전체 reference coverage 적용 | `OD-SOURCE-01`, `OD-LIMIT-01`, `OD-ALG-01`, `OD-EVIDENCE-01`, `OD-FRESHNESS-01`, `OD-REFERENCE-01`, `OD-REVOCATION-01` |
 | `SG-07` | certificate construction | CSR extension을 복사하지 않고 authoritative TBS를 구성해 official cert schema, validity, issuer, serial과 OCSP readiness를 통과 | `OD-SOURCE-01`, `OD-ALG-01`, `OD-VALIDITY-01`, `OD-REVOCATION-01` |
@@ -66,6 +66,13 @@ Locator의 CP/GSPR/Program은 `conformance-public@2466172859fad1215f7aaf7e3768b4
 | `RT-01` | runtime | private-key boundary/용도, rotation, O.3~O.6, conformance/status refresh와 incident sign-stop을 지속 강제 | `OD-REVOCATION-01`, `OD-RUNTIME-01` |
 
 권장 의존 순서는 credential/path authentication → strict body parse → body value authorization → onboarding/CPL currentness → CSR PoP/profile → AL별 Evidence → lifecycle/key history → authoritative certificate construction → pre-issuance currentness다. 이는 내부 구현의 fail-closed data dependency이며 네트워크 API나 상태 머신을 규정하지 않는다.
+
+Subject 관련 검증 예시는 다음을 구분한다. 이는 향후 검증 조건이며 실행한 테스트 결과가 아니다.
+
+- CSR C/O/CN 누락·잘못된 ASN.1 또는 PoP 실패는 거부한다.
+- CSR Subject를 제품 식별에 사용하는 절차에서 제품/CPL record·권한이 확인되지 않으면 보완 전 발급하지 않는다.
+- `cplRecordId`나 인증된 등록정보로 동일 요청의 제품·권한을 확인하는 절차에서는 CSR DN 차이만을 공통 자동 거부 조건으로 추가하지 않는다. CA가 정한 불일치 처리와 제출정보 정확성 확인 결과를 검증한다.
+- 다른 Subscriber의 CPL record로 바꿔치기하거나 최종 인증서 DN이 확인된 CPL DN과 다른 경우는 거부한다. Subject 식별 방식 변경으로 AL/CPL extension, Evidence 또는 원본 CSR hash 결속을 완화하지 않는다.
 
 ## 4. Pre-issuance invariant set
 
@@ -112,7 +119,7 @@ Accepted CPL의 `maxAssuranceLevel=2` product는 AL1/AL2 요청 경로를 모두
 | `OD-LIMIT-01` | body/CSR/item/chain/depth positive limits | Platform/SRE → Security / config registry | `TBD`; 수치 default 없음 | 모든 profile `DISABLED` | capacity·abuse·parser test로 bound 승인 |
 | `OD-AUTH-01` | secure credential 종류와 GP-instance binding | IAM/CA CPS → PKI+Security / CPS+IAM policy | `TBD` | 모든 profile `DISABLED` | threat model, credential lifecycle/revocation와 negative tests |
 | `OD-IAV-01` | identity source, representative authority, Agreement와 re-auth workflow | RA/Legal → CA Policy / CPS+RA registry | `TBD`; 398일 ceiling만 고정 | 모든 profile `DISABLED` | source/procedure/agreement evidence와 boundary tests |
-| `OD-CPL-01` | Notice/CPL authenticity/currentness/conflict, DN과 `minVersion` mapping | Conformance ingest → PKI+Security / CPL registry | `TBD` | 모든 Claim profile `DISABLED` | signature/freshness/conflict/DN/version rules와 tests |
+| `OD-CPL-01` | Notice/CPL authenticity/currentness/conflict, 제품 식별정보의 출처·요청자 결속, CSR DN 차이 처리, 최종 DN과 `minVersion` mapping | Conformance ingest → PKI+Security / CPL registry | `TBD` | 모든 Claim profile `DISABLED` | signature/freshness/conflict/대상·권한/DN/version rules와 tests |
 | `OD-ALG-01` | CSR, subject key, issuer signature와 runtime COSE algorithm 교집합 | Crypto policy → PKI+Security / CPS crypto registry | `TBD` | 모든 Claim profile `DISABLED` | HSM/client matrix, KAT와 CPS approval |
 | `OD-VALIDITY-01` | actual AL1≤366/AL2≤90 validity, serial, AIA/OCSP와 optional CDP/OID | PKI operations → CA Policy / template registry | `TBD`; C2PA ceilings만 고정 | 모든 Claim profile `DISABLED` | template/status/serial/profile end-to-end tests |
 | `OD-EVIDENCE-01` | AL2 provider 지원 버전·`N_p`·signed artifact 포장·trust/status 운영과 objective map 적용 | Evidence owner → Security+CA Policy / provider registry | `TBD` 운영 승인; 사용자는 Google-rooted Android Key Attestation 선택, CP 21개 매핑은 02 §13에 문서화 | AL2 `DISABLED` | 01 §5.4 포장의 registry 값·지원 parser/algorithm·root rotation·factory/RKP 범위, status feed 및 02 §13.5 positive/negative vectors 확정 |
@@ -136,7 +143,7 @@ Accepted CPL의 `maxAssuranceLevel=2` product는 AL1/AL2 요청 경로를 모두
 | `OD-LIMIT-01` | `RB-09,RB-10,RB-14,SG-04,SG-06` |
 | `OD-AUTH-01` | `SG-01,SG-08` |
 | `OD-IAV-01` | `SG-02,SG-08` |
-| `OD-CPL-01` | `RB-02,RB-04,SG-03,SG-08` |
+| `OD-CPL-01` | `RB-02,RB-04,SG-03,SG-04,SG-08` |
 | `OD-ALG-01` | `RB-10,SG-04,SG-06,SG-07,SG-08` |
 | `OD-VALIDITY-01` | `SG-07,SG-08` |
 | `OD-EVIDENCE-01` | `RB-12,RB-13,RB-14,SG-06,SG-08[AL2]` |

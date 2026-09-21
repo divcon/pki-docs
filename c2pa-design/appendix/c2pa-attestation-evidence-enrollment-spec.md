@@ -313,7 +313,7 @@ itemDigest = SHA-256(UTF8(RFC 8785 JCS(Evidence item)))
 
 ### 6.2 인증서에 들어갈 제품 이름(Subject DN)
 
-Subject DN에는 `C`, `O`, `CN`이 항상 들어가며, CPL에 `OU`가 있으면 `OU`도 들어간다.
+이 절의 표는 **최종 인증서 Subject**의 조건이다. 최종 DN에는 `C`, `O`, `CN`이 항상 들어가며, CPL에 `OU`가 있으면 `OU`도 들어간다. CSR Subject의 입력 검사와는 구분한다.
 
 | 인증서 이름 필드 | OID | 넣어야 하는 값 |
 |---|---|---|
@@ -322,7 +322,9 @@ Subject DN에는 `C`, `O`, `CN`이 항상 들어가며, CPL에 `OU`가 있으면
 | commonName `CN` | `2.5.4.3` | CPL에 등록된 C2PA 제품 이름과 일치 |
 | organizationalUnitName `OU` | `2.5.4.11` | CPL `product.DN.OU`가 존재하면 필수이며 동일한 값 |
 
-모든 DN 값은 C2PA Certificate Policy에 따라 ASCII 문자만 사용한다. CA는 공식 CPL의 `product.DN`에 등록된 C/O/CN/OU 필드 구성과 각 값을 CSR과 정확히 비교한다. CPL에 없는 이름 필드가 CSR에 추가되어 있으면 거부하며, 최종 인증서에도 확인된 동일한 DN을 넣는다.
+최종 인증서의 모든 DN 값은 C2PA Certificate Policy에 따라 ASCII 문자만 사용하고, 공식 CPL `product.DN`의 필드 구성·값과 일치시킨다(CP:387-399). CSR은 공식 AL1/AL2 CSR schema의 구조·C/O/CN 포함 조건을 검사한다. 최종 인증서의 CPL DN 일치를 모든 원본 CSR의 exact-match 의무로 확대하거나, 추가 RDN만으로 모든 CSR을 자동 거부하지 않는다.
+
+발급 전에는 신청 제품·CPL record/DN·적합성 및 신청자 권한을 확인한다(CP:405-455,461-509). CSR Subject, 별도 신청정보 또는 인증된 등록정보 중 어디서 대상을 식별할지는 CA 절차의 선택이다. CSR DN 차이는 거부·보완·독립적으로 검증된 식별정보 사용 등 문서화한 절차로 판단하며, 제출정보의 정확성·대상·권한이 해결되지 않은 상태에서 발급하지 않는다. CSR 원본의 서명 bytes를 변경하거나 최종 DN 보충으로 잘못된 원본 CSR을 유효하게 만들지 않는다. 상세 기준은 [Claim Subject 입력과 제품 식별](../claim-signing-enrollment-request/02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification)을 따른다.
 
 ### 6.3 인증서에 들어갈 공개키(SubjectPublicKeyInfo)
 
@@ -377,7 +379,8 @@ C2PA CPL Record ID 확장 필드에는 이 제품의 CPL 레코드 UUID를 표�
 
 - CSR 서명을 검증해 공개키에 대응하는 개인키를 요청자가 보유하고 있는지 확인한다.
 - CSR이 요청한 확장 필드를 최종 인증서에 그대로 복사하지 않는다. 각 값을 서버 정책과 비교한 뒤 CA가 최종 값을 만든다.
-- Subject DN, CPL Record ID, AL2 값, 키 종류와 크기를 서버에 등록된 값과 비교한다.
+- CSR Subject의 구조·C/O/CN 포함을 확인하고, §6.2에 따라 선택한 제품 식별 절차로 신청자의 권한과 해당 CPL 제품을 검증한다. CSR Subject와 검증된 제품 DN에 차이가 있으면 CA의 문서화된 절차로 처리하고, 해결되지 않은 식별·권한·제출정보 정확성 문제는 발급 전에 해소한다.
+- CPL Record ID, AL2 값, 키 종류와 크기를 서버에 등록된 값과 비교한다. 최종 인증서 Subject는 검증된 CPL DN으로 구성한다.
 - AIA, CRL Distribution Points, SKI, AKI, 일련번호, 유효기간, 발급자 정보는 CA가 만든다.
 - `challengePassword`와 정의되지 않은 CSR 속성은 기존 AL1 CSR parser 정책대로 처리한다. AL2에서 더 엄격하게 거부한다면 그 차이를 `Local AL2` 정책으로 기록한다.
 - 동일한 CSR을 다른 인증서 발급 작업에서 다시 제출할 수 있는지는 CA 운영 정책으로 정한다.
@@ -388,7 +391,9 @@ C2PA CPL Record ID 확장 필드에는 이 제품의 CPL 레코드 UUID를 표�
 {
   "formatValid": true,
   "signatureValid": true,
-  "subjectMatchesCpl": true,
+  "subjectInputValid": true,
+  "productIdentificationValid": true,
+  "subjectReviewResult": "accepted-under-ca-procedure",
   "keyProfileValid": true,
   "requestedExtensionsValid": true,
   "spkiSha256": "base64url-sha256",
@@ -396,7 +401,7 @@ C2PA CPL Record ID 확장 필드에는 이 제품의 CPL 레코드 UUID를 표�
 }
 ```
 
-이 JSON은 CA가 내부적으로 저장하는 확인 결과 예시다. 클라이언트 요청 body에 넣는 값이 아니다.
+이 JSON은 CA가 내부적으로 저장하는 확인 결과 예시다. 클라이언트 요청 body에 넣는 값이 아니다. `productIdentificationValid`와 `subjectReviewResult`는 CSR 서명 검증만으로 얻는 결과가 아니라 별도 제품 식별·권한·정확성 확인 및 필요한 DN 차이 처리를 마친 결과다. CSR Subject와 CPL DN의 원문 일치 자체를 모든 요청의 통과 조건으로 삼는 예시는 아니다.
 
 ## 7. 검증 증거(Attestation Evidence) 전송 형식
 
@@ -785,7 +790,7 @@ sequenceDiagram
 2. DER PKCS#10 구조를 엄격하게 파싱한다.
 3. CSR 서명을 확인해 공개키에 대응하는 개인키 보유 여부를 검증한다.
 4. CSR 버전이 `0`인지 확인한다.
-5. ASCII로 작성된 C/O/CN과 조건부 OU의 필드 구성·값을 공식 CPL과 비교하고 CPL에 없는 추가 이름 필드는 거부한다.
+5. CSR Subject의 ASN.1 Name 구조와 C/O/CN 포함을 확인하고, §6.2의 제품 식별 및 DN 차이 처리 절차를 적용한다. 추가 RDN이나 CPL DN과의 차이만으로 모든 CSR을 자동 거부하지 않으며, 발급 전에는 제품·CPL 상태·신청자 권한과 제출정보 정확성을 검증해야 한다. ASCII와 CPL DN 일치는 최종 인증서 Subject를 구성할 때 확인한다.
 6. 공개키 알고리즘, 키 크기·곡선 등 매개변수를 확인한다.
 7. 필요한 `extensionRequest`와 AL2 OID가 있는지 확인한다.
 8. CSR 전체 DER과 공개키 SPKI DER의 SHA-256을 각각 계산해 이후 단계와 감사 로그에서 사용한다.

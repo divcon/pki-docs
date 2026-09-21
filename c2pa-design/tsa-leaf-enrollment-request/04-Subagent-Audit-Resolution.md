@@ -71,3 +71,11 @@
 - 위 runtime 속성은 설계·TEE enforcement·시험·배포 승인·모니터링·감사로 보증할 수 있다.
 - Staged activation과 signed observation은 채택한 project mechanism의 gate이지 base TSA Leaf issuance의 C2PA prerequisite가 아니다.
 - `TSA-REQ-GAP-04/05/06/12/15/16/17`은 base TSA Leaf issuance blocker가 아니다.
+
+## 6. 2026-09-18 CSR Subject 일반화
+
+현재 Subject 기준은 [02 §2.1](02-CSR-and-Attestation-Requirements.md#21-subject)이다. 등록 TSA DN과 CSR Subject의 일치를 모든 요청에 강제하던 제한을 제거하고, CSR 입력 적합성·서비스 식별·신청자 인증·권한/키 소유 검증·최종 Subject 구성을 분리했다.
+
+CSR Subject, 별도 서비스 정보 또는 인증된 등록정보는 CA 절차에서 선택할 수 있는 식별 방식의 예다. Subject 문자열이나 CSR PoP만으로 서비스 권한이 증명되지는 않는다. 등록 DN과의 차이는 문서화한 절차로 해결하고, 대상·권한·제출정보 정확성이 확인되지 않으면 발급하지 않는다. 이는 CP:471-473,517,1542-1556과 CSR schema:692-740의 구분에 따른 설계 해석이며, 원문이 CSR Subject 일괄 무시·보정을 명시적으로 허용했다는 주장이 아니다.
+
+요청 계약·검증 및 거부 조건·공통 설계와 ZIP을 함께 점검한다. 동일 snapshot에 대한 독립 감사 후 유효 지적을 수정하고 재감사를 반복하며, 지적이 없는 최종 snapshot과 실제 결과는 최종 응답과 작업 일지에 기록한다. 이전 감사 범위의 Appendix 제외는 과거 조사 조건이며 이번에는 관련 Subject 서술의 일관성도 검토하되 사실 근거로 사용하지 않는다.

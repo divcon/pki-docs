@@ -152,3 +152,11 @@ Scope 변경 전 snapshot의 API 설계 finding은 현재 계약의 미해결 fi
 | 보강본 1차 | `9ab2bcd02de88ebb1799eec0b4eb635644889c30590319985716fcfaed7c3c92` | 기존 지적 모두 해소. Android security는 `NO FINDINGS`. CSR standards와 coverage가 같은 Low locator 오기 1건을 각각 보고. 메인이 pinned MIB를 확인해 02 §3.3 EKU 행의 `MIB:32-34`를 실제 정의가 있는 `MIB:34-37`로 정정. OID 값은 변경하지 않음 |
 
 매 보강본은 ZIP의 정확한 5개 entry 및 bytes, local link/anchor, 21개 AK 행, decision 상태를 검사하고 manifest를 만든 뒤 freeze한다. 세 감사자는 동일 snapshot을 원문과 새로 대조한다. 유효 finding이 있으면 수정하고 세 감사를 모두 반복하며, **동일 최종 snapshot에서 세 감사자가 모두 `NO FINDINGS`일 때만 종료**한다. 최종 snapshot과 세 verdict는 감사 후 파일을 다시 바꾸지 않도록 최종 응답·작업 일지에 기록한다.
+
+## 10. 2026-09-18 CSR Subject 일반화
+
+이전 §9의 `INPUT-AUDIT-04`에서 유지했던 CSR DN 선검사는 당시의 프로젝트 선택이다. 현재 기준은 [02 §3.1.1](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification)이며, 모든 CSR에 CPL DN exact-match를 요구하던 제한을 일반화한다. 과거 감사 기록을 현재 원문 의무나 현재 Subject 정책의 근거로 사용하지 않는다.
+
+CSR 구조·C/O/CN, 원본 PoP·필수 확장과 발급 전 제품·CPL·권한 확인, 최종 인증서 DN 조건은 유지한다. 식별 입력 위치와 CSR DN 차이 처리는 CA가 문서화할 선택이며, 무조건 거부 또는 무조건 보정·수락으로 고정하지 않는다. 공식 근거는 pinned CP:387-405,461-517,1542-1570 및 CSR schemas:692-740이다. RFC 2986 §3의 CA 보유정보 사용 문장은 인증서 확장 구성에 관한 것이므로 Subject 덮어쓰기의 직접 허용 근거로 사용하지 않는다.
+
+이번 감사는 수정된 Markdown과 대응 ZIP을 같은 snapshot으로 고정하고 원문 적합성·검증 절차·문서 간 일관성을 독립 검토한다. 유효 지적을 수정한 뒤 같은 범위를 재감사하며, 지적이 없는 최종 snapshot 및 실제 감사 결과는 최종 응답과 작업 일지에 기록한다. 과거 감사의 통과 결과를 이번 변경의 통과 근거로 재사용하지 않는다.

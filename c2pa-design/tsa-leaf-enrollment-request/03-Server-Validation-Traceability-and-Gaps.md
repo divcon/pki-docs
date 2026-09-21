@@ -6,9 +6,9 @@
 
 1. secure credential, caller identity와 TSA operator/service 권한
 2. transaction ownership, environment/profile/operation 및 project idempotency
-3. CA business practices가 정한 TSA applicant identification/authentication/verification
+3. CA business practices가 정한 TSA applicant identification/authentication/verification. CSR Subject, 별도 신청정보 또는 인증된 등록정보 중 선택한 정보로 서비스와 요청자 권한을 확인
 4. key-pair ownership: 기본 구현은 CSR signature 검증
-5. strict DER PKCS#10 parsing, algorithm/SPKI/Subject/requested-extension 검증
+5. strict DER PKCS#10 parsing, algorithm/SPKI/Subject 구조·C/O/CN/requested-extension 검증. CSR DN 차이는 [02 §2.1](02-CSR-and-Attestation-Requirements.md#21-subject)의 절차로 처리
 6. official `tsaLeaf.csr.schema.json` 검증([02 §2.3의 필수 확장 표](02-CSR-and-Attestation-Requirements.md#23-requested-extensions) 참조)
 7. CA-controlled TSA Leaf template, issuer/HSM authorization 및 serial/key uniqueness
 8. 발급 결과의 signature, CSR-SPKI 일치 및 official `tsaLeaf.cert.schema.json` post-check
@@ -58,7 +58,8 @@ TSA 서비스가 production에서 timestamp를 발행하기 전에는 다음을 
 - applicant I/A/V 실패
 - transaction/profile/operation/current-certificate binding 실패
 - key ownership 또는 CSR signature 실패
-- malformed/unsupported CSR, Subject/SPKI/extension mismatch
+- malformed/unsupported CSR, Subject 구조·필수 C/O/CN 실패 또는 SPKI/extension profile 불일치
+- CA의 식별·불일치 처리 절차를 적용해도 TSA 서비스·권한 또는 제출정보의 정확성을 확인할 수 없음. CSR Subject와 등록 DN의 차이만을 공통 자동 거부 조건으로 삼지 않음
 - issuer/HSM/template/status/serial/key-uniqueness 실패
 - post-issuance certificate profile self-check 실패
 - 감사/저장 원자성을 보장할 수 없는 오류
@@ -72,6 +73,8 @@ TSA 서비스가 production에서 timestamp를 발행하기 전에는 다음을 
 - provider-specific TA/TEE predicate 또는 compound join 실패
 
 기본 profile에서 “active-key signed observation 없음”이나 “TEE Evidence 없음”만으로 인증서 발급을 거부하는 것은 C2PA 근거가 없다.
+
+Subject 검증에서는 필수 C/O/CN 누락·PoP 실패, Subject 조회로 대상을 확인하지 못한 경우, 별도 서비스 ID로 대상을 확인한 경우의 문서화된 DN 차이 처리, 다른 운영자의 서비스 요청 및 최종 Subject의 서비스 불일치를 구분한다. 별도 식별정보가 있다는 이유만으로 의미상 충돌을 무시하거나 잘못된 원본 CSR의 서명을 유효하게 취급하지 않는다. 이는 향후 검증 조건이며 실행한 테스트 결과가 아니다.
 
 ## 5. INITIAL과 REKEY validation
 
@@ -92,7 +95,7 @@ TSA 서비스가 production에서 timestamp를 발행하기 전에는 다음을 
 |---|---|---|
 | `01` | OpenAPI/JSON Schema, strict parse/idempotency/state contract | project API production blocker |
 | `02` | TSU slot request/response와 server-owned identifier | 해당 project API 기능 blocker |
-| `03` | authoritative TSA Subject 전달/canonicalization | CSR/profile interoperability blocker |
+| `03` | TSA 식별정보 출처·요청자 권한 결속, CSR Subject 차이 처리와 최종 Subject 구성 | CA business-practices/interoperability 결정; CSR과 등록 DN의 공통 exact-match 의무가 아님 |
 | `04` | custom Compound Attestation schema | **optional attested profile만** blocker |
 | `05` | trusted-time/activation Evidence field | enrollment blocker 아님; 선택적 attestation/telemetry 또는 runtime 설계 항목 |
 | `06` | production attestation provider/trust bundle | **optional attested profile만** blocker |
@@ -122,6 +125,7 @@ TSA 서비스가 production에서 timestamp를 발행하기 전에는 다음을 
 | timestamp-only/single-active | C2PA CP `:915-927` | TSA runtime/운영 요구 |
 | On-Device TEE/app/key | C2PA CP `:933-939` | runtime/implementation 요구 |
 | TSA Leaf profile | C2PA CP `:1334` 이후 및 공식 TSA schemas | certificate/CSR profile |
+| Subject 식별·불일치 처리 | CP `:471-473,517,1542-1556`; TSA CSR `:692-740`, 최종 Subject CP `:1347` | 원문은 CSR Subject 입력 위치·등록 DN 불일치 시 단일 처리 방식을 고정하지 않음. 선택한 CA 절차로 대상·권한·정확성을 확인 |
 | timestamp protocol | RFC 3161 및 C2PA Content Credentials | runtime request/token/validation; Leaf enrollment wire 아님 |
 
 ## 8. Source-negative 확인
