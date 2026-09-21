@@ -11,6 +11,9 @@ Global과 CN이 공유하는 플랫폼 Root를 운영하고, C2PA를 첫 적용 
 | [Root Key Management System 설계 시작 가이드](design-start-guide.md) | 9개 설계 항목과 산출물·완료 기준·상태, 구체적인 작성 원칙과 작성 순서 |
 | [초기 메모](rough_requirements.md) | 사용자가 작성한 원문 |
 | [요구사항과 결정 상태](requirements.md) | 추가 결정, 범위, 보류 및 검증 과제 |
+| [설계 문답 기록](design-dialogue-log.md) | 질문·사용자 답변 원문과 관련 검토·결정 링크 |
+| [설계 검토 기록](reviews/README.md) | 선택지, 비교 전제·근거, 판단 과정과 남은 질문 |
+| [확정된 설계 결정](decisions/README.md) | 기존 확정 사항 색인과 새로 확정한 선택·이유·조건·반영 위치 |
 | [운영 모델](operating-model.md) | CA 계층, Global/CN 흐름, TSA 인계, OCSP, 수명주기·복구 |
 | [C2PA 요구사항 대응표](c2pa-requirements-matrix.md) | 근거 조항, 설계 반영 위치, 구현·인계 증빙과 해석 미확인 항목 |
 | [2인 통제 대안](dual-control-options.md) | 세 가지 방식, 권고안, 우회 경로와 검증 기준 |
