@@ -6,30 +6,37 @@
 
 ## 1. CA 계층과 신뢰 경계
 
+[확정 요구사항](requirements.md)에 따라 **공용 First ICA 하나를 중앙에서 운영한다.** 중앙 운영팀이 있다면 그 팀이 개인키 관리와 하위 ICA 발급 운영을 맡는다. C2PA Trust List에 등록할 인증서를 하나로 유지하는 것이 주된 이유다.
+
 ```mermaid
 flowchart TD
-  R["Platform Root G0 · pathLen 2 · Global CloudHSM"]
-  C["Claim First ICA · pathLen 1 · C2PA Trust List 등록 대상"]
-  T["TSA First ICA · pathLen 1 · TSA Trust List 등록 대상"]
-  PC["Phone Claim Issuing ICA · pathLen 0"]
-  VC["TV Claim Issuing ICA · pathLen 0"]
-  PT["Phone TSA Issuing ICA · pathLen 0"]
-  VT["TV TSA Issuing ICA · pathLen 0"]
-  R --> C
-  R --> T
-  C --> PC
-  C --> VC
-  T --> PT
-  T --> VT
-  PC --> PL["Phone claim-signing leaf"]
-  VC --> VL["TV claim-signing leaf"]
-  PT --> PTL["Phone on-device TSU leaf"]
-  VT --> VTL["TV server 또는 on-device TSU leaf"]
+  R["Platform Root G0 · Global CloudHSM"] --> F["공용 First ICA 1개 · 중앙 운영 · C2PA Trust List 등록 대상"]
+  F --> I1["하위 Issuing ICA 1"]
+  F --> I2["하위 Issuing ICA 2"]
+  I1 --> L1["최종 인증서"]
+  I2 --> L2["최종 인증서"]
 ```
 
-Root/First의 키와 인증서를 구분해 식별하고, 같은 키를 Claim·TSA·OCSP·업데이트 서명에 겸용하지 않는다. Root G0의 Global/CN 공유는 중앙에 보관된 같은 발급 권한을 사용한다는 뜻이다. 지역별 하위 CA가 필요하면 같은 계층에서 병렬로 추가한다. pathLen=0 아래에 CA를 한 단계 더 추가하지 않는다.
+하위 ICA의 개수·용도·부서별 배치는 미정이다. pathLen 설계는 Root=2, First=1, Issuing=0이다. 하위 Issuing ICA는 이번 생성·감사 범위 밖이지만 관리 대상으로 유지한다.
 
-Claim 계층의 pathLen은 [CP]의 Root/First Intermediate/Claim Signing Issuing CA 프로파일과 맞춘다. TSA 계층은 사용자 요구를 반영한 제안이며, [TSA-PROFILE]의 Issuer Name 문구와 AKI 설명 사이 차이는 V02로 남긴다. 이는 서명 체인이 암호학적으로 구성된다는 사실만으로 공식 적합성까지 확정하지 않기 위함이다.
+단말은 C2PA Trust List에 등록된 인증서를 신뢰한다. 단말별 부서 허용 정책을 별도 요구하지 않는다. 중앙은 발급 요청자의 권한을 관리하며 구체적인 승인 역할과 담당자는 이후 지정한다.
+
+Root/First와 하위 서명 키는 용도에 따라 구분한다. Root G0의 Global/CN 공유는 중앙에 보관된 같은 발급 권한을 사용한다는 뜻이다. [TSA-PROFILE]의 Issuer Name과 AKI 해석(V02), Claim·TSA별 신뢰 목록 적용 조건은 아래 하위 ICA 설계에서 확인한다.
+
+<a id="subordinate-scope"></a>
+
+### 하위 ICA의 용도와 남은 설계
+
+| 대상 | 설계·인계할 내용 |
+|---|---|
+| Claim Issuing ICA | 부서·플랫폼별 배치, 전용 키와 pathLen=0 프로파일, leaf 발급 조직·요청 자격·증빙 |
+| TSA Issuing ICA | Claim과 별개의 발급 키·TSA 프로파일, First 아래 발급 가능 여부와 issuer/AKI 해석, TSA 운영 조직 |
+| 공통 관리 | 운영 조직·담당자·정책·키/인증서 식별·상위 관계·상태·준수 증거·미해결 과제 |
+| 요청·인계 | CSR 접수·권한 확인·승인·발급·수락, 폐지·OCSP·사고 통보·교체·종료 책임 |
+
+C2PA 서명자와 TSA의 신뢰 목록은 별도다. 공용 First 하나를 사용한다는 구성 결정만으로 양쪽 목록에 같은 인증서를 등록할 수 있다고 확정하지 않는다. 용도별 프로파일·등록 조건을 확인하고 충돌이 있으면 근거에 따라 구조를 재검토한다. [Spec 2.4 §14.4](../specifications/build/site/specifications/2.4/specs/C2PA_Specification.html#_trust_lists)
+
+First의 하위 CA 발급이 중단되면 새로운 Issuing ICA 발급·교체에 영향이 있다. 기존 Issuing ICA의 일상 leaf 발급은 별도이며, First 침해·폐지·신뢰 제거의 영향은 실제 검증 경로로 판단한다. 하위 개인키의 생성·보관 책임은 하위 운영 조직과 정한다.
 
 ### Root의 C2PA 적용 범위
 
@@ -79,8 +86,8 @@ Root 인증서의 pathLen 값만 믿고 모든 검증기에서 동일하게 제�
 
 | 상태를 응답할 인증서 | 응답자 인증서를 직접 발급할 CA | 응답자 키 운영 |
 |---|---|---|
-| Claim/TSA First ICA 인증서 | Platform Root G0 | 중앙 OCSP 서비스의 G0 전용 키 |
-| Phone/TV Issuing ICA 인증서 | 해당 Claim/TSA First ICA | 중앙 OCSP 서비스의 First별 키 |
+| 공용 First ICA 인증서 | Platform Root G0 | 중앙 OCSP 서비스의 G0 전용 키 |
+| 하위 Issuing ICA 인증서 | 공용 First ICA | 중앙 OCSP 서비스의 First 전용 키 |
 | Claim-signing leaf | 해당 플랫폼 Claim Issuing ICA | 플랫폼 또는 위탁 OCSP 서비스의 해당 CA 전용 키 |
 | TSU leaf | 해당 플랫폼 TSA Issuing ICA | 플랫폼 또는 위탁 OCSP 서비스의 해당 CA 전용 키 |
 
@@ -137,7 +144,7 @@ TSU leaf의 발급·폐지·OCSP·보존 조건도 인계 항목이다. 위 표�
 | 작업 | 통제 및 결과 |
 |---|---|
 | 정책/프로파일 변경 | 정책 승인자 2인 검토, 버전·변경 이유 기록, 다음 발급부터 명시 적용 |
-| Root/First 생성 | 사전 승인된 ceremony script, HSM 내 생성, 지문·속성·quorum 확인. CP의 독립 입회 또는 기록과 별도로 Trust List 등록 대상에는 Program의 독립 입회·서명된 script 증빙을 준비 |
+| Root/First 생성 | [Key Ceremony](key-ceremony.md)의 생성 전 확인·다인 통제·입회·발급·검증·인계 절차 적용 |
 | ICA/응답자 인증서 발급 | 요청자 → 프로파일 검사 → 2인 승인·실행 통제 → 서명 검증 → 원장 확정·전달 |
 | 사용자/권한/quorum 변경 | 키 사용자와 HSM 관리자 역할 구분, 통제 완화 자체에 다인 승인 적용 |
 | 백업·복구 | 암호화된 HSM 지원 백업, 원장·프로파일·권한 정책·로그 함께 보존, 원본과 같은 다인 통제, off-site 사본, 공식 계획의 연 1회 검토, 복구 후 quorum·공유 사용자·키 지문 검증 |

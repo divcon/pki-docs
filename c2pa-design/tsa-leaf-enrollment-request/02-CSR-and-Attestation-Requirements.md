@@ -6,7 +6,7 @@
 |---|---|---|
 | key-pair ownership | `C2PA-REQUIRED` | CA가 발급 대상 key pair 소유를 확인해야 함 |
 | PKCS#10 CSR | `ARCH-DECISION` | CP가 든 소유 확인 방법의 한 예. 이 architecture의 기본 방법 |
-| TSA CSR/certificate profile | `C2PA-REQUIRED` | 공식 TSA Leaf profile과 schema 준수 |
+| 최종 TSA certificate profile | `C2PA-REQUIRED` | 공식 TSA Leaf 인증서 profile 준수. CSR schema는 참고용 |
 | On-Device TSA TEE/키/용도/active-key 상태 | `C2PA-REQUIRED` runtime/implementation | 제품·서비스가 실제 운영에서 만족해야 함 |
 | per-enrollment Compound Evidence | 기본 `NOT REQUIRED` | C2PA TSA enrollment wire로 정의되지 않음 |
 | custom attestation | `OPTIONAL CPS EXTENSION` | CA가 별도 profile로 채택한 경우에만 해당 transaction에서 필수 |
@@ -30,15 +30,15 @@ CertificationRequest ::= SEQUENCE {
 - trailing bytes, BER-only encoding, duplicate/unknown 구조를 허용하지 않는 strict DER
 - `CertificationRequestInfo` 원본 DER에 대한 CSR signature
 - 허용된 RSA/ECDSA algorithm, key size/curve 및 parameter 규칙
-- CSR Subject의 ASN.1 Name 구조와 공식 schema의 C/O/CN 포함 조건; 서비스 식별·Subject 불일치 처리는 §2.1에서 별도 판단
-- 공식 `tsaLeaf.csr.schema.json`에 부합하는 requested extension
+- CSR Subject의 ASN.1 Name 구조와 프로젝트 입력 정책인 C/O/CN 포함 조건; 서비스 식별·Subject 불일치 처리는 §2.1에서 별도 판단
+- CSR 요청 확장은 사용하지 않으며 프로파일 검사를 생략([공통 정책](../02-Certificate-Enrollment.md#csr-extension-policy))
 - `K_tsu` 공개키 재사용 금지 등 project lifecycle policy
 
 CSR signature 검증은 C2PA가 요구하는 key ownership 확인을 구현하는 방법이다. CP 473은 signed CSR 외에 KMS configuration inspection도 예로 들므로, “PKCS#10 자체가 C2PA에서 유일하게 필수”라고 표기하지 않는다.
 
 ### 2.1 Subject
 
-공식 TSA CSR schema는 Subject의 구조와 `C`, `O`, `CN` 포함을 요구한다(`tsaLeaf.csr.schema.json:692-740`). 최종 TSA Leaf Subject는 해당 TSA service를 식별하는 unique name이며 C/O/CN을 포함한다(CP:1347). 최종 Subject 조건과 원본 CSR의 등록 DN 일치 조건을 동일하게 취급하지 않는다.
+참고용 TSA CSR schema는 Subject의 구조와 `C`, `O`, `CN` 포함을 검사한다(`tsaLeaf.csr.schema.json:692-740`). 이 문서는 C/O/CN을 기존 프로젝트 입력 정책으로 유지하며 C2PA 공통 CSR 의무로 분류하지 않는다. 최종 TSA Leaf Subject는 해당 TSA service를 식별하는 unique name이며 C/O/CN을 포함한다(CP:1347). 최종 Subject 조건과 원본 CSR의 등록 DN 일치 조건을 동일하게 취급하지 않는다.
 
 CP:517은 TSA 발급에 CA business practices의 identification/authentication/verification 절차를 요구한다. CPL은 Generator Product의 기준이며 TSA 서비스 DN을 대조하는 목록이 아니다. CA는 CSR Subject, 별도 신청정보의 서비스 식별자 또는 인증 계정에 연결된 등록정보로 대상을 식별하도록 절차를 정할 수 있다. 이들은 가능한 설계 예시이며 C2PA가 지정한 wire field가 아니다.
 
@@ -46,7 +46,7 @@ CP:517은 TSA 발급에 CA business practices의 identification/authentication/v
 - **인증:** 등록된 신청자가 실제로 요청하는지 secure credential로 확인한다. Subject 문자열은 인증수단이 아니다.
 - **검증:** 해당 TSA를 위한 발급 권한, 발급 대상 키 소유와 인증서에 넣을 정보의 정확성을 확인한다. CSR signature/PoP는 key ownership을 확인하는 방법이며 운영기관·서비스의 신원을 대신 증명하지 않는다(CP:471-473,1542-1556).
 
-CSR C/O/CN 누락·구조 부적합은 CSR profile 실패다. 등록 TSA DN과 다른 문자열이 들어왔다는 사실만으로 모든 요청을 자동 거부하거나 수락하지 않는다. CA의 문서화된 절차가 거부·보완 요청·독립적으로 검증된 식별정보 사용을 정한다. CSR Subject로 식별하는데 대상이 확인되지 않으면 보완 전에는 발급하지 않는다. 별도 정보로 대상을 확인한 경우에도 요청의 정확성·권한·키와의 관계 및 Subject 불일치 처리 근거를 확인·기록한다. 확인되지 않은 서비스에 임의의 Subject를 붙여 승인하는 절차가 아니다.
+CSR C/O/CN 누락은 프로젝트 입력 정책 실패이고 구조 부적합은 ASN.1 검사 실패다. 등록 TSA DN과 다른 문자열이 들어왔다는 사실만으로 모든 요청을 자동 거부하거나 수락하지 않는다. CA의 문서화된 절차가 거부·보완 요청·독립적으로 검증된 식별정보 사용을 정한다. CSR Subject로 식별하는데 대상이 확인되지 않으면 보완 전에는 발급하지 않는다. 별도 정보로 대상을 확인한 경우에도 요청의 정확성·권한·키와의 관계 및 Subject 불일치 처리 근거를 확인·기록한다. 확인되지 않은 서비스에 임의의 Subject를 붙여 승인하는 절차가 아니다.
 
 원본 CSR의 서명 bytes는 변경하지 않는다. CSR 변경이 필요하면 신청자가 다시 서명한다. 최종 Subject는 확인된 TSA 서비스와 인증서 profile에 따라 구성한다. [01의 서비스 ID 기반 API](01-Enrollment-Request-Contract.md)는 이 식별 방식의 한 예이며, 원문이 CSR Subject의 일괄 무시·덮어쓰기를 명시적으로 허용했다고 해석하지 않는다.
 
@@ -58,24 +58,26 @@ CSR C/O/CN 누락·구조 부적합은 CSR profile 실패다. 등록 TSA DN과 �
 - EC `id-ecPublicKey`, P-256/P-384/P-521
 - EdDSA 제외
 
-구체 signature AlgorithmIdentifier/parameter 조합은 RFC와 공식 decoded-output schema에 맞게 strict allow-list로 고정한다.
+구체 signature AlgorithmIdentifier/parameter 조합은 RFC와 최종 인증서 profile에 맞게 strict allow-list로 고정한다.
 
 ### 2.3 Requested extensions
 
-이 프로젝트의 TSA leaf PKCS#10 CSR은 `CertificationRequestInfo.attributes`의 `extensionRequest`에 아래 네 확장을 반드시 포함해야 한다. 이는 [공식 TSA leaf CSR profile](../../conformance-public/docs/v0.2/cert-profiles/tsaLeaf.csr.schema.json)의 요구사항이며, 표는 디코딩한 확장값을 나타낸다.
+**CSR의 모든 요청 확장을 사용하지 않는다.** `extensionRequest`와 개별 확장은 없어도 수락하며, 제출된 BC·KU·EKU·policy·AL/CPL·AIA/CDP 등의 존재·값·criticality에 대한 프로파일 검사는 생략한다. unknown critical 요청도 최종 인증서에 복사하지 않는다. 구조·PoP·SPKI·Subject 입력 정책은 §2 및 [공통 parser 정책](../02-Certificate-Enrollment.md#73-csr-parser-최소-검증-순서)대로 유지한다.
 
-| 필수 요청 확장 | 요청값 | `critical` |
+공식 `tsaLeaf.csr.schema.json`은 참고용이며 발급 필수 gate가 아니다. 근거인 사용자 전달 Conformance 회신과 TSA/Claim 유지 검증 비교는 [공통 정책](../02-Certificate-Enrollment.md#csr-extension-policy)에 기록했다. 이 정책은 최종 TSA 인증서나 optional attestation 증거 인증서의 확장 검증을 면제하지 않는다.
+
+아래는 **CA가 생성하는 최종 인증서**의 주요 확장값이다. CSR에 제출할 필수 필드 목록이 아니다.
+
+| 최종 확장 | CA가 생성·검증할 값 | `critical` |
 |---|---|---|
-| Basic Constraints (`2.5.29.19`) | `cA=FALSE` | `TRUE` |
-| Key Usage (`2.5.29.15`) | `digitalSignature`, `contentCommitment` 두 비트만 `TRUE`. 나머지 비트는 모두 `FALSE` | `TRUE` |
-| Extended Key Usage (`2.5.29.37`) | `id-kp-timeStamping` (`1.3.6.1.5.5.7.3.8`) 정확히 하나만 포함 | `TRUE` |
-| Certificate Policies (`2.5.29.32`) | `c2pa-certificate-policy` (`1.3.6.1.4.1.62558.1.1`) 반드시 포함 | `FALSE` |
+| Basic Constraints (`2.5.29.19`) | `cA=FALSE`; `pathLenConstraint` 없음 | `TRUE` |
+| Key Usage (`2.5.29.15`) | `digitalSignature`, `contentCommitment` | `TRUE` |
+| Extended Key Usage (`2.5.29.37`) | `id-kp-timeStamping` (`1.3.6.1.5.5.7.3.8`) 정확히 하나 | `TRUE` |
+| Certificate Policies (`2.5.29.32`) | `c2pa-certificate-policy` (`1.3.6.1.4.1.62558.1.1`) 포함 | `FALSE` |
 
-`contentCommitment`와 `nonRepudiation`은 같은 Key Usage 비트의 이름이다. CA는 인증서 정책에 따라 자신이 관리하는 IANA private arc의 CPS 식별용 policy OID를 추가할 수 있으며, policy qualifier는 선택사항이다. CSR은 C2PA Claim Signing용 AL/CPL 확장을 요청하지 않는다.
+`contentCommitment`와 `nonRepudiation`은 같은 Key Usage 비트다. CA가 관리하는 IANA private arc의 CPS policy OID 추가와 qualifier는 CP가 허용한 범위에서 선택한다. 최종 TSA 인증서에는 Claim Signing용 AL/CPL 확장을 넣지 않는다.
 
-**CSR 작성 방침:** 최종 TSA leaf 인증서의 제약을 반영하여 `pathLenConstraint`는 요청하지 않는다. 공식 CSR 스키마는 이 생략을 검사하지 않는다. 생략의 근거는 [최종 인증서 스키마](../../conformance-public/docs/v0.2/cert-profiles/tsaLeaf.cert.schema.json)와 [RFC 5280 §4.2.1.9](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.9)이다.
-
-CA는 CSR 요청값을 검증한 뒤 server-controlled certificate template를 생성한다. 최종 인증서는 [CP의 TSA leaf profile](../../conformance-public/docs/v0.2/C2PA%20Certificate%20Policy.md#tsa-time-stamp-signing-leaf-certificates)과 공식 인증서 스키마에 부합해야 한다. SKI, AKI, issuer, serial, validity, AIA/CDP와 최종 extension encoding은 CA가 결정·생성한다.
+SKI, AKI, issuer, serial, validity, AIA/CDP와 최종 extension encoding도 CA가 생성한다. 최종 인증서는 [CP의 TSA leaf profile](../../conformance-public/docs/v0.2/C2PA%20Certificate%20Policy.md#tsa-time-stamp-signing-leaf-certificates)과 공식 인증서 스키마에 부합해야 하며, 발급 결과의 CSR SPKI 일치와 서명·체인을 확인한다.
 
 ## 3. TEE·timestamp-only·single-active-key
 
@@ -150,7 +152,7 @@ private key, 불필요한 raw Evidence, 직접 장치 식별자 및 client self-
 - 같은 문서 `:915-939`: TSA runtime/implementation 의무
 - [C2PA Certificate Policy — TSA Time-Stamp Signing Leaf Certificates](../../conformance-public/docs/v0.2/C2PA%20Certificate%20Policy.md#tsa-time-stamp-signing-leaf-certificates), 1334–1385행: 최종 인증서 profile. 1362–1377행은 네 확장의 값·critical 및 추가 정책 OID·qualifier의 선택성
 - 같은 문서 `:1684` 이후: Generator Product AL1/AL2 Dynamic Evidence
-- [TSA leaf CSR schema](../../conformance-public/docs/v0.2/cert-profiles/tsaLeaf.csr.schema.json), 852–1078행: `requestedExtensions`와 네 확장의 필수값·critical, AL/CPL 요청 금지
+- [TSA leaf CSR schema](../../conformance-public/docs/v0.2/cert-profiles/tsaLeaf.csr.schema.json), 852–1078행: 참고용 schema의 `requestedExtensions` 검사 조건. 서버 필수 gate로 적용하지 않음
 - [TSA leaf certificate schema](../../conformance-public/docs/v0.2/cert-profiles/tsaLeaf.cert.schema.json): 최종 인증서의 decoded-output profile. 1077–1113행은 Basic Constraints와 `pathLenConstraint` 제약
 - [RFC 2985 §5.4.2](https://www.rfc-editor.org/rfc/rfc2985.html#section-5.4.2): CSR의 `extensionRequest` 속성
 - [RFC 5280 §4.2.1.9](https://datatracker.ietf.org/doc/html/rfc5280#section-4.2.1.9): `cA=FALSE`인 인증서의 `pathLenConstraint` 금지

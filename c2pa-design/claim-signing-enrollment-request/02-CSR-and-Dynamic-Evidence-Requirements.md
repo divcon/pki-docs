@@ -2,7 +2,7 @@
 
 ## 1. Authority와 용어
 
-이 문서는 Claim Signing만 다룬다. TSA Leaf나 기존 TSA 아키텍처의 Evidence, EKU, lifecycle 또는 runtime 요구를 Claim Signing 근거로 사용하지 않는다.
+이 문서는 Claim Signing만 다룬다. CSR schema는 참고용이며 C2PA 필수 발급 gate가 아니다. 사용자 전달 Conformance 회신과 CSR 확장 미사용 정책은 [공통 문서 §3.3](../02-Certificate-Enrollment.md#csr-extension-policy)에 기록했다. TSA Leaf나 기존 TSA 아키텍처의 Evidence, EKU, lifecycle 또는 runtime 요구를 Claim Signing 근거로 사용하지 않는다.
 
 | 표기 | 의미 |
 |---|---|
@@ -22,37 +22,29 @@ RFC 2986 v1.7의 request는 `CertificationRequestInfo`, signature algorithm과 s
 
 1. canonical base64를 decode하고 exactly one strict DER PKCS#10 object인지 확인한다.
 2. `CertificationRequestInfo.version == 0`인지 확인한다.
-3. Subject의 구조·C/O/CN, SPKI와 extensionRequest를 AL별 official schema로 확인한다. 제품 식별과 CSR Subject 불일치 처리는 §3.1.1에 따라 별도로 판단하고 요청 extension을 확인된 profile/record와 대조한다.
+3. Subject 구조·프로젝트 C/O/CN 입력 정책과 최종 인증서 profile의 SPKI 조건을 확인한다. `extensionRequest`는 없어도 수락하고 제출된 요청 확장은 전부 사용하지 않는다. 제품 식별과 CSR Subject 불일치 처리는 §3.1.1에 따라 별도로 판단한다.
 4. outer signature algorithm/parameters가 `OD-ALG-01`의 승인값인지 확인한다.
 5. CSR SPKI로 exact `CertificationRequestInfo` signature를 cryptographically verify한다. 이것이 PoP다.
 6. CSR에 requested value가 있어도 최종 TBS certificate는 server-authoritative template로 다시 만든다.
 
 Schema parser가 `signature_hex` field를 출력하거나 JSON Schema validation이 성공했다는 사실은 signature의 cryptographic validity를 증명하지 않는다. 반대로 AL2 attestation이 key possession/property를 주장해도 RFC 2986 PoP를 생략하지 않는다(CP:471-473).
 
-## 3. AL1/AL2 CSR profile
+## 3. AL1/AL2 CSR 입력 정책과 참고용 schema
 
-AL1과 AL2 CSR schema는 title/definition name과 requested `c2pa-al` value 외에는 byte-level diff상 동일하다. AL1은 `.3.10`, AL2는 `.3.20`이다(AL1 CSR:1090-1133; AL2 CSR:1090-1133).
+참고용 AL1·AL2 CSR schema는 requested `c2pa-al`에 각각 `.3.10`, `.3.20`을 검사한다(AL1 CSR:1090-1133; AL2 CSR:1090-1133). 이 검사는 발급 조건에서 제외한다. 발급할 AL과 CPL ID는 요청된 프로파일과 검증된 제품 자격·증거를 근거로 CA가 결정한다.
 
 ### 3.1 공통 CSR predicate
 
 | field | cardinality / predicate | authority · modality | locator |
 |---|---|---|---|
 | `version` | exactly `0` | `RFC`, required syntax | RFC 2986 §4.1 |
-| Subject | ASN.1 Name 구조와 C/O/CN 포함 조건. CSR DN과 CPL DN의 불일치는 §3.1.1의 대상 식별·CA 절차로 판단 | C/O/CN은 공식 CSR schema 요구; 모든 CSR에 CPL DN exact-match를 요구하는 원문 조건은 확인되지 않음 | AL1 CSR/AL2 CSR:692-740; 제품 식별 CP:461-503; 최종 Subject CP:383-395 |
+| Subject | ASN.1 Name 구조와 C/O/CN 포함 조건. CSR DN과 CPL DN의 불일치는 §3.1.1의 대상 식별·CA 절차로 판단 | C/O/CN은 참고용 schema를 바탕으로 유지하는 `PROJECT` 입력 정책; 모든 CSR에 CPL DN exact-match를 요구하는 원문 조건은 확인되지 않음 | AL1 CSR/AL2 CSR:692-740; 제품 식별 CP:461-503; 최종 Subject CP:383-395 |
 | SPKI RSA | `rsaEncryption`, modulus ≥2048 | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:798-823; CP:1218-1222,1283-1287 |
 | SPKI EC | `id-ecPublicKey`, P-256/P-384/P-521 | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:758-795; CP:1218-1222,1283-1287 |
 | SPKI EdDSA | Ed25519 only | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:825-866; CP:1218-1222,1283-1287 |
-| Basic Constraints request | present, critical, `cA=false` | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:881-919 |
-| Key Usage request | present, critical; exactly `digitalSignature=true`, `contentCommitment=true`, all other represented bits false | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:920-984 |
-| EKU request | present, non-critical; `c2pa-kp-claimSigning` plus at least one of emailProtection or documentSigning | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:985-1049 |
-| Certificate Policies request | present, non-critical; includes `1.3.6.1.4.1.62558.1.1` | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:1050-1091 |
-| C2PA AL request | present, non-critical; profile-specific OID value | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:1092-1134 |
-| CPL Record request | present, non-critical; DER UTF8String length 36 and exact authoritative UUID | `C2PA REQUIRED` | AL1 CSR/AL2 CSR:1135-1179; MIB:46-48 |
-| AIA if requested | non-critical; access location HTTP URI under schema | `C2PA REQUIRED when present` | AL1 CSR/AL2 CSR:1188-1257 |
-| CDP if requested | non-critical; fullName HTTP URI under schema | `C2PA REQUIRED when present` | AL1 CSR/AL2 CSR:1258-1336 |
 | outer CSR signature | cryptographically valid; allow-list/parameters from approved policy | `RFC` PoP + `PROJECT/CA-CPS` algorithm choice | RFC 2986 §4.2; CP:473 |
 
-“contains” 기반 official schema가 extra Subject RDN, duplicate extension 또는 unrecognized extension을 모두 배제한다고 가정하지 않는다. Subject의 추가 RDN·등록값 불일치는 아래 절차로 판단하며, required-extension uniqueness와 `OD-ALG-01`의 unknown attribute/extension policy는 별도로 적용한다.
+CSR 확장의 존재·값·criticality·프로파일 일치는 검사하지 않는다. Subject의 추가 RDN·등록값 불일치는 아래 절차로 판단한다. strict DER·attribute 외부 구조·중복/모호성 검사는 프로젝트 parser 정책으로 유지하며, unknown critical 확장도 의미 검사나 최종 인증서 복사에 사용하지 않는다.
 
 <a id="csr-subject-identification"></a>
 
@@ -62,13 +54,13 @@ CA는 발급 전에 신청 제품의 CPL record·DN·적합성과 신청자의 �
 
 CP는 제품 식별정보를 반드시 `CSR.subject`에서 읽도록 정하지 않는다. CSR Subject, 별도 신청정보 또는 인증된 계정의 등록정보를 사용하는 것은 가능한 CA 절차의 선택이다. 현재 [요청 body](01-Enrollment-Request-Body.md)의 `cplRecordId`는 제품 레코드 조회를 위한 프로젝트 입력이며, 그 값 자체가 권한을 증명하지 않는다. CA는 레코드를 인증된 Subscriber·GP instance·현재 요청과 결속하고 DN을 확인한다. CSR-only 조회나 다른 wrapper를 채택하더라도 제품/CPL record 정보 제공 및 신원·적합성 검증은 유지해야 한다.
 
-CSR의 C/O/CN 누락·구조 부적합은 CSR profile 실패다. 반면 등록 DN과의 문자열 불일치, CPL에 없는 추가 RDN 또는 CSR OU의 차이만으로 모든 요청을 자동 거부하도록 일반화하지 않는다. CA는 문서화한 절차에 따라 거부·보완 요청·독립적으로 검증된 식별정보 사용을 정한다. CSR Subject를 식별에 사용하는데 대상이 확인되지 않으면 보완 전에는 발급하지 않는다. 별도 정보로 대상을 확인한 경우에도 제출정보의 정확성과 불일치 처리 근거를 확인·기록하며, 다른 제품의 신원·권한으로 바꾸어 통과시키지 않는다(CP:501-503,1542-1556,1568-1570).
+CSR의 C/O/CN 누락은 프로젝트 입력 정책 실패이고 구조 부적합은 ASN.1 검사 실패다. 반면 등록 DN과의 문자열 불일치, CPL에 없는 추가 RDN 또는 CSR OU의 차이만으로 모든 요청을 자동 거부하도록 일반화하지 않는다. CA는 문서화한 절차에 따라 거부·보완 요청·독립적으로 검증된 식별정보 사용을 정한다. CSR Subject를 식별에 사용하는데 대상이 확인되지 않으면 보완 전에는 발급하지 않는다. 별도 정보로 대상을 확인한 경우에도 제출정보의 정확성과 불일치 처리 근거를 확인·기록하며, 다른 제품의 신원·권한으로 바꾸어 통과시키지 않는다(CP:501-503,1542-1556,1568-1570).
 
 최종 인증서 DN은 해당 CPL DN·ASCII·개별 instance 식별 금지 조건을 만족해야 한다(CP:387-399,1217,1282). 이 조건을 모든 원본 CSR의 exact-match 검사로 옮기지 않는다. 원본 CSR의 서명 bytes와 PoP 검증 결과를 보존하고, CSR 변경이 필요하면 새로 서명한 요청을 받는다. 최종 Subject 구성은 검증된 정보에 근거하며, 원문이 잘못된 CSR Subject의 일괄 무시·덮어쓰기를 명시적으로 허용했다고 주장하지 않는다.
 
 ### 3.2 Profile 차이
 
-| profile | requested AL extension value | max final validity | Dynamic Evidence |
+| profile | CA가 생성할 최종 AL extension value | max final validity | Dynamic Evidence |
 |---|---|---:|---|
 | `c2pa-claim-signing-al1` | `1.3.6.1.4.1.62558.3.10` | 366 days | secure instance credential authentication; provider artifact count `NOT-SPECIFIED`, project `evidenceItems=0` |
 | `c2pa-claim-signing-al2` | `1.3.6.1.4.1.62558.3.20` | 90 days | O.1~O.4 hardware-backed semantic coverage required |
@@ -79,31 +71,20 @@ CSR의 C/O/CN 누락·구조 부적합은 CSR profile 실패다. 반면 등록 D
 
 ### 3.3 CSR DER 입력 필드와 확장 식별자
 
-`requestedExtensions`, `_pyasn1_decoded`, `signature_hex`, JSON의 `format=csr`는 official inspector/schema의 **decoded projection** 이름이지 PKCS#10 DER 필드나 client body의 추가 JSON field가 아니다. Client는 01의 `csr.value`에 DER를 담는다. 서버는 실제 ASN.1을 검증하고 필요하면 그 결과를 official schema의 projection으로 변환한다.
+`requestedExtensions`, `_pyasn1_decoded`, `signature_hex`, JSON의 `format=csr`는 참고용 inspector/schema의 decoded projection 이름이며 PKCS#10 DER 필드가 아니다. Client는 01의 `csr.value`에 DER를 담는다. 서버는 실제 ASN.1과 서명을 검증하며 공식 CSR schema 통과를 요구하지 않는다.
 
-| 실제 ASN.1 경로 | 타입 / 필수 값·개수 | 근거 |
+| 실제 ASN.1 경로 | 서버 입력 검사 | 근거 |
 |---|---|---|
-| `CertificationRequest` | `SEQUENCE`의 세 필수 member: `certificationRequestInfo`, `signatureAlgorithm`, `signature` | RFC 2986 §4.2 |
-| `certificationRequestInfo` | `SEQUENCE`: `version INTEGER = 0`, `subject Name`, `subjectPKInfo SubjectPublicKeyInfo`, `attributes [0] IMPLICIT SET OF Attribute`가 순서대로 존재 | RFC 2986 §4.1, Appendix A |
-| `subject` | C `2.5.4.6`, O `2.5.4.10`, CN `2.5.4.3` 필수. ASN.1 Name/RDN 구조를 파싱한다. CSR OU `2.5.4.11`의 CPL 일치는 공통 입력 필수조건으로 추가하지 않으며, DN 차이는 §3.1.1에 따라 처리 | CSR:692-740; RFC 2986 §4.1; 최종 certificate DN은 CP:387-395 |
-| `attributes`의 `extensionRequest` | Attribute type OID `1.2.840.113549.1.9.14`; `values SET OF` 안에 **정확히 한 `Extensions` 값**. 이 profile에서는 해당 attribute도 정확히 한 개 요구 | value 단일성 RFC 2985 §5.4.2, Appendix A; attribute 존재/중복 거부는 CSR profile + `PROJECT` |
-| 각 requested `Extension` | `SEQUENCE { extnID OBJECT IDENTIFIER, critical BOOLEAN DEFAULT FALSE, extnValue OCTET STRING }`; `extnValue` 내용은 아래 inner type의 DER 한 개 | RFC 5280 §4.1, §4.2; RFC 2985 §5.4.2 |
-| `signatureAlgorithm`, `signature` | 각각 `AlgorithmIdentifier`, `BIT STRING`; 승인된 outer signature OID/parameters로 exact DER 정보부의 signature 검증. SPKI OID를 outer signature OID로 대신 사용하지 않음 | RFC 2986 §4.2; `OD-ALG-01` |
+| `CertificationRequest` | `SEQUENCE`의 `certificationRequestInfo`, `signatureAlgorithm`, `signature` | RFC 2986 §4.2 |
+| `certificationRequestInfo` | version 0, Subject Name, SPKI, `attributes [0] IMPLICIT SET OF Attribute`의 구조·순서 | RFC 2986 §4.1, Appendix A |
+| `subject` | ASN.1 Name/RDN 구조. C `2.5.4.6`, O `2.5.4.10`, CN `2.5.4.3` 포함은 기존 프로젝트 입력 정책으로 유지. DN 차이는 §3.1.1 적용 | RFC 2986 §4.1; `PROJECT` |
+| `attributes`의 `extensionRequest` | OID `1.2.840.113549.1.9.14`. 존재는 선택이며 없으면 확장 검사 없이 진행. 있으면 단일 `Extensions` attribute value의 외부 구조와 중복/모호성에 대한 parser 정책 유지 | RFC 2985 §5.4.2, Appendix A; `PROJECT` parser 정책 |
+| 각 requested `Extension` | 외부 `SEQUENCE { extnID OBJECT IDENTIFIER, critical BOOLEAN DEFAULT FALSE, extnValue OCTET STRING }` 구조만 처리. 사용하지 않는 내부 값의 타입·프로파일 적합성은 검사하지 않음 | RFC 2985 §5.4.2; [공통 정책](../02-Certificate-Enrollment.md#csr-extension-policy) |
+| `signatureAlgorithm`, `signature` | `AlgorithmIdentifier`, `BIT STRING`; 승인된 OID/parameters와 CSR SPKI로 원본 DER 정보부 전체의 서명을 검증 | RFC 2986 §4.2; `OD-ALG-01` |
 
-아래 첫 여섯 확장은 **AL1/AL2 모두 필수**이며 각각 정확히 한 개 요구한다. Extension 중복 거부는 project 강화다. 고정 CP/CSR schema의 요구값과 DER 문법을 함께 표시하되, 추가 EKU/policy/미인식 확장의 수락 여부는 `OD-ALG-01`에서 제한한다. `critical=false`는 DER에서 DEFAULT이므로 해당 member를 **생략**한다. Decoded projection에는 schema가 요구하는 boolean `false`를 생성한다. 마찬가지로 `BasicConstraints.cA=false`의 DEFAULT도 DER에서는 생략할 수 있는 것이 아니라 DER 규칙에 따라 생략하며, decoded 의미는 false다.
+BC, KU, EKU, Certificate Policies, AL, CPL ID, AIA/CDP를 포함한 **모든 CSR 요청 확장은 사용하지 않는다.** 따라서 누락·다른 AL/CPL ID·다른 EKU·unknown critical 확장·요청 URI만으로 프로파일 실패를 선언하지 않는다. 요청값을 무시하더라도 원본 CSR 서명 bytes는 보존한다.
 
-| 요청 확장 | `extnID` | critical | `extnValue` 안의 DER 타입과 필수 값 | 고정 원문 |
-|---|---|---|---|---|
-| Basic Constraints | `2.5.29.19` | `true` | `BasicConstraints SEQUENCE`, `cA=false` 의미. `pathLenConstraint`는 CA가 아닌 최종 cert에 금지되므로 CSR에서도 거부(`PROJECT` 선검사) | CSR:881-919; RFC 5280 §4.2.1.9 |
-| Key Usage | `2.5.29.15` | `true` | `BIT STRING`: bit 0 `digitalSignature`와 bit 1 `contentCommitment/nonRepudiation`만 true; bits 2..8 false. DER named-bit-list의 trailing zero bits를 임의 고정 길이로 요구하지 않음 | CSR:920-984; RFC 5280 §4.2.1.3 |
-| Extended Key Usage | `2.5.29.37` | `false` | `SEQUENCE OF OBJECT IDENTIFIER`: `1.3.6.1.4.1.62558.2.1`을 포함하고, `1.3.6.1.5.5.7.3.4` 또는 `1.2.840.113583.1.1.5` 중 최소 하나를 포함 | CSR:985-1049; MIB:34-37; RFC 5280 §4.2.1.12 |
-| Certificate Policies | `2.5.29.32` | `false` | `SEQUENCE OF PolicyInformation`; 적어도 하나의 `policyIdentifier OBJECT IDENTIFIER = 1.3.6.1.4.1.62558.1.1` | CSR:1050-1091; RFC 5280 §4.2.1.4 |
-| C2PA AL | `1.3.6.1.4.1.62558.3` | `false` | **OBJECT IDENTIFIER** 값: AL1 `1.3.6.1.4.1.62558.3.10`, AL2 `1.3.6.1.4.1.62558.3.20`. 문자열이나 INTEGER 1/2가 아님 | CSR:1092-1134; MIB:39-44 |
-| CPL Record | `1.3.6.1.4.1.62558.4` | `false` | **UTF8String**, 길이 36의 authoritative CPL UUID와 exact match; body `cplRecordId`와 동일 record | CSR:1135-1179; MIB:46-48 |
-| AIA — CSR에서는 선택 | `1.3.6.1.5.5.7.1.1` | `false` | `SEQUENCE OF AccessDescription`; 각 항목에 `accessMethod OBJECT IDENTIFIER`와 `accessLocation GeneralName` 필수. 이 CSR schema는 URI 선택의 값이 `^http://.+`와 일치하도록 요구 | CSR:1188-1257; RFC 5280 §4.2.2.1 |
-| CDP — CSR에서는 선택 | `2.5.29.31` | `false` | `SEQUENCE OF DistributionPoint`; schema가 요구하는 `distributionPoint.fullName`의 URI가 `^http://.+`와 일치 | CSR:1258-1336; RFC 5280 §4.2.1.13 |
-
-이 표의 `documentSigning`은 고정 CSR schema가 이름 붙인 **`1.2.840.113583.1.1.5`**다. 라이브러리의 다른 동명 OID로 치환하지 않는다. CSR의 선택 AIA에는 특정 OCSP `accessMethod`를 필수화하지 않는다. 반면 **최종 certificate**는 §4에 따라 OCSP AIA가 필수이며 `id-ad-ocsp=1.3.6.1.5.5.7.48.1`을 사용한다. 권고 `caIssuers`의 OID는 `1.3.6.1.5.5.7.48.2`다. CSR이 요청한 URI를 그대로 최종 certificate에 복사하지 않는다.
+최종 확장의 OID·타입·값·criticality는 §4의 certificate profile로 확인한다. 최종 AL은 허용 AL 및 해당 AL의 증거 검증 결과로, CPL ID는 인증된 제품 레코드로 결정한다. CSR의 AL/CPL 값을 그대로 사용하거나 잘못된 자격·증거를 최종 확장 덮어쓰기로 통과시키지 않는다. AL2 Android attestation 인증서의 확장·키 결속 검증은 §13에 따라 유지한다.
 
 ### 3.4 SPKI 타입·OID와 parameters
 
@@ -113,7 +94,7 @@ CSR의 C/O/CN 누락·구조 부적합은 CSR profile 실패다. 반면 등록 D
 |---|---|---|---|
 | RSA | `1.2.840.113549.1.1.1` (`rsaEncryption`) | **ASN.1 NULL 필수** | DER `RSAPublicKey SEQUENCE { modulus INTEGER, publicExponent INTEGER }`; modulus ≥2048 bits. 이 두 INTEGER를 생략하거나 JSON 값으로 대체하지 않음 |
 | EC | `1.2.840.10045.2.1` (`id-ecPublicKey`) | **namedCurve OBJECT IDENTIFIER 필수**: P-256 `1.2.840.10045.3.1.7`, P-384 `1.3.132.0.34`, P-521 `1.3.132.0.35` | BIT STRING 내용은 EC point bytes이며 OCTET STRING TLV로 한 번 더 감싸지 않음. curve/point/key size가 일치해야 함; RFC는 uncompressed 지원 필수, compressed 선택, hybrid 금지 |
-| Ed25519 | `1.3.101.112` | **absent**; NULL도 거부 | BIT STRING 내용은 public-key byte stream; 다른 EdDSA curve는 이 CSR profile에 없음 |
+| Ed25519 | `1.3.101.112` | **absent**; NULL도 거부 | BIT STRING 내용은 public-key byte stream; 다른 EdDSA curve는 최종 Claim 인증서 profile에 없음 |
 
 근거: AL1/AL2 CSR:758-866; [RFC 3279 §2.3.1](https://www.rfc-editor.org/rfc/rfc3279.html#section-2.3.1), [RFC 5480 §2.1.1·§2.2](https://www.rfc-editor.org/rfc/rfc5480.html#section-2.1.1), [RFC 8410 §3·§4](https://www.rfc-editor.org/rfc/rfc8410.html#section-3). Android key profile의 RSA/EC 및 크기·curve 제한은 §13.2와 추가 교집합을 취한다. RSA exponent의 운영 허용값, CSR signature의 RSA-PSS parameters 등 알고리즘별 상세 allowlist는 `OD-ALG-01` 승인 전 임의 default로 활성화하지 않는다.
 
@@ -267,7 +248,7 @@ Certificate issuance eligibility, X.509 status와 runtime key authorization/acti
 | Subscriber Agreement / terms | CA onboarding | 아니오 | current accepted version/status |
 | signed Notice/CPL record | C2PA/CA registry | record ID만 wire | signature/source/current status, product type, DN, max AL, methods |
 | GPSA/static GSPR evidence | Applicant/Conformance Program | 아니오 | current conformance approval 참조; CA가 raw GPSA를 매 호출 재평가하지 않음 |
-| CSR | GP instance | 예, INITIAL/REKEY마다 | strict DER/profile/PoP/SPKI/new key |
+| CSR | GP instance | 예, INITIAL/REKEY마다 | strict DER/PoP/SPKI/프로젝트 Subject 입력 정책/new key; 요청 확장 프로파일 검사 제외 |
 | AL1 credential authentication | GP instance/CA | transport credential | current request의 instance verdict |
 | AL2 Dynamic Evidence | GP/provider | 예, `1..N_p` | provider trust/freshness/binding와 semantic O.1~O.4 |
 | product runtime controls | GP TOE | 아니오 | Conformance/monitoring/audit; incident/status가 issuance eligibility에 반영 |
@@ -381,7 +362,7 @@ AL1의 Android 가이드는 `No stipulation`이다(CP:1786-1788). 이 절은 AL2
 - 다른 요청·빈 값·만료·재사용 challenge와 기존 attestation의 envelope 재서명을 거부한다. Nonce TTL과 OS/vendor/boot patch age는 별도로 검증한다.
 - 승인된 월 경계의 직전/직후, 일 경계 `0/90/91`일, 미래 날짜·불가능한 날짜를 확인한다. `vendorPatchLevel [718]`을 `bootPatchLevel [719]` 대신 읽지 않는다.
 - Android 필드가 모두 정상이어도 Claim Generator 또는 처리 component coverage·승인 revision·취약점 조치 상태가 불명확하면 O.3/O.4 전체 PASS가 되지 않음을 확인한다.
-- JSON 필수 키 누락/`null`/타입 오류, AL1의 `evidenceItems=null`, Android 빈 chain, 비정규 base64를 거부한다. CSR의 잘못된 extension OID·inner type·criticality, 복수 `extensionRequest` 값, RSA parameters 부재와 Ed25519 NULL parameters를 거부한다.
+- JSON 필수 키 누락/`null`/타입 오류, AL1의 `evidenceItems=null`, Android 빈 chain, 비정규 base64를 거부한다. CSR의 복수 `extensionRequest` attribute value·잘못된 외부 구조, RSA parameters 부재와 Ed25519 NULL parameters는 거부한다. 사용하지 않는 CSR 확장의 OID·내부 값·criticality 프로파일 차이만으로 거부하지 않으며 최종 인증서와 Android 증거 인증서의 확장은 계속 검증한다.
 - KeyDescription 필수 member 누락·잘못된 version/HAL 쌍, 집합을 scalar로 바꾼 purpose/digest/padding, malformed AppId 내부 DER·32-byte가 아닌 signer digest를 거부한다. Version 3 이상 RootOfTrust에서 `verifiedBootHash`가 없으면 reference 비교 정책과 무관하게 거부한다. `uniqueId`의 정상 빈 OCTET STRING을 member 누락과 혼동하지 않는다.
 
 <a id="android-asn1-input"></a>

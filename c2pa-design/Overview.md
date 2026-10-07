@@ -233,7 +233,7 @@ TSA 요청자는 임의 Subscriber가 아니라 해당 CA Applicant의 TSA gover
 2. TSA TA가 TEE 내부에서 K_tsu 생성
 3. TSA TA가 K_tsu로 PKCS#10 CSR 서명하여 이 architecture가 선택한 key ownership 증명 생성
 4. REE가 CSR을 enrollment transaction으로 전달
-5. 서버가 TSA operator/service I/A/V, CSR PoP, TSA CSR/profile과 CA policy 검증
+5. 서버가 TSA operator/service I/A/V, CSR PoP, CSR 기본 입력·SPKI·최종 인증서 profile과 CA policy 검증
 6. TSA Issuing CA가 동일 K_tsu 공개키에 TSA Signing Leaf 발급
 7. TSA TA가 Leaf와 chain을 K_tsu에 연결하여 저장
 ```
@@ -411,7 +411,7 @@ Evidence의 `tsaServiceId`와 `tsuInstanceId`는 enrollment 응답에서 받은 
 3. Claim Evidence-required profile은 승인된 freshness/replay predicate와 request-context binding을 확인하고, challenge-using profile만 expected challenge의 유효성과 미사용 여부를 추가 확인한다. TSA transaction expiry는 §6의 TSA-only 계약으로 확인한다.
 4. 요청 크기, 항목 수, DER/CBOR/COSE 중첩 깊이 제한을 적용한다.
 5. CSR을 strict parser로 해석하고, Evidence-required profile이면 Evidence에도 strict parser를 적용한다. Trailing data, duplicate field 및 비정규 encoding을 거부한다.
-6. 요청 profile에 대응하는 공식 `*.csr.schema.json`으로 CSR Subject 구조·C/O/CN, SPKI algorithm과 `extensionRequest`를 검증한다. CSR DN과 등록 DN의 차이는 대상 식별·권한 검증 및 문서화한 CA 절차로 판단한다. 요청 extension은 존재·값을 검증하지만 최종 인증서에 그대로 복사하지 않는다.
+6. CSR 구조·PoP·SPKI algorithm과 프로젝트 Subject C/O/CN 입력 정책을 검증한다. CSR DN과 등록 DN의 차이는 대상 식별·권한 검증 및 문서화한 CA 절차로 판단한다. CSR 요청 확장은 전부 사용하지 않고 존재·값·criticality 프로파일 검사를 생략하며, CA가 확인된 정보와 template로 최종 확장을 생성한다([공통 정책](02-Certificate-Enrollment.md#csr-extension-policy)).
 7. CSR `CertificationRequestInfo` 서명을 검증하여 Proof of Possession을 확인한다.
 8. Claim Signing 요청이면 signed Notice를 onboarding에 사용한 경우 그 record를 검증하고, 그와 별도로 current public CPL status, Subscriber·DN, Max Assurance Level과 허용 `attestationMethods`를 확인한다. 현재 interim rule에서 Notice alone은 issuance eligibility가 아니다.
 9. AL1은 O.1의 secure enrollment authentication과 CSR PoP를 평가하며 현재 Claim Signing contract에서는 `evidenceItems`를 금지한다. 향후 CA가 AL1 CPS attestation 확장을 채택하려면 현재 AL1 profile에 암묵적으로 추가하지 않고 별도 versioned profile과 Operations Decision 승인을 정의한다.
@@ -471,7 +471,7 @@ TSA Leaf의 EKU나 Key Usage를 Claim Signing 용도와 혼합하지 않는다.
 
 C2PA profile은 TSA service의 unique name과 C/O/CN 존재를 요구하지만 이 프로젝트의 DN canonical encoding까지 정의하지는 않는다. 이 프로젝트는 승인될 CPS/profile에서 RDN 순서를 `C,O,CN`, 각 RDN을 single-valued, DirectoryString을 UTF8String으로 고정한다. 값은 Unicode NFC로 정규화하고 control character와 leading/trailing space를 거부한 뒤 X.501 Name을 DER encoding한다. 그 exact DER byte를 `canonicalTsaSubjectDn`의 비교값으로 사용한다. 서로 다른 `tsaServiceId`는 같은 canonical Subject를 사용할 수 없고 DB global unique constraint로 강제한다. Subject는 TSU가 아니라 TSA service identity이므로 같은 service의 initial/re-key와 여러 TSU certificate는 같은 Subject를 사용하며 요청자 입력으로 바꾸지 않는다.
 
-TSA CSR은 `tsaLeaf.csr.schema.json`, 발급 인증서는 `tsaLeaf.cert.schema.json`으로 검증한다. 공식 CSR profile이 요구하는 Basic Constraints, Key Usage, Extended Key Usage와 Certificate Policies의 `extensionRequest`를 검증하되, CA는 CSR 값을 신뢰해 복사하지 않고 최종 certificate template을 독립적으로 구성한다.
+TSA CSR schema는 참고용이며 필수 gate가 아니다. `extensionRequest`가 없어도 수락하고 모든 요청 확장을 사용하지 않는다. CSR 구조·PoP·SPKI·프로젝트 Subject 입력 정책과 TSA I/A/V는 유지한다. CA는 모든 확장을 직접 생성하고 발급 인증서를 `tsaLeaf.cert.schema.json` 및 CP profile로 검증한다([상세 정책](02-Certificate-Enrollment.md#csr-extension-policy)).
 
 ## 10. 외부 단말 acceptance contract: C2PA 2.4 서명 흐름
 
@@ -758,7 +758,7 @@ Base Claim/TSA 발급은 다음 중 하나라도 발생하면 거부한다.
 
 - 알 수 없거나 권한 없는 Subscriber/TSA operator/service 또는 issuer
 - Claim Signing 요청에서 알 수 없는 CPL record, 잘못된 CPL status 또는 Max Assurance Level 불일치
-- key ownership/CSR 서명 실패, unsupported key 또는 CSR/profile 불일치
+- key ownership/CSR 서명 실패, unsupported key, CSR 기본 입력 정책 실패 또는 최종 인증서 profile 불일치
 - 확인되지 않거나 권한 없는 TSA/TSU identity, 또는 최종 인증서 Subject를 확인된 대상에 결속할 수 없음. CSR Subject의 단순 등록값 불일치는 공통 자동 거부 조건으로 삼지 않고 공통 Subject 원칙에 따라 처리
 - 승인된 `keyReuseIdentity` profile에서 과거 발급 또는 issuance reservation과 같은 public key로 판정된 요청
 - 발급 후 인증서 profile self-check 실패

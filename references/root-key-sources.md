@@ -26,6 +26,40 @@ c55cc538ef1dd174d38f2187cbbb118e1b2bc2bb86a3e1316c1403c0ae8cfc6c  ocspResponderL
 
 CP/Program/Governance의 확인 범위에서 미등록 상위 Root에 대한 포괄적인 운영 책임 면제 문구를 발견하지 못했다. 이는 다른 공식 해석이나 참가 계약의 존재를 부정하는 결론은 아니다. CA 참가 계약 PDF는 다운로드했으나 본문을 읽지 못했으므로 본 설계의 근거로 사용하지 않았다.
 
+## 2026-10-07 — Ceremony와 감사 준비 추가 확인
+
+§6.1.1의 번호·본문 대조에는 공식 저장소의 기존 로컬 Git 객체에서 commit `2466172859fad1215f7aaf7e3768b41a0ac29abc`를 지정해 읽은 v0.2 PDF와 Markdown을 사용했다(`git show <commit>:<path>`). 작업 트리의 Markdown 수정·줄바꿈 상태를 해당 commit 원문으로 간주하지 않았다. 이전 절의 다른 commit을 대체하거나 신청 기준 버전을 새로 확정한 것은 아니다.
+
+| 자료 | 공식 원문·로컬 위치 | 확인 범위 |
+|---|---|---|
+| C2PA Certificate Policy v0.2 PDF | [PDF](https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.pdf), `conformance-public/docs/v0.2/C2PA Certificate Policy.pdf` | §6.1.1 본문 21–22쪽(PDF 24–25번째 페이지), §6.2.1·6.3–6.5의 연계 통제 |
+| C2PA Certificate Policy v0.2 Markdown | [원문](https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md) | 같은 제목의 §6.1.1 대응 내용, Publication·Certificate Renewal·Certificate Modification·Compliance Audits |
+| C2PA Conformance Program v0.2 PDF/Markdown | [PDF](https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.pdf), [Markdown](https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md), 로컬 `conformance-public/docs/v0.2/` | Certificate Policy, 독립 입회·서명된 스크립트/조건부 WebTrust 대체 증거(PDF 14번째 페이지), CA Evidence Request·Evidence Assessment(PDF 17번째 페이지) |
+
+해당 commit의 PDF 바이트 SHA-256:
+
+```text
+bfae1e17c501dd33099f2c03e0c6f921ba310d481b23b6881948d56aaa6a2715  C2PA Certificate Policy.pdf
+d1d4b932320866479fc78abbcd81c35234bdb6f666ca8138fbca71b8bbdf198a  C2PA Conformance Program.pdf
+```
+
+§6.1.1과 Program의 위 확인 범위에서 서류 누락마다 자동 재생성을 명령하는 조항은 확인되지 않았다. 생성 당시 통제·증거를 입증할 수 없으면 재생성이 필요할 수 있다는 설명은 해당 원문에서 도출한 설계 위험 판단이며, 실제 수용 여부나 재생성 명령을 받은 사실이 아니다.
+
+## 2026-10-07 — CA 소프트웨어 기능 분류 확인
+
+위와 같은 commit `2466172859fad1215f7aaf7e3768b41a0ac29abc`의 CP·Program Markdown을 로컬 `git show`로 읽었다. CP의 Publication·Repositories, Identification and Authentication, Certificate Life-Cycle, Facility/Management/Operational Controls, Technical Security Controls, Certificate Profiles, Compliance Audits, Dynamic Evidence 부록과 Program의 CA 등록 증거 조항을 확인했다. 기능 분류는 원문 요구의 구현상 해석이며 표준이 지정한 제품 구성으로 취급하지 않는다.
+
+제품 종류·도구의 역할은 다음 공식 온라인 문서로 확인했다. 특정 제품 선정, C2PA 적합성이나 quorum 연동 실증의 근거가 아니다.
+
+| 원문 | 확인 범위 |
+|---|---|
+| [EJBCA Cloud AWS](https://docs.keyfactor.com/ejbca-cloud/latest/ejbca-cloud-aws) | CA 계층·발급·관리 기능, CloudHSM 연동 안내 |
+| [Microsoft AD CS CA 역할](https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certification-authority-role) | Windows Server의 인증서 발급·폐지·관리, CA 유형 |
+| [OpenSSL ca](https://docs.openssl.org/master/man1/openssl-ca/) | 기본 CA 명령의 인증서 처리와 상태 원장 기능 |
+| [AWS quorum 사용](https://docs.aws.amazon.com/cloudhsm/latest/userguide/key-quorum-auth-chsm-cli-crypto-user.html) | 제품의 HSM 지원과 구분해야 하는 CLI 토큰의 작업·세션·애플리케이션 제한 |
+
+2026-10-07 앱 기능 감사에서는 같은 고정본의 CA Representations, OCSP Responder Leaf Profile, 키 백업·복구·archive 구분, 기록 보관과 폐지 요청 처리 기한도 대조했다. 구현 기능·거부 사례는 원문 요구에서 도출한 설계이며 원문이 지정한 애플리케이션 구조로 취급하지 않는다.
+
 ## RFC·키 관리·업데이트·PQC
 
 | 자료 | 원문 | 읽은 범위·사용 목적 |

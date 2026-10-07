@@ -10,7 +10,7 @@
 | 1 | TSU 등록/slot 생성 | 승인 credential, service 식별자 | server-owned `tsuInstanceId` 등 project metadata |
 | 2 | `POST /v1/enrollments` | profile, service/TSU, `INITIAL`/`REKEY` | transaction과 CSR 작성에 필요한 authoritative context |
 | 3 | 단말 내부 | `K_tsu` 생성, CSR 서명 | 서버 호출 없음 |
-| 4 | `POST /v1/enrollments/{transactionId}/submission` | CSR | key ownership, authorization, CSR/profile 검증 |
+| 4 | `POST /v1/enrollments/{transactionId}/submission` | CSR | key ownership, authorization, CSR 기본 입력·최종 인증서 profile 검증 |
 | 5 | `GET /v1/enrollments/{transactionId}` | transaction 조회 | TSA Leaf와 intermediate chain 또는 실패 |
 
 별도 activation/state protocol을 채택할 수 있지만 C2PA가 TSA Leaf 발급 전에 특정 activation API나 signed receipt를 요구하는 것은 아니다.
@@ -25,7 +25,7 @@ C2PA CP가 직접 요구하는 것은 secure enrollment credential과 key-pair o
 - service/profile별 authorization
 - 변경 요청의 `Idempotency-Key`
 - strict JSON parsing, size/rate limit과 stable error code
-- client가 보낸 서비스/TSU/issuer 선택을 인증된 caller의 권한과 대조. CSR Subject는 구조·C/O/CN을 검사하고 서비스 식별과의 관계·불일치를 [02 §2.1](02-CSR-and-Attestation-Requirements.md#21-subject)의 CA 절차로 처리
+- client가 보낸 서비스/TSU/issuer 선택을 인증된 caller의 권한과 대조. CSR Subject는 구조·프로젝트 C/O/CN 입력 정책을 검사하고 서비스 식별과의 관계·불일치를 [02 §2.1](02-CSR-and-Attestation-Requirements.md#21-subject)의 CA 절차로 처리
 
 이 API는 인증된 operator와 별도 `tsaServiceId`/`tsuInstanceId`를 이용해 대상을 식별하는 예다. Subject로 서비스를 조회하거나 계정에 연결된 등록정보를 쓰는 다른 절차도 가능하지만, 원문이 특정 wire field를 정한 것은 아니다. 어느 방식도 Subject 문자열만으로 인증·권한을 대신하지 않는다.
 
@@ -81,8 +81,8 @@ CP는 re-key를 신규 신청과 동일하게 처리하고 같은 identity valid
 ## 4. CSR 생성
 
 1. 승인된 On-Device TSA 구현은 `K_tsu`를 TEE 안에서 생성·보관한다.
-2. CSR Subject는 ASN.1 Name과 공식 CSR schema의 C/O/CN 조건을 만족하도록 작성한다. 확인된 TSA service DN을 사용하는 것은 불일치를 줄이는 작성 방법이며, 모든 요청에 동일값을 강제하는 C2PA 규칙으로 두지 않는다.
-3. [02 §2.3](02-CSR-and-Attestation-Requirements.md#23-requested-extensions)에 따른 `extensionRequest`를 포함한 PKCS#10 `CertificationRequestInfo`에 `K_tsu`로 서명한다.
+2. CSR Subject는 ASN.1 Name과 프로젝트 입력 정책인 C/O/CN 조건을 만족하도록 작성한다. 확인된 TSA service DN을 사용하는 것은 불일치를 줄이는 작성 방법이며, 모든 요청에 동일값을 강제하는 C2PA 규칙으로 두지 않는다.
+3. PKCS#10 `CertificationRequestInfo`에 `K_tsu`로 서명한다. `attributes`는 문법대로 유지하되 `extensionRequest`는 생략할 수 있다. 제출된 요청 확장은 서버가 사용하지 않는다([02 §2.3](02-CSR-and-Attestation-Requirements.md#23-requested-extensions)).
 4. private key는 enrollment client나 Certificate Platform으로 내보내지 않는다.
 
 1번은 구현/runtime 의무이고 3번은 이 architecture가 선택한 key ownership 확인 방법이다. 기본 API 요청은 1번의 별도 원격 증거를 동봉하지 않는다.
@@ -151,7 +151,7 @@ HSM/CA 서명 전 기본 gate는 다음과 같다.
 2. transaction ownership, operation과 idempotency
 3. CA business practices가 정한 applicant identification/authentication/verification
 4. 발급 대상 key ownership
-5. strict CSR signature/DER/SPKI/Subject 구조·C/O/CN/requested-extension 검증 및 02 §2.1의 Subject 불일치 처리
+5. strict CSR signature/DER/SPKI/Subject 구조·프로젝트 C/O/CN 입력 정책 검증 및 02 §2.1의 Subject 불일치 처리. CSR 확장 프로파일 검사는 생략
 6. server-controlled TSA Leaf template 및 issuer 상태
 7. key/serial uniqueness와 atomic issuance 기록 같은 project invariants
 

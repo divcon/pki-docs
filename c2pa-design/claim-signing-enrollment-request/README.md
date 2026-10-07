@@ -19,6 +19,8 @@
 11. 2026-09-11에 사용자가 선택한 AL2 provider는 Google 신뢰 루트 기반 **Android Key Attestation**이다. CP:1796-1816에는 O.1~O.4 및 key profile의 21개 필드 가이드가 이미 있다. [Android 상세 매핑과 검증](02-CSR-and-Dynamic-Evidence-Requirements.md#android-key-attestation)에 이 누락을 보강했다. Provider 선택·원문 매핑 확인과 운영 profile 승인은 별개이며 실제 제품 기준값·지원 범위·freshness 정책 등의 `TBD`는 유지한다.
 12. 2026-09-15 필드 단위 감사에서 누락된 [CSR DER 필드·OID·필수 값](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-input-fields)과 [Android 필수 ASN.1 구조·타입](02-CSR-and-Dynamic-Evidence-Requirements.md#android-asn1-input)을 보강했다. JSON의 존재/null/타입, 고정 schema version과 placeholder도 분리했다. 구조상 필수 필드, C2PA profile의 값 가이드, 조건부 provider 요구와 미정 운영 승인값은 서로 대체하지 않는다.
 
+13. **2026-09-23 CSR 정책:** [사용자 전달 Conformance 회신과 공통 비교표](../02-Certificate-Enrollment.md#csr-extension-policy)에 따라 CSR schema는 참고용이다. CSR 요청 확장은 전부 사용하지 않고 CA가 생성하며, CSR 확장 프로파일 검사는 생략한다. PoP·SPKI·제품 자격·CPL·AL별 증거 및 최종 인증서 검증은 유지한다. 이전 감사 기록의 CSR 확장 필수 판정은 이 정책으로 대체한다.
+
 ### 1.1 인증 방식 요약
 
 Enrollment의 “인증”은 단일 login 방식이 아니라 서로 다른 대상을 확인하는 계층이다.
@@ -95,7 +97,7 @@ Enrollment의 “인증”은 단일 login 방식이 아니라 서로 다른 대
 - `Program`: 같은 commit의 `docs/v0.2/C2PA Conformance Program.md:line`
 - `GSPR`: 같은 commit의 `docs/v0.2/C2PA Generator Product Security Requirements.md:line`
 - `AL1 CSR` / `AL2 CSR`, `AL1 cert` / `AL2 cert`: 같은 commit의 각 `docs/v0.2/cert-profiles/claimSigningLeaf.al{1,2}.{csr,cert}.schema.json:line`
-- `CSR:line`: 위 AL1/AL2 CSR schema 양쪽에서 동일한 line의 공통 제약. AL 값이 다른 행은 해당 AL의 schema를 각각 적용한다.
+- `CSR:line`: 위 AL1/AL2 CSR schema 양쪽에서 동일한 line의 참고용 검사 조건. AL 값이 다른 행은 해당 AL의 참고용 schema를 가리키며 서버 필수 gate가 아니다.
 - `CPL schema` / `Guide` / `MIB`: 같은 commit의 `schemas/conforming-products/conforming-products-list.schema.json:line`, `schemas/conforming-products/Companion Guide for the C2PA Conforming Products List.md:line`, `schemas/mib/oid.txt:line`
 - `Spec 2.4 HTML`: `specifications@9c58c8c27044e44e8601f6ab13f1bcac1376eb1f:build/site/specifications/2.4/specs/C2PA_Specification.html:line`
 
@@ -162,7 +164,7 @@ CP는 BCP 14를 all-caps keyword에만 적용한다고 선언한다(CP:10-12). C
 
 ## 8. 문서 지도
 
-CSR Subject의 형식 검사, 발급 전 제품/CPL·권한 확인과 최종 Subject 구성을 구분하는 기준은 [02 §3.1.1](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification)에 있다. 모든 CSR의 등록 DN 일치를 강제하던 프로젝트 선검사를 일반화했으며, 식별 입력 위치와 DN 차이 처리는 CA 절차의 선택으로 명시한다. CSR PoP·필수 확장·제품 적합성과 최종 CPL DN 조건은 유지한다.
+CSR Subject의 형식 검사, 발급 전 제품/CPL·권한 확인과 최종 Subject 구성을 구분하는 기준은 [02 §3.1.1](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification)에 있다. 모든 CSR의 등록 DN 일치를 강제하던 프로젝트 선검사를 일반화했으며, 식별 입력 위치와 DN 차이 처리는 CA 절차의 선택으로 명시한다. CSR PoP·제품 적합성과 최종 인증서의 필수 확장·CPL DN 조건은 유지한다. CSR 요청 확장은 사용하지 않으며 프로파일 검사를 생략한다.
 
 - [01 — Enrollment Request Body](01-Enrollment-Request-Body.md)
 - [02 — CSR and Dynamic Evidence Requirements](02-CSR-and-Dynamic-Evidence-Requirements.md)

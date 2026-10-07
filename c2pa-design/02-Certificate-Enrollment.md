@@ -4,7 +4,7 @@
 > 성격: API·DB·provider wire format을 확정하는 시스템 설계서가 아니라, C2PA 인증서 발급 요구를 구현 항목별로 해석한 가이드다.  
 > 기준 snapshot: `conformance-public` commit `2466172859fad1215f7aaf7e3768b41a0ac29abc`
 
-> **2026-09-02 TSA enrollment 정정:** C2PA는 TSA Leaf API마다 Compound Evidence를 요구하지 않는다. Base TSA profile은 secure credential, CA business practices의 I/A/V, key ownership과 TSA CSR/certificate profile을 검증한다. 6.4~6.6은 명시적으로 채택한 optional CPS attestation profile에만 적용한다.
+> **2026-09-02 TSA enrollment 정정:** C2PA는 TSA Leaf API마다 Compound Evidence를 요구하지 않는다. Base TSA profile은 secure credential, CA business practices의 I/A/V, key ownership, CSR 기본 입력과 최종 TSA certificate profile을 검증한다. 6.4~6.6은 명시적으로 채택한 optional CPS attestation profile에만 적용한다.
 
 > **2026-09-04 Claim Signing enrollment 정정:** 공식 명칭은 **C2PA Claim Signing Certificate**다. Claim Signing의 인증 방식, AL1/AL2 독립 판정, `INITIAL`/`REKEY`/거부되는 `RENEWAL`, request-body cardinality, CSR/Dynamic Evidence binding 및 fail-closed 운영 결정은 [Claim Signing enrollment 문서 세트](claim-signing-enrollment-request/README.md)가 소유한다. 이 문서는 그 원문 요구를 설명하는 상위 가이드이며 endpoint·response·state 등 일반 API 계약을 정의하지 않는다.
 
@@ -111,11 +111,11 @@ Certificate Platform이 발급하는 Leaf는 아래 두 종류다. Claim Signing
 
 1. DER PKCS#10 CSR을 파싱한다.
 2. CSR의 `CertificationRequestInfo`에 대한 signature를 CSR SPKI로 검증한다.
-3. 공개키 알고리즘과 key size/curve는 C2PA CSR profile로 확인한다. Outer CSR signature algorithm은 cryptographically valid해야 하며 CA가 별도로 문서화한 secure PoP algorithm policy를 충족해야 한다.
+3. 공개키 알고리즘과 key size/curve는 최종 인증서의 C2PA profile로 확인한다. Outer CSR signature algorithm은 cryptographically valid해야 하며 CA가 별도로 문서화한 secure PoP algorithm policy를 충족해야 한다.
 4. CSR signature 검증 성공을 Proof of Possession으로 기록한다.
 5. 과거 발급 이력과 비교해 같은 공개키가 재사용되지 않았는지 확인한다.
 
-공식 `*.csr.schema.json`은 DER PKCS#10의 wire schema가 아니다. CSR을 parser로 해석한 **decoded JSON 결과가 C2PA profile에 맞는지 검사하는 schema**다. 그러므로 schema validation만 하고 실제 CSR signature 검증을 생략하면 안 된다.
+공식 `*.csr.schema.json`은 DER PKCS#10의 wire schema가 아니다. CSR을 parser로 해석한 **decoded JSON 결과가 C2PA profile에 맞는지 검사하는 schema**다. 이 schema는 선택적 보조 검사이며 필수 발급 gate가 아니다([§3.3](#csr-extension-policy)). 실제 CSR signature 검증은 별도로 유지한다.
 
 #### 발급을 거부해야 하는 경우
 
@@ -135,7 +135,40 @@ Certificate Platform이 발급하는 Leaf는 아래 두 종류다. Claim Signing
 
 ### 3.3 CSR 값과 최종 인증서 값의 관계
 
-CSR의 Subject와 `extensionRequest`는 신청자의 요청값이다. CA는 이를 검증 없이 최종 인증서에 복사하지 않는다. CSR Subject의 입력 적합성, 발급 대상의 식별·인증·권한 확인, 최종 인증서 Subject의 정확성을 별도로 판단한다.
+CSR의 Subject와 `extensionRequest`는 신청자의 요청값이다. CA는 요청 확장을 사용하지 않고 모든 최종 확장을 직접 생성한다. CSR Subject의 입력 적합성, 발급 대상의 식별·인증·권한 확인, 최종 인증서 Subject의 정확성을 별도로 판단한다.
+
+<a id="csr-extension-policy"></a>
+
+#### CSR 확장을 사용하지 않는 발급 정책
+
+**Claim Signing AL1·AL2와 TSA Leaf 모두 CSR의 요청 확장을 최종 인증서 구성에 사용하지 않는다.** CA는 검증된 발급 대상 정보와 승인된 certificate profile/template로 모든 확장을 직접 생성한다. 따라서 CSR의 `extensionRequest` 존재 여부, 개별 확장의 존재·OID 허용 목록·값·criticality·프로파일 일치 검사를 발급 조건에서 제외한다. 요청 확장이 없거나, 최종 프로파일과 다른 EKU·AL·CPL ID·AIA/CDP 등이 있어도 그 사실만으로 거부하지 않으며 해당 값은 사용하지 않는다. CSR 전체에 공식 `*.csr.schema.json` 통과를 요구하지 않는다.
+
+CSR 서명은 제출된 원본 `CertificationRequestInfo` 전체에 대해 검증한다. 입력 크기, 단일 strict DER PKCS#10, 필수 ASN.1 member, Subject/SPKI 구조, algorithm/parameters, PoP 검증은 유지한다. `attributes` 필드는 PKCS#10 문법대로 유지하되 그 안에 `extensionRequest`를 넣을 의무는 없다. 존재하는 경우 attribute와 `Extensions` 외부 구조·단일 attribute value 및 중복으로 인한 모호성에 대한 기존 parser 정책은 유지하고, 사용하지 않는 `extnValue` 내부의 프로파일 의미 검사는 하지 않는다. CSR 확장을 사용하지 않는다는 결정이 잘못된 DER 또는 유효하지 않은 CSR 서명을 허용한다는 뜻은 아니다.
+
+CSR Subject의 C/O/CN 포함 검사는 기존 **프로젝트 입력 정책**으로 유지한다. 공식 CSR 스키마를 참고해 채택한 선택이며 C2PA 공통 의무로 분류하지 않는다. 최종 인증서 Subject의 C/O/CN 및 대상 식별 조건은 CP에 따라 계속 적용한다.
+
+| 유지하거나 생략할 검증 | TSA Leaf | Claim Signing Leaf |
+|---|---|---|
+| CSR 요청 확장 프로파일 검사 | 전부 생략; CA가 전부 직접 생성 | AL1·AL2 모두 전부 생략; CA가 전부 직접 생성 |
+| CSR 구조·서명/PoP·공개키 알고리즘/크기/곡선 | 유지 | 유지 |
+| 신청자 신원·발급 권한·등록 요청 인증 | CA business practices에 따른 TSA 운영기관·서비스 I/A/V | Subscriber/대표자 I/A/V·Agreement·GP instance 인증 |
+| 제품 Conformance·CPL·최대 AL | Claim Signing의 제품 자격 검사는 적용하지 않음 | Notice/CPL 적합성, 제품·DN·record ID 및 `maxAssuranceLevel` 확인 유지 |
+| 증거·키 보호 | TSA 유형별 운영·키 보호 의무 유지. 기본 enrollment에 attestation 제출 의무 없음; 채택한 CPS attestation profile에만 추가 검증 | AL1은 적격 GP instance 인증. AL2는 제품·키 생성/보관·플랫폼의 O.1~O.4 증거와 freshness·CSR SPKI 결속 검증 유지 |
+| 최종 인증서 | TSA profile의 필수 확장·값·criticality, Subject/SPKI·issuer·validity 등 확인 | Claim profile의 필수 확장·값·criticality, 확인된 AL·CPL ID, Subject/SPKI·issuer·validity 등 확인 |
+
+**생략 범위는 발급 요청 CSR의 확장 프로파일 검사다.** AL2 또는 선택적 TSA attestation의 증거 인증서 확장, 인증서 체인, 서명, 키 결속 검증은 해당 증거 검증 절차대로 유지한다. 최종 인증서 검증과 재키 발급·키 재사용·감사 정책도 유지한다. 향후 CSR 확장값을 하나라도 발급에 반영하려면 해당 값의 허용 여부·내용·권한 검증을 추가하는 명시적 정책 변경이 필요하다.
+
+##### Conformance 회신과 근거 범위
+
+2026-09-23에 사용자가 전달한 Conformance 회신은 다음과 같다. 전달일을 기록한 것이며 원 회신의 발신일·담당자·공개 URL은 제공되지 않았다.
+
+> It just helps the applicant check that their proposed certificate attributes (as encoded in a CSR) will meet the target attirbutes once the certificate is issued. But it's by no means mandated; it's just a helpful aid along the way.
+>
+> The only (thing) that matters is that the final issue certificate matches the certificate profile.
+
+이 회신은 CSR 검사 도구/스키마의 비의무성을 설명하는 것으로 반영한다. `specifications/` 전체나 RFC, CP의 신원·키 소유·제품 자격·Dynamic Evidence 의무를 무효화하는 근거로 확대하지 않는다. CSR 확장을 전부 사용하지 않고 CA가 구성한다는 것은 위 설명에 따른 **프로젝트 발급 정책**이다.
+
+독립 근거: [RFC 2986 §3](https://www.rfc-editor.org/rfc/rfc2986.html#section-3)의 요청자 인증·CSR 서명 검증·CA의 확장 구성, [RFC 2985 §5.4.2](https://www.rfc-editor.org/rfc/rfc2985.html#section-5.4.2)의 `extensionRequest` 의미, [CP 발급 절차](../conformance-public/docs/v0.2/C2PA%20Certificate%20Policy.md#certificate-issuance), [CP Claim AL1](../conformance-public/docs/v0.2/C2PA%20Certificate%20Policy.md#c2pa-claim-signing-leaf-certificates---assurance-level-1)·[AL2](../conformance-public/docs/v0.2/C2PA%20Certificate%20Policy.md#c2pa-claim-signing-leaf-certificates---assurance-level-2)·[TSA 최종 프로파일](../conformance-public/docs/v0.2/C2PA%20Certificate%20Policy.md#tsa-time-stamp-signing-leaf-certificates), CP:457–473,1684–1768. CSR 스키마의 `required`는 그 보조 스키마의 통과 조건이며 발급 의무로 승격하지 않는다.
 
 <a id="csr-subject-identification"></a>
 
@@ -143,7 +176,7 @@ CSR의 Subject와 `extensionRequest`는 신청자의 요청값이다. CA는 이�
 
 | 판단 대상 | Claim Signing Leaf | TSA Leaf | 원문 근거 |
 |---|---|---|---|
-| CSR Subject 입력 | ASN.1 Name 구조와 공식 CSR schema의 C/O/CN 포함 조건 | 동일 | AL1/AL2/TSA CSR schemas:692-740; RFC 2986 §4.1 |
+| CSR Subject 입력 | ASN.1 Name 구조와 프로젝트 입력 정책인 C/O/CN 포함 조건 | 동일 | AL1/AL2/TSA CSR schemas:692-740; RFC 2986 §4.1 |
 | 발급 대상 확인 | 신청 제품·CPL record와 DN, 적합성, 신청자 권한을 확인 | CA business practices에 정한 TSA 신청자·서비스의 식별·인증·검증 | CP:405-455,461-473,491-517 |
 | 최종 Subject | 해당 CPL 제품 DN과 일치; ASCII 및 개별 instance 식별 금지 | 해당 TSA 서비스를 식별하는 unique C/O/CN | CP:387-399,1217,1282,1347 |
 
@@ -155,7 +188,7 @@ Claim의 기준 DN은 CPL `product.DN`이며 서명된 Notice도 해당 CPL reco
 
 | CSR Subject 상태 | 처리 원칙 |
 |---|---|
-| 필수 C/O/CN 누락 또는 구조·형식 부적합 | 해당 CSR profile 검증 실패. 최종 인증서 보충으로 원본 CSR의 적합성을 대신하지 않음 |
+| 필수 C/O/CN 누락 또는 구조·형식 부적합 | 프로젝트 Subject 입력 정책 또는 ASN.1 구조 검증 실패. 최종 인증서 보충으로 원본 CSR의 적합성을 대신하지 않음 |
 | 등록 DN과 문자열·필드 구성이 다름 | 차이 자체를 모든 요청의 자동 거부 또는 자동 수락 조건으로 고정하지 않음. CA가 문서화한 절차에 따라 거부·보완 요청·독립적으로 검증된 식별정보의 사용 여부를 결정 |
 | CSR Subject를 대상 식별에 사용하는데 대상을 확인할 수 없음 | 일치 여부나 보완 정보를 확인하여 대상·권한을 확정하기 전까지 발급하지 않음 |
 | 별도 정보로 대상이 확인되지만 CSR Subject가 다름 | 제출정보의 정확성과 해당 요청과의 관계를 확인하고 불일치 처리 근거를 남김. 다른 제품·서비스의 권한을 대신 사용하거나 확인되지 않은 값을 임의 보정하지 않음 |
@@ -166,20 +199,20 @@ Claim의 기준 DN은 CPL `product.DN`이며 서명된 Notice도 해당 CPL reco
 
 - Claim 발급 대상과 최종 Subject는 authoritative CPL/서명된 Notice의 product DN에 결속한다. CSR Subject의 대조·불일치 처리는 위 식별 절차를 따른다.
 - TSA 발급 대상과 최종 Subject는 CA가 확인한 unique TSA service에 결속한다. CSR Subject를 반드시 그 서비스의 사전 등록 DN과 같게 요구하지 않는다.
-- 요청된 Basic Constraints, Key Usage, EKU, Certificate Policies, C2PA AL과 CPL extension을 profile과 비교한다.
+- CSR 요청 확장은 사용하지 않는다. 최종 Basic Constraints, KU, EKU, Certificate Policies, AL·CPL ID 등은 확인된 발급 대상 정보와 CA template로 생성한다.
 - Issuer, serial, validity, SKI, AKI, AIA와 CRL Distribution Points는 CA-controlled template에서 만든다.
 - serial은 양수이고 20 octets 이하이며, 같은 Issuing CA가 발급한 모든 인증서 사이에서 유일해야 한다. C2PA profile은 high entropy serial을 권장한다.
 - 발급 후 인증서를 다시 파싱하고 공식 `*.cert.schema.json`으로 검증한다.
 
 #### 발급을 거부해야 하는 경우
 
-- CSR의 필수 extension, 값 또는 criticality가 선택한 공식 CSR schema와 다름
-- Claim 발급 대상의 신원·권한·적합성을 확인할 수 없거나, CSR의 AL·CPL record extension이 확인된 요청 profile/record와 다름. CSR Subject의 단순 불일치는 위 식별 절차로 판단
+- CSR 구조·서명/PoP·SPKI 또는 프로젝트 Subject 입력 정책 실패
+- Claim 발급 대상의 신원·권한·Conformance·CPL·허용 AL 또는 해당 AL의 증거 검증 실패
 - TSA 신청자·서비스의 신원·권한 또는 최종 Subject의 정확성을 확인할 수 없음
-- TSA CSR에 C2PA AL 또는 CPL record extension이 있음
-- TSA CSR의 EKU가 critical인 `id-kp-timeStamping` 정확히 하나가 아님
+- 최종 인증서의 필수 확장·값·criticality·금지 확장 등 프로파일 위반
+- 키 재사용·issuer·상태·저장/감사 등 나머지 발급 조건 실패
 
-Claim CSR의 추가 EKU나 unknown critical 요청을 무조건 거부하는 것은 C2PA 공통 규칙이 아니라 CA CPS의 strict-input 정책이다. 거부하지 않더라도 해당 요청값을 최종 인증서에 복사하지 않고 CA-controlled Claim template만 적용한다. 중복 extension처럼 PKCS#10 또는 선택한 공식 schema를 모호하게 만드는 입력은 거부한다.
+CSR 확장 누락, 요청 AL/CPL ID의 불일치, TSA CSR의 AL/CPL 요청 또는 다른 EKU만으로 거부하지 않는다. 사용하지 않는 unknown critical 요청도 최종 인증서에 전달하지 않는다. 구조적 모호성·중복은 §7.3의 parser 정책으로 처리한다.
 
 ### 3.4 Server challenge 적용 범위와 검증
 
@@ -252,7 +285,7 @@ CA signing key를 사용하기 전에 최소한 다음 결과가 모두 성공�
 
 ```text
 신청자 신원·credential·발급 권한
-AND CSR 구조·profile·Proof of Possession
+AND CSR 구조·공개키 적합성·Proof of Possession
 AND 요청 Leaf 종류에 맞는 eligibility
 AND 필요한 경우 Dynamic Evidence 검증
 AND 발급 직전 authoritative 상태 재확인
@@ -318,7 +351,7 @@ Generator Product conformance proof == PASS
 (현재 interim production rule: authenticated public CPL의 status=conformant; signed Notice는 onboarding proof로만 보관)
 requested AL == AL1
 requested AL <= CPL maxAssuranceLevel
-CSR PoP and AL1 CSR profile == PASS
+CSR PoP and structure/SPKI/Subject input policy == PASS
 current conformance source state == PASS
 ```
 
@@ -661,50 +694,30 @@ Evidence가 증명한 TSA subject key
 
 Evidence signature를 검증하는 attestation signer 공개키와, 인증서를 발급할 `K_tsu` 공개키를 혼동하지 않는다.
 
-## 7. 공식 CSR profile 적용 방법
+## 7. CSR 입력 검사와 참고용 스키마
 
 ### 7.1 Claim AL1·AL2 CSR
 
-| 항목 | AL1 | AL2 |
-|---|---|---|
-| Subject | ASN.1 Name 구조·C/O/CN 포함; 제품 식별과 DN 차이 처리는 [§3.3](#csr-subject-identification) 참조 | 동일 |
-| SPKI | RSA 2048+, EC P-256/P-384/P-521, Ed25519 | 동일 |
-| Basic Constraints | critical, `cA=false` | 동일 |
-| Key Usage | critical, 정확히 `digitalSignature` + `contentCommitment` | 동일 |
-| EKU | non-critical, `c2pa-kp-claimSigning` + email/document signing 중 하나 이상 | 동일 |
-| Certificate Policies | non-critical, C2PA policy OID | 동일 |
-| C2PA AL | 필수, non-critical; extension OID `.62558.3`, value `.3.10` | 필수, non-critical; extension OID `.62558.3`, value `.3.20` |
-| CPL Record ID | 필수, non-critical; extension OID `.62558.4`, DER UTF8String(36) UUID | 동일 |
-| AIA 요청 시 | optional, non-critical; OID `1.3.6.1.5.5.7.1.1`, 모든 accessLocation은 HTTP URI | 동일 |
-| CDP 요청 시 | optional, non-critical; OID `2.5.29.31`, distributionPoint는 HTTP URI | 동일 |
+공식 AL1·AL2 CSR schema는 신청자가 최종 인증서 속성을 미리 점검하는 보조 자료다. AL1 `.3.10`과 AL2 `.3.20`의 요청 AL 값 등 schema 조건이 다르지만 서버는 schema 통과나 CSR 확장 존재를 요구하지 않는다. BC, KU, EKU, Certificate Policies, AL, CPL ID, AIA/CDP를 포함한 모든 요청 확장은 사용하지 않는다.
 
-AL1과 AL2 CSR profile의 핵심 차이는 C2PA Assurance Level 값이다.
+CSR의 구조·서명/PoP, RSA 2048+·EC P-256/P-384/P-521·Ed25519 공개키 조건과 프로젝트 Subject 입력 정책은 유지한다. 발급 AL과 CPL ID는 인증된 요청·제품 레코드·허용 AL·증거 판정으로 결정한다. 최종 확장값은 §8에 따라 생성한다.
 
 ### 7.2 TSA CSR
 
-| 항목 | 요구 |
-|---|---|
-| Subject | ASN.1 Name 구조·C/O/CN 포함; 서비스 식별과 DN 차이 처리는 [§3.3](#csr-subject-identification) 참조 |
-| SPKI | RSA 2048+ 또는 EC P-256/P-384/P-521; Ed25519 금지 |
-| Basic Constraints | critical, `cA=false` |
-| Key Usage | critical, 정확히 `digitalSignature` + `contentCommitment` |
-| EKU | critical, 정확히 `id-kp-timeStamping` 하나 |
-| Certificate Policies | non-critical, C2PA policy OID |
-| C2PA AL | 요청 금지 |
-| CPL Record ID | 요청 금지 |
-| AIA 요청 시 | optional, non-critical; OID `1.3.6.1.5.5.7.1.1`, 모든 accessLocation은 HTTP URI |
-| CDP 요청 시 | optional, non-critical; OID `2.5.29.31`, distributionPoint는 HTTP URI |
+공식 TSA CSR schema도 참고용이다. `extensionRequest`와 개별 확장을 요구하지 않고, 제출된 EKU·AL/CPL·policy·AIA/CDP 등의 요청값은 사용하지 않는다. CSR의 구조·서명/PoP, RSA 2048+ 또는 EC P-256/P-384/P-521(Ed25519 제외), 프로젝트 Subject 입력 정책과 TSA 서비스 I/A/V는 유지한다. 최종 TSA 확장값은 §8에 따라 생성한다.
 
 ### 7.3 CSR parser 최소 검증 순서
 
-1. 입력 크기와 단일 DER object 여부 확인
-2. PKCS#10 version `0` 확인
-3. Subject와 SPKI 구조 확인
-4. `extensionRequest` cardinality와 중복 extension 확인
-5. SPKI algorithm/parameters는 C2PA CSR profile로, outer CSR signature algorithm/parameters는 CA의 secure PoP policy로 확인
-6. CSR signature로 PoP 확인
-7. decoded CSR을 선택한 공식 CSR schema로 검증
-8. CSR Subject의 형식 검사와 별도로 [3.3절](#csr-subject-identification)의 대상 식별·권한 검증을 수행하고, 해당 CSR extension을 확인된 profile/record와 비교
+1. 입력 크기와 단일 strict DER PKCS#10 object 여부 확인
+2. PKCS#10 version `0` 및 필수 ASN.1 member 확인
+3. Subject와 SPKI 구조 및 프로젝트 Subject C/O/CN 입력 정책 확인
+4. `attributes`의 구조 확인. `extensionRequest`는 없어도 수락한다. 있으면 외부 구조·단일 attribute value와 기존 중복/모호성 거부 정책을 적용하되 사용하지 않는 확장 내부의 값·criticality·프로파일 검사는 생략한다.
+5. SPKI algorithm/parameters는 최종 인증서 profile과 RFC로, outer CSR signature algorithm/parameters는 CA의 secure PoP policy로 확인
+6. 원본 `CertificationRequestInfo` 전체의 CSR signature로 PoP 확인
+7. [§3.3](#csr-subject-identification)의 대상 식별·권한 검증 및 해당 자격·증거 검증 수행
+8. CSR 확장을 입력으로 사용하지 않는 CA template로 최종 인증서를 구성하고 §8의 profile 확인
+
+공식 CSR schema 검사는 필요하면 별도의 참고용 진단으로 제공하며, 실패 자체를 발급 거부 조건으로 연결하지 않는다.
 
 ## 8. 최종 Leaf certificate profile
 
@@ -865,7 +878,7 @@ API endpoint, request/response body와 database schema는 이 문서의 범위�
 | Android Claim AL2 | 5.7.2의 challenge, security levels, app identity, key authorization, boot와 patch predicate |
 | TSA 운영 | UTC(k) traceability, accuracy/drift-stop, leap second, timestamp 전용 key, TSU당 active key 하나, SHA-2 256/384/512 |
 | On-Device TSA | TSA application의 TEE 실행, `K_tsu`의 TEE 생성·보관, 최소 24시간마다 online synchronization 시도 |
-| CSR/certificate profile | 7~8절의 algorithm, Subject, extension OID/value/criticality/cardinality, 금지 extension과 validity 상한 |
+| CSR 입력·최종 certificate profile | CSR 구조·PoP·SPKI·프로젝트 Subject 입력 정책, 최종 인증서의 extension OID/value/criticality/cardinality·금지 확장·validity 상한. CSR 확장 프로파일 검사는 생략(§3.3, §7~8) |
 | 발급 CA와 trust | Claim과 TSA를 별도 Issuing CA/trust domain으로 분리하고 해당 C2PA Trust List 경로 사용 |
 | lifecycle/status | full re-key validation, 정해진 revocation 사유·72시간 처리, Claim OCSP와 TSA OCSP-or-CRL, issued-certificate record 최소기간 |
 | audit/privacy | certificate-operation 상세 log와 필수 identity/time/action/parameter, log 보호·정기검토, archival policy, 비공개 Subscriber 정보와 개인정보 보호 |
@@ -888,7 +901,7 @@ API endpoint, request/response body와 database schema는 이 문서의 범위�
 | 지원 발급 범위 | 승인하여 수용한 Subscriber/product에는 CPL max AL 이하 모든 Claim AL 요청을 지원하고, 유효한 요청이 해당 AL의 mandatory gate를 모두 통과하면 발급으로 진행. CA/CPS는 TSA 종류, 수용할 customer/product service scope, 실제 key algorithm subset과 profile 상한보다 짧은 validity를 결정 |
 | Agreement·warranty | affiliation 판정, legally valid Subscriber Agreement 또는 Terms of Use acknowledgement, 문서 version/digest·승인자·시각, Subject/product-name control·대표자 권한·최종 certificate 정보 정확성의 발급별 evidence |
 | CPL/Notice | source 인증, snapshot freshness/cache, 상태 변경 시 fail-closed, Android version과 CPL `minVersion` 비교 규칙 |
-| PoP/CSR input policy | 이 프로젝트는 DER PKCS#10 CSR signature 검증을 key ownership PoP로 채택. CA/CPS는 outer CSR signature algorithm allow-list, 추가·미인지 attribute/extension의 reject/ignore 정책, 입력 크기와 parser 제한을 결정. KMS inspection 등 다른 PoP는 별도 승인된 profile로만 추가 |
+| PoP/CSR input policy | 이 프로젝트는 DER PKCS#10 CSR signature 검증을 key ownership PoP로 채택. CA/CPS는 outer CSR signature algorithm allow-list, 추가·미인지 attribute의 parser 정책과 CSR 확장 미사용 정책, 입력 크기와 parser 제한을 결정. KMS inspection 등 다른 PoP는 별도 승인된 profile로만 추가 |
 | Provider 등록 | provider profile/version, signed Evidence schema, trust anchors, chain/status source와 rotation·freshness, Reference Value 출처·version |
 | Challenge | 적용할 provider flow, byte length·entropy·encoding·transform, 목적/Subscriber/CPL 또는 TSA service 결속, TTL, single-use/동시성, 재제출 시 이전 freshness 값 재사용 금지와 보존 |
 | Android app mapping | package/version/signing digest 등록, shared UID와 signing-key rotation의 expected-set/exact-set 여부, extra key purpose/digest 허용 여부, product-specific brand/manufacturer/model/boot Reference Value |
@@ -909,7 +922,9 @@ Claim Signing의 JSON field name, schema와 cardinality는 [전용 request-body 
 
 - [ ] DER PKCS#10 parsing과 실제 CSR signature PoP 검증
 - [ ] profile별 key algorithm/size/curve 확인
-- [ ] CSR requested extension을 CA template에 그대로 복사하지 않음
+- [ ] CSR 요청 확장을 전부 사용하지 않으며, 누락·값·criticality 프로파일 검사를 발급 조건에서 제외
+- [ ] 최종 확장은 확인된 발급 대상 정보와 CA template에서 생성하고 검증
+- [ ] CSR 확장 미사용 정책을 attestation 증거 인증서의 확장 검증 생략으로 확대하지 않음
 - [ ] Issuing CA별 serial 유일성과 양수·20 octets 상한 확인
 - [ ] 동일 key renewal 금지와 re-key full validation
 - [ ] 발급 후 공식 certificate schema와 chain self-check
@@ -944,7 +959,7 @@ Claim Signing의 JSON field name, schema와 cardinality는 [전용 request-body 
 - [ ] signed Notice를 받은 경우 onboarding proof로 확인하고 authenticated public CPL의 current `status=conformant`를 별도로 확인; Notice-only pre-public issuance는 source tension이 해소될 때까지 금지
 - [ ] `generatorProduct`, Applicant, DN, recordId와 존재하는 `minVersion` 확인
 - [ ] requested AL이 CPL max AL 이하인지 확인
-- [ ] AL1 CSR/Leaf의 AL OID와 validity 확인
+- [ ] 최종 AL1 Leaf의 AL OID와 validity 확인; CSR AL 요청값은 사용하지 않음
 
 ### 12.4 Claim AL2
 
@@ -968,7 +983,7 @@ Claim Signing의 JSON field name, schema와 cardinality는 [전용 request-body 
 - [ ] conformant CA의 TSA 운영 구조와 별도 TSA trust chain 확인
 - [ ] business practices에 TSA 신청자 확인 절차 문서화
 - [ ] TSA practices의 hash, signature lifetime, 의무·제한, 검증, time accuracy와 logging 공개
-- [ ] TSA CSR에서 timeStamping EKU만 허용
+- [ ] CSR EKU 요청값은 사용하지 않고 최종 TSA Leaf에 critical timeStamping EKU만 생성·검증
 - [ ] TSA Leaf에서 C2PA AL/CPL extension 금지
 - [ ] On-Device TSA의 TEE 실행과 TEE key 생성·보관을 설계·구현·시험·운영 acceptance로 확인
 - [ ] UTC(k), accuracy/drift stop, single active key, 24시간 sync 시도와 공인 leap-second 통지 시 synchronization 유지를 runtime/운영 acceptance로 확인
@@ -993,7 +1008,7 @@ Claim Signing의 JSON field name, schema와 cardinality는 [전용 request-body 
 - [CPL schema](../conformance-public/schemas/conforming-products/conforming-products-list.schema.json)와 [Companion Guide](../conformance-public/schemas/conforming-products/Companion%20Guide%20for%20the%20C2PA%20Conforming%20Products%20List.md): Claim eligibility field 의미
 - [C2PA OID registry](../conformance-public/schemas/mib/oid.txt): C2PA policy, Claim EKU, AL과 CPL extension OID
 
-### 13.2 직접 적용한 공식 CSR/certificate profile
+### 13.2 참고용 공식 CSR schema와 최종 certificate profile
 
 - Claim AL1: [CSR schema](../conformance-public/docs/v0.2/cert-profiles/claimSigningLeaf.al1.csr.schema.json), [certificate schema](../conformance-public/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.schema.json), [summary](../conformance-public/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.yaml)
 - Claim AL2: [CSR schema](../conformance-public/docs/v0.2/cert-profiles/claimSigningLeaf.al2.csr.schema.json), [certificate schema](../conformance-public/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.schema.json), [summary](../conformance-public/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.yaml)

@@ -9,7 +9,7 @@ ISSUE =
   secure credential과 GP-instance authentication PASS
   AND Subscriber I/A/V·representative authority·Agreement current
   AND authenticated current CPL과 requested profile/AL eligible
-  AND CSR profile·signature/PoP·new-key predicate PASS
+  AND CSR 구조·SPKI·프로젝트 Subject 입력 정책·signature/PoP·new-key predicate PASS
   AND (AL1 Evidence field absent
        OR AL2 provider trust·freshness·binding·O.1..O.4 all PASS)
   AND final certificate profile·issuer·status readiness PASS
@@ -34,7 +34,7 @@ Locator의 CP/GSPR/Program은 `conformance-public@2466172859fad1215f7aaf7e3768b4
 | `REQ-CPL-01` | CPL product type/status/DN/record/max AL과 조건부 method | CP:457-467,491-527; CPL schema:24-110,554-562 | `RB-02,RB-04,SG-03,SG-08` |
 | `REQ-ALSET-01` | 수용 product에는 CPL maximum 이하 Claim AL 경로 제공 | CP:465-467; Program:440-445 | profile enablement gate |
 | `REQ-POP-01` | requested key ownership과 CSR signature/PoP | CP:471-473; RFC 2986 §3,§4.1-4.2 | `RB-07..RB-10,SG-04,SG-08` |
-| `REQ-DN-01` | CSR의 구조·C/O/CN, 발급 전 제품/CPL DN·권한 확인과 최종 Subject의 CPL DN·ASCII·unique instance ID 금지를 분리. 식별 입력 위치 및 CSR DN 불일치 처리는 CA 절차의 선택이며 공통 exact-match gate로 고정하지 않음 | CSR schemas:692-740; CP:381-405,461-509,1542-1556; [02 §3.1.1](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification) | `RB-04,RB-10,SG-02,SG-03,SG-04,SG-07` |
+| `REQ-DN-01` | CSR의 구조·프로젝트 C/O/CN 입력 정책, 발급 전 제품/CPL DN·권한 확인과 최종 Subject의 CPL DN·ASCII·unique instance ID 금지를 분리. 식별 입력 위치 및 CSR DN 불일치 처리는 CA 절차의 선택이며 공통 exact-match gate로 고정하지 않음 | CSR schemas:692-740; CP:381-405,461-509,1542-1556; [02 §3.1.1](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-subject-identification) | `RB-04,RB-10,SG-02,SG-03,SG-04,SG-07` |
 | `REQ-AL1-01` | AL1은 secure credential 기반 GP instance 인증; hardware Evidence count 미규정 | CP:1686-1695; GSPR:330-358 | `RB-11,SG-01` |
 | `REQ-AL2-O1` | hardware-backed GP product-instance identity | CP:1712-1714; GSPR:360-376; Android CP:1799-1801,1812-1814 | `RB-12..RB-14,SG-06`; 02 §13의 `AK-04..AK-06,AK-17..AK-19` 및 공통 검증 |
 | `REQ-AL2-O2` | requested key의 hardware generation/storage/possession | CP:1716-1718; GSPR:422-472; Android CP:1808 | `RB-12..RB-14,SG-06`; `AK-13` 및 hardware security level·증명키/CSR/PoP 결속 |
@@ -44,7 +44,7 @@ Locator의 CP/GSPR/Program은 `conformance-public@2466172859fad1215f7aaf7e3768b4
 | `REQ-ANDROID-02` | Android Claim Signing key profile의 목적·algorithm·size·digest·padding·curve | CP:1802-1807; AOSP `#authorizationlist-fields` | `RB-10,SG-04,SG-06,SG-07`; `AK-07..AK-12`, `OD-ALG-01` |
 | `REQ-O5O6-01` | issuance Dynamic Evidence는 O.5/O.6 `No stipulation`; GSPR runtime/static은 별도이며 O.5 AL2는 모든 class, O.6은 Distributed/Backend | CP:1753-1759; GSPR:324-328,638-744; GPSA Template:327-343 | `RT-01`; request body에는 추가 artifact 없음 |
 | `REQ-FRESH-01` | challenge-using key/platform flow는 CA nonce exact match와 provider 권고 준수 | CP:1764-1768; Android CP:1798; Android Builder `setAttestationChallenge(byte[])` | `SG-06`; Android `AK-03`와 02 §13.3, 구체 TTL 등은 `OD-FRESHNESS-01` |
-| `REQ-CSR-01` | AL1/AL2 CSR 필수 ASN.1 member, Subject/SPKI OID·parameters 및 extensionRequest의 OID·타입·criticality·값 | AL1/AL2 CSR:683-1336; RFC 2986 §4, RFC 2985 §5.4.2, RFC 5280 §4.2, RFC 3279 §2.3.1, RFC 5480 §2, RFC 8410 §§3-4 | `RB-07..RB-10,SG-04,SG-07`; [02 §3.3~§3.4](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-input-fields) |
+| `REQ-CSR-01` | AL1/AL2 CSR 필수 ASN.1 member, Subject/SPKI OID·parameters 및 PoP. 요청 확장 프로파일 검사 생략; 외부 구조·중복/모호성 parser 정책 유지 | AL1/AL2 CSR:683-1336; RFC 2986 §4, RFC 2985 §5.4.2, RFC 5280 §4.2, RFC 3279 §2.3.1, RFC 5480 §2, RFC 8410 §§3-4 | `RB-07..RB-10,SG-04,SG-07`; [02 §3.3~§3.4](02-CSR-and-Dynamic-Evidence-Requirements.md#csr-input-fields) |
 | `REQ-CERT-01` | AL1/AL2 final Leaf fields와 validity | CP:1204-1331; AL1/AL2 cert schemas:715-1535 | `SG-07,SG-08` |
 | `REQ-KEY-01` | Subscriber key generation·exclusive control·no export/share; same-key renewal 금지 | CP:537,563-579,815-823; GSPR:378-472 | `RB-03,RB-05,RB-06,SG-05,RT-01` |
 | `REQ-REKEY-01` | re-key는 새 key/CSR과 신규 신청과 같은 issuance auth·PoP | CP:475-481,573-579 | AL1/AL2 REKEY body 전체와 `SG-01..SG-08` |
@@ -58,21 +58,29 @@ Locator의 CP/GSPR/Program은 `conformance-public@2466172859fad1215f7aaf7e3768b4
 | `SG-01` | credential + instance | 승인된 secure credential이 Subscriber와 적격 GP instance에 결속되고 현재 유효함 | `OD-AUTH-01` |
 | `SG-02` | onboarding authority | Subscriber/representative I/A/V, ≤398일 재인증과 legally valid/current Agreement가 유효함 | `OD-IAV-01` |
 | `SG-03` | conformance/CPL | 인증된 신청자·GP instance와 발급 대상 제품을 결속하고 authenticated current CPL의 applicant, `generatorProduct`, `conformant`, DN, record ID, `minVersion`, max AL과 조건부 method를 확인. CSR Subject가 유일한 식별 입력이라고 가정하지 않으며 silent downgrade가 없음 | `OD-CPL-01`, `OD-DOWNGRADE-01[AL2]`, `OD-REVOCATION-01` |
-| `SG-04` | CSR | strict DER PKCS#10 한 개, 02 §3.3~§3.4 필수 member/OID/type/parameters/criticality/value, signature/PoP, Subject 구조·C/O/CN 및 SPKI/extension profile이 유효함. CSR DN 차이는 02 §3.1.1의 절차로 처리하고 SG-03의 대상·권한 확인을 우회하지 않음 | `OD-SOURCE-01`, `OD-LIMIT-01`, `OD-ALG-01`, `OD-CPL-01` |
+| `SG-04` | CSR | strict DER PKCS#10 한 개, 02 §3.3~§3.4 필수 member/구조/SPKI parameters, signature/PoP, Subject 구조·프로젝트 C/O/CN 입력 정책 및 최종 인증서의 SPKI 조건이 유효함. CSR 확장은 사용하지 않으며 누락·값·criticality 프로파일 검사는 생략함. CSR DN 차이는 02 §3.1.1의 절차로 처리하고 SG-03의 대상·권한 확인을 우회하지 않음 | `OD-SOURCE-01`, `OD-LIMIT-01`, `OD-ALG-01`, `OD-CPL-01` |
 | `SG-05` | lifecycle/key | INITIAL/REKEY 의미와 server issuance history가 일치하고 승인된 same-public-key 판별 정책에서 새 key임 | `OD-BODY-01`, `OD-KEY-01`, `OD-LIFECYCLE-01[REKEY]` |
 | `SG-06` | AL2 Evidence | provider parser/signature/chain/status/freshness/audience/subject-key binding과 O.1/O.2/O.3/O.4 각각이 PASS; Android는 02 §13의 `AK-01..AK-21`, §13.6의 필수 구조·타입·조건부 provider 필드, root-nearest 확장 및 전체 reference coverage 적용 | `OD-SOURCE-01`, `OD-LIMIT-01`, `OD-ALG-01`, `OD-EVIDENCE-01`, `OD-FRESHNESS-01`, `OD-REFERENCE-01`, `OD-REVOCATION-01` |
 | `SG-07` | certificate construction | CSR extension을 복사하지 않고 authoritative TBS를 구성해 official cert schema, validity, issuer, serial과 OCSP readiness를 통과 | `OD-SOURCE-01`, `OD-ALG-01`, `OD-VALIDITY-01`, `OD-REVOCATION-01` |
 | `SG-08` | pre-issuance currentness | 서명 직전에 applicable authoritative source와 decision version이 여전히 current이고 body/CSR/Evidence hash가 바뀌지 않음 | `OD-SOURCE-01`, `OD-BODY-01`, `OD-AUTH-01`, `OD-IAV-01`, `OD-CPL-01`, `OD-ALG-01`, `OD-VALIDITY-01`, `OD-EVIDENCE-01[AL2]`, `OD-FRESHNESS-01[AL2]`, `OD-REFERENCE-01[AL2]`, `OD-KEY-01`, `OD-DOWNGRADE-01[AL2]`, `OD-LIFECYCLE-01[REKEY]`, `OD-RETENTION-01`, `OD-REVOCATION-01` |
 | `RT-01` | runtime | private-key boundary/용도, rotation, O.3~O.6, conformance/status refresh와 incident sign-stop을 지속 강제 | `OD-REVOCATION-01`, `OD-RUNTIME-01` |
 
-권장 의존 순서는 credential/path authentication → strict body parse → body value authorization → onboarding/CPL currentness → CSR PoP/profile → AL별 Evidence → lifecycle/key history → authoritative certificate construction → pre-issuance currentness다. 이는 내부 구현의 fail-closed data dependency이며 네트워크 API나 상태 머신을 규정하지 않는다.
+권장 의존 순서는 credential/path authentication → strict body parse → body value authorization → onboarding/CPL currentness → CSR 구조·PoP·SPKI·Subject 입력 정책 → AL별 Evidence → lifecycle/key history → authoritative certificate construction → pre-issuance currentness다. 이는 내부 구현의 fail-closed data dependency이며 네트워크 API나 상태 머신을 규정하지 않는다.
+
+CSR 확장 검증 생략의 확인 항목은 다음과 같다. 아래는 문서상의 검증 조건이며 실행 결과가 아니다.
+
+- 확장이 없는 유효한 CSR은 나머지 발급 조건을 통과하면 수락한다.
+- CSR에 다른 AL/CPL ID·EKU·URI 또는 unknown critical 요청이 있어도 사용하지 않으며, 같은 검증된 발급 맥락에서는 최종 확장 구성이 바뀌지 않는다.
+- 실제 요청된 profile이 CPL 최대 AL을 초과하거나 AL2 증거가 실패하면, CSR 확장 유무와 관계없이 거부한다.
+- CSR PoP 실패 또는 AL2 attestation 인증서의 확장·키 결속 실패는 계속 거부한다.
+- 최종 인증서의 필수 확장 누락·값·criticality 오류는 계속 거부한다.
 
 Subject 관련 검증 예시는 다음을 구분한다. 이는 향후 검증 조건이며 실행한 테스트 결과가 아니다.
 
-- CSR C/O/CN 누락·잘못된 ASN.1 또는 PoP 실패는 거부한다.
+- 프로젝트 입력 정책상 CSR C/O/CN 누락·잘못된 ASN.1 또는 PoP 실패는 거부한다.
 - CSR Subject를 제품 식별에 사용하는 절차에서 제품/CPL record·권한이 확인되지 않으면 보완 전 발급하지 않는다.
 - `cplRecordId`나 인증된 등록정보로 동일 요청의 제품·권한을 확인하는 절차에서는 CSR DN 차이만을 공통 자동 거부 조건으로 추가하지 않는다. CA가 정한 불일치 처리와 제출정보 정확성 확인 결과를 검증한다.
-- 다른 Subscriber의 CPL record로 바꿔치기하거나 최종 인증서 DN이 확인된 CPL DN과 다른 경우는 거부한다. Subject 식별 방식 변경으로 AL/CPL extension, Evidence 또는 원본 CSR hash 결속을 완화하지 않는다.
+- 다른 Subscriber의 CPL record로 바꿔치기하거나 최종 인증서 DN이 확인된 CPL DN과 다른 경우는 거부한다. Subject 식별 방식 변경으로 최종 인증서의 AL/CPL extension, Evidence 또는 원본 CSR hash 결속을 완화하지 않는다.
 
 ## 4. Pre-issuance invariant set
 
@@ -81,7 +89,7 @@ Subject 관련 검증 예시는 다음을 구분한다. 이는 향후 검증 조
 | `INV-AUTH` | credential, GP instance, Subscriber와 representative approval current | 발급 중단 |
 | `INV-AGREEMENT` | legally valid/current Agreement record가 동일 Subscriber와 발급 범위에 결속 | 발급 중단 |
 | `INV-CPL` | exact CPL record/applicant/product/status/DN/max AL/method pass | profile 발급 중단 |
-| `INV-CSR` | 저장된 DER hash, PoP, Subject/SPKI/extensions unchanged | 보안 사건으로 격리 |
+| `INV-CSR` | 저장된 원본 DER hash와 PoP 유효; Subject/SPKI 및 미사용 확장을 포함한 원본 bytes unchanged | 보안 사건으로 격리 |
 | `INV-AL1` | Evidence item이 없고 GP-instance authentication pass | 발급 중단 |
 | `INV-AL2` | Evidence hashes, trust/freshness/binding과 O.1~O.4 pass/current | AL2 발급 중단 |
 | `INV-LIFECYCLE` | INITIAL은 prior issuance 없음; REKEY는 same-lineage predecessor와 새 key | 발급 중단 |

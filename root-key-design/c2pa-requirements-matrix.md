@@ -9,8 +9,8 @@
 | ID | 원문 조건·근거 | 설계 반영 위치 | 현재 상태와 남은 작업 |
 |---|---|---|---|
 | M01 | [Certificate Profiles][CP-PROFILES], [Key Pair and Certificate Usage][CP-USAGE]: 용도별 CA·leaf 프로파일과 허용 키 사용을 준수 | [계층](operating-model.md#hierarchy), [발급 검사](operating-model.md#issuance) | 문서 반영. 실제 인증서의 알고리즘·확장·pathLen·체인 프로파일 검사 필요. TSA 계층은 V02 미확인 |
-| M02 | [Certificate Issuance][CP-ISSUANCE], [Procedural Controls][CP-PROCEDURAL]: Root의 모든 인증서 서명은 2인 참여, 그중 1인의 명시적 실행 명령. CA 인증서 발급은 문서화된 다인 통제·split knowledge 원칙 적용 | [2인 통제 대안](dual-control-options.md) | 문서 반영. HSM quorum과 절차의 조합이 단독 서명·관리·복구 우회를 막는지 V03 PoC 필요. 2-of-3은 설계 후보 |
-| M03 | [CA 키 생성][CP-KEYGEN] 및 [Program의 Certificate Policy][PROGRAM-CP]: ceremony script와 생성 증빙. 등록 대상은 독립 입회·서명된 script 또는 명시된 WebTrust 예외 조건 | [생성·등록 증빙](dual-control-options.md#c2pa-controls) | 문서 보완. 실제 ceremony·프로파일 검증·등록 증빙 미작성. CP의 기록만으로 Program의 독립 입회를 대체하지 않음 |
+| M02 | [Certificate Issuance][CP-ISSUANCE], [Procedural Controls][CP-PROCEDURAL]: Root의 모든 인증서 서명은 2인 참여, 그중 1인의 명시적 실행 명령. CA 인증서 발급은 문서화된 다인 통제·split knowledge 원칙 적용 | [2인 통제 대안](dual-control-options.md) | 문서 반영. HSM quorum과 절차의 조합이 단독 서명·관리·복구 우회를 막는지 V03 PoC 필요. N/M 값은 미정 |
+| M03 | [CA 키 생성][CP-KEYGEN] 및 [Program의 Certificate Policy][PROGRAM-CP]: ceremony script와 생성 증빙. 등록 대상은 독립 입회·서명된 script 또는 명시된 WebTrust 예외 조건 | [생성·등록 증빙](key-ceremony.md#생성-전-확인) | 문서 보완. 실제 ceremony·프로파일 검증·등록 증빙 미작성. CP의 기록만으로 Program의 독립 입회를 대체하지 않음 |
 | M04 | [Certificate Renewal][CP-RENEWAL], [Re-key][CP-REKEY], [Modification][CP-MODIFICATION]: 해당 CA가 이미 발급한 키로 새 인증서 발급 금지. Subscriber re-key는 신규 검증, 발급 인증서 수정 금지 | [새 키로 교체](operating-model.md#rekey), [신뢰 앵커 교체](trust-anchor-migration.md) | 문서 보완. 동일 키 재발급 거부, 같은 인증서 재전달, 새 키 교체, 불확정 서명 복구 시험 필요 |
 | M05 | [Repositories][CP-REPOSITORIES]: 모든 발급 인증서의 serial·subject·유효기간·확장과 값·폐지 상태를 만료 후 최소 1년 보존. 보관소 접근 통제·정기 감사 | [기록 보존](operating-model.md#records) | 문서 보완. 저장·보존·검색·삭제 정책과 복원 시험 필요. 조기 폐지로 보존 기산점을 앞당기지 않음 |
 | M06 | [Certificate Status Services][CP-STATUS]: Claim OCSP는 필수 기록 보존 기간까지 제공. 하위 CA·TS 인증서는 OCSP가 없으면 CRL 필요 | [OCSP 운영](operating-model.md#ocsp) | 문서 보완. 만료·CA 교체·운영 종료 후에도 유효한 응답을 제공할 원장·응답자 교체·이관 검증 필요. CRL 미사용 결정 유지 |
@@ -35,13 +35,23 @@
 | V03: CloudHSM 기반 2인 통제 | 설계 대안과 실패 기준이 있으며 실환경 PoC는 수행하지 않았다. | [PoC 기준](dual-control-options.md)에 따른 단독 서명·관리자 우회·복구·승인 대상 결합·알고리즘별 결과 |
 | V04/V05: 단말 교체·PQC | 갱신·복구 구조 제안은 있으나 단말 저장 위치·알고리즘·부팅 권한은 조사하지 않았다. | [교체 설계](trust-anchor-migration.md)의 제품별 능력 조사, 실제 검증기·HSM·C2PA 프로파일 지원 확인 |
 
-## 상세 운영 문서로 이어질 항목
+## 운영·감사 준비
 
-이 대응표로 CP 전체 심사를 완료했다고 판단하지 않는다. 물리·네트워크·인력 보안, 역할 분리와 교육·권한 검토, 변경 관리, 세부 인증서 프로파일과 발급 자격 검증, 공개 CPS·계약·등록 자료 등은 적용 범위별 상세 절차와 실제 증빙을 추가해야 한다. 관련 원문은 [Facility, Management, and Operational Controls][CP-OPERATIONS]와 [Program][PROGRAM]에서 이어서 확인한다.
+각 항목에 **적용 원문·조항 → Root/First 적용 판단 → 담당 역할 → 절차·설정 → 증거 위치·검토 결과 → 미비점·조치**를 연결한다. 현재는 이 연결과 실환경 증빙이 미완료다.
 
-운영 전에는 각 해당 항목에 정책/절차 버전, 역할, 증빙 위치, 수행일, 검토 결과와 결함 조치를 연결한다. 조직명·인명 배정은 이후에 해도 되지만 문서에 필요한 역할과 통제 자체를 삭제하지 않는다. 인계 대상의 미충족 조건은 인증서 발급 또는 운영 시작을 보류하는 조건으로 처리한다.
+| 분야 | 준비할 산출물 | 준비 시점 |
+|---|---|---|
+| 적용 범위·공개 정책 | 조항별 적용표, 공개 CPS 또는 협의된 고지, 해석 확인 | 생성에 적용할 관행은 생성 전, 나머지는 해당 운영·등록 전 |
+| 생성·인증서 검증 | 승인된 스크립트·설정표·입회·로그·인증서 검사 | [Ceremony 시작 조건](key-ceremony.md#생성-전-확인)에 따라 준비·수행 |
+| 인력·접근·보안 | 역할·교육·권한 검토, 실제 모듈·시스템·네트워크 설정과 점검 기록 | 키 생성 전부터 지속 |
+| 기록·변경·사고 대응 | 보존·검색·복구·정기 검토, 변경 승인과 사고 처리 절차 | 생성일부터 기록·보호, 이후 정기 수행 |
+| 백업·복구·종료 | 책임·보호된 사본·off-site 배치·공식 계획과 검토 증거 | 생성 직후 보호 책임 연결, 계획에 따라 지속 |
+| 발급·폐지·OCSP | 발급 대상별 절차, 상태 공개·인계·장애 처리 책임 | 해당 인증서 발급·상태 서비스 제공 전 |
+| 감사·등록·시정 | 감사 계획, 프로파일·생성 증거, 신청·검토·시정·승인 기록 | 등록 제출·운영 일정에 맞춰 확인 |
 
-이 설계의 응답 유효기간 24시간·재생성 6시간, 응답자 인증서 30일, HSM quorum 2-of-3, 복구 목표 1영업일 및 복구 시험 연 1회 제안은 CP의 의무 수치와 구분한다. 반면 발급 기록의 만료 후 최소 1년, 백업 계획의 연간 검토, on-device TSA의 적어도 24시간마다 동기화 시도는 이 버전의 원문 조건이다.
+근거는 [CP 운영 통제][CP-OPERATIONS], [CP 감사](../conformance-public/docs/v0.2/C2PA%20Certificate%20Policy.md#compliance-audits), [Program][PROGRAM]이다. CP의 독립 제3자 감사 SHOULD를 일률적인 연례 WebTrust 의무로 바꾸지 않는다. 이번 내부 감사 범위와 C2PA의 의무·증거 수용 판단은 구분한다. 생성 당시 필요한 증거는 사후 제출 준비로 미루지 않으며, 준비되지 않은 항목은 해당 단계의 시작·완료를 보류한다.
+
+이 설계의 응답 유효기간 24시간·재생성 6시간, 응답자 인증서 30일, 복구 목표 1영업일 및 복구 시험 연 1회 제안은 CP의 의무 수치와 구분한다. 반면 발급 기록의 만료 후 최소 1년, 백업 계획의 연간 검토, on-device TSA의 적어도 24시간마다 동기화 시도는 이 버전의 원문 조건이다.
 
 [CP-PROFILES]: https://github.com/c2pa-org/conformance-public/blob/7b2fcb3ca5f60bbd4c6dfc6ccfaccaaa5ff9fc50/docs/v0.2/C2PA%20Certificate%20Policy.md#certificate-profiles
 [CP-USAGE]: https://github.com/c2pa-org/conformance-public/blob/7b2fcb3ca5f60bbd4c6dfc6ccfaccaaa5ff9fc50/docs/v0.2/C2PA%20Certificate%20Policy.md#key-pair-and-certificate-usage

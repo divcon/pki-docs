@@ -105,7 +105,7 @@ Provider artifact의 표준 개수와 project JSON array cardinality는 다른 �
 | ID | field | applicable body | cardinality / format | validation and server binding | authority · modality · source / decision |
 |---|---|---|---|---|---|
 | `RB-01` | `requestSchemaVersion` | INITIAL+REKEY / AL1+AL2 | `1`; exact string `2026-09-04` | 현재 계약의 고정 version과 exact match; 임의 날짜 불가 | `PROJECT REQUIRED`; `OD-BODY-01` |
-| `RB-02` | `certificateProfile` | INITIAL+REKEY / AL1+AL2 | `1`; exact AL1 또는 AL2 profile ID | profile과 CSR certificate policy/AL extension 조합이 일치; CPL maximum을 넘지 않으며 AL2 실패를 AL1로 변환하지 않음 | 의미는 `C2PA REQUIRED` CP:491-497; AL별 CSR extension은 AL1/AL2 CSR:1051-1179; wrapper는 `PROJECT`; `OD-BODY-01`, `OD-CPL-01`, `OD-DOWNGRADE-01[AL2]` |
+| `RB-02` | `certificateProfile` | INITIAL+REKEY / AL1+AL2 | `1`; exact AL1 또는 AL2 profile ID | 요청 profile이 CPL maximum을 넘지 않으며 AL2 실패를 AL1로 변환하지 않음. CSR policy/AL 요청값은 사용하지 않음 | 의미는 `C2PA REQUIRED` CP:491-497; 최종 AL extension은 CP:1257-1266,1322-1331; wrapper는 `PROJECT`; `OD-BODY-01`, `OD-CPL-01`, `OD-DOWNGRADE-01[AL2]` |
 | `RB-03` | `operation` | INITIAL+REKEY / AL1+AL2 | `1`; `INITIAL` 또는 `REKEY` | INITIAL은 prior issuance가 없는 server lineage, REKEY는 exact predecessor와 새 key | lifecycle 의미 CP:479-481,573-579; token은 `PROJECT`; `OD-BODY-01`, `OD-LIFECYCLE-01[REKEY]` |
 | `RB-04` | `cplRecordId` | INITIAL+REKEY / AL1+AL2 | `1`; CPL schema의 lowercase UUIDv7 | authenticated current CPL의 exact record에 resolve하고 Subscriber/product/DN/max AL을 server state에서 검증 | application meaning `C2PA REQUIRED` CP:461-467,491-497; CPL schema:11-14; wrapper `PROJECT`; `OD-BODY-01`, `OD-CPL-01` |
 | `RB-05` | `replacesCertificate` | INITIAL | `0`, field 금지 | INITIAL lineage에 과거 발급이 없어야 함 | `PROJECT`; `OD-BODY-01` |
@@ -118,7 +118,7 @@ Provider artifact의 표준 개수와 project JSON array cardinality는 다른 �
 | `RB-07` | `csr` | INITIAL+REKEY / AL1+AL2 | `1` object | 정확히 한 PKCS#10 object; trailing bytes와 ambiguous parse 거부 | `C2PA REQUIRED` CP:471-473; RFC 2986 §4; container `PROJECT`; `OD-BODY-01` |
 | `RB-08` | `csr.mediaType` | INITIAL+REKEY / AL1+AL2 | exact `application/pkcs10` | 다른 media type 거부 | `PROJECT REQUIRED`; `OD-BODY-01` |
 | `RB-09` | `csr.encoding` | INITIAL+REKEY / AL1+AL2 | exact `base64` | canonical base64만 허용하고 strict DER로 decode | `PROJECT REQUIRED`; `OD-BODY-01`, `OD-LIMIT-01` |
-| `RB-10` | `csr.value` | INITIAL+REKEY / AL1+AL2 | `1`; non-empty bounded string | CSR signature/PoP, Subject, SPKI, extensionRequest와 profile schema 검증 | RFC 2986 §3/§4; CP:383-395,473; AL1/AL2 CSR:683-1336; `OD-BODY-01`, `OD-ALG-01`, `OD-LIMIT-01` |
+| `RB-10` | `csr.value` | INITIAL+REKEY / AL1+AL2 | `1`; non-empty bounded string | CSR 구조·signature/PoP·Subject 프로젝트 입력 정책·SPKI 검증. 요청 확장 프로파일 검사는 생략(02 §3.3) | RFC 2986 §3/§4; CP:383-395,473; AL1/AL2 CSR:683-1336; `OD-BODY-01`, `OD-ALG-01`, `OD-LIMIT-01` |
 
 ### 5.3 Evidence field
 
@@ -183,7 +183,7 @@ Android는 `.17`의 signed `attestationChallenge`와 CA가 보관한 요청 범�
 1. Body byte/depth/count limit을 적용하고 JSON을 strict parse한다.
 2. Unknown/duplicate field와 operation/profile별 cardinality를 검사한다.
 3. Server-authoritative Subscriber/CPL/profile approval을 조회한다.
-4. CSR을 strict DER parse하고 signature/PoP, Subject 구조·C/O/CN, SPKI와 extension profile을 검사한다. Subject와 식별된 제품 DN의 차이는 02 §3.1.1의 CA 절차로 판단한다.
+4. CSR을 strict DER parse하고 signature/PoP, Subject 구조·프로젝트 C/O/CN 입력 정책과 SPKI를 검사한다. 요청 확장은 사용하지 않고 프로파일 검사를 생략한다. Subject와 식별된 제품 DN의 차이는 02 §3.1.1의 CA 절차로 판단한다.
 5. AL1은 Evidence field 부재를 확인한다.
 6. AL2는 provider schema/signature/chain/status/freshness/binding과 O.1~O.4 각각을 검사한다.
 7. 발급 직전에 current I/A/V, Agreement, credential/instance, CPL/provider/reference, same-key history, issuer와 final certificate template를 다시 검사한다.

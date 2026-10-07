@@ -15,7 +15,7 @@ C2PA Certificate Policy v0.2가 요구하는 것은 다음과 같이 나뉜다.
 | 안전한 enrollment credential | CA가 secure access credential을 요구 | enrollment request 인증 | credential은 요청에 제시. 구체 형식은 business practices/API가 정함 |
 | 발급 대상 key pair 소유 확인 | CA가 key ownership을 확인. signed CSR 또는 KMS inspection은 예시 | 발급 대상 key마다 확인 | 반드시 payload일 필요는 없음. 이 architecture는 CSR payload를 선택 |
 | TSA 신청자 검증 | TSA certificate issuance는 CA business practices의 identification/authentication/verification을 따름 | issuance 판단 | 아니오. onboarding/사전 심사 등 business practices가 절차를 정함 |
-| TSA Leaf profile | Subject, SPKI, KU/EKU/policy 등 공식 profile 준수 | CSR/발급 결과 검증 | 아니오. 요청 증거가 아니라 발급 profile gate |
+| TSA Leaf profile | Subject, SPKI, KU/EKU/policy 등 공식 profile 준수 | 최종 인증서 검증; CSR 확장은 미사용 | 아니오. 요청 증거가 아니라 발급 profile gate |
 | TSA app의 TEE 실행 | On-Device TSA runtime/구현 요구 | runtime/implementation acceptance | 아니오 |
 | TSU key의 TEE 내 생성·보관 | On-Device TSA runtime/구현 요구 | runtime/implementation acceptance | 아니오 |
 | timestamp 전용 key | TSA runtime/운영 요구 | runtime/operations acceptance | 아니오 |
@@ -29,7 +29,8 @@ C2PA Certificate Policy v0.2가 요구하는 것은 다음과 같이 나뉜다.
   → secure credential로 enrollment 요청
   → 발급 대상 key pair 소유 확인
      (이 설계에서는 DER PKCS#10 CSR 사용)
-  → TSA CSR/profile 및 CA business-practices 검증
+  → CSR 기본 입력·PoP·SPKI 및 CA business-practices 검증
+  → CSR 요청 확장 미사용, CA가 모든 확장 구성·최종 인증서 profile 검증
   → TSA Leaf 발급
 ```
 
@@ -56,7 +57,8 @@ TEE 실행, TEE key confinement, timestamp-only 사용 및 single-active-key는 
 | TSA applicant/operator I/A/V | CA business practices에 따라 필수 | 신규 신청과 동일한 identity validation |
 | key ownership | 필수 | 새 key에 대해 필수 |
 | CSR | 이 architecture가 선택한 기본 PoP 방식 | 새 key의 새 CSR을 쓰는 project policy |
-| TSA CSR/profile 검증 | 필수 | 필수 |
+| CSR 구조·PoP·SPKI·프로젝트 Subject 입력 정책 / 최종 인증서 profile | 필수 | 필수 |
+| CSR 요청 확장 프로파일 검사 | 생략; CA가 모든 확장 생성 | 동일 |
 | Compound Evidence | 기본 profile에는 없음 | 기본 profile에는 없음 |
 | optional CPS attestation profile | 명시적으로 선택한 경우만 | 명시적으로 선택한 경우만 |
 
@@ -84,9 +86,11 @@ CP는 re-key 요청을 신규 신청과 동일한 identity validation으로 처�
 
 ## 5. 문서 구성
 
-CSR Subject의 구조·C/O/CN 검사와 TSA 운영기관·서비스의 식별·인증·권한 확인은 [02 §2.1](02-CSR-and-Attestation-Requirements.md#21-subject)에서 분리한다. Subject 또는 별도 신청·등록정보를 사용하는 방식과 DN 차이 처리는 CA 절차가 정한다. 모든 CSR에 등록 TSA DN 일치를 요구하거나 임의 Subject를 무조건 수락하는 공통 규칙으로 일반화하지 않는다.
+CSR Subject의 구조·프로젝트 C/O/CN 입력 정책 검사와 TSA 운영기관·서비스의 식별·인증·권한 확인은 [02 §2.1](02-CSR-and-Attestation-Requirements.md#21-subject)에서 분리한다. Subject 또는 별도 신청·등록정보를 사용하는 방식과 DN 차이 처리는 CA 절차가 정한다. 모든 CSR에 등록 TSA DN 일치를 요구하거나 임의 Subject를 무조건 수락하는 공통 규칙으로 일반화하지 않는다.
 
 - [01-Enrollment-Request-Contract.md](01-Enrollment-Request-Contract.md): 기본 TSA API와 선택적 확장 경계
+**2026-09-23 CSR 정책:** [사용자 전달 Conformance 회신과 공통 비교표](../02-Certificate-Enrollment.md#csr-extension-policy)에 따라 CSR schema는 참고용으로 분류한다. 모든 CSR 요청 확장을 사용하지 않고 CA가 직접 생성하므로 요청 확장 프로파일 검사는 생략한다. 최종 인증서, I/A/V·PoP·키 보호와 선택한 attestation 검증은 유지한다.
+
 - [02-CSR-and-Attestation-Requirements.md](02-CSR-and-Attestation-Requirements.md): CSR 필수 범위와 optional attestation 규칙
 - [03-Server-Validation-Traceability-and-Gaps.md](03-Server-Validation-Traceability-and-Gaps.md): 서버 validation gate, 원문 추적, 정정된 gap 분류
 - [04-Subagent-Audit-Resolution.md](04-Subagent-Audit-Resolution.md): 이전 결론의 철회 및 감사 결과

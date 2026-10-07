@@ -1,38 +1,18 @@
 # Root Key 설계
 
-Global과 CN이 공유하는 플랫폼 Root를 운영하고, C2PA를 첫 적용 대상으로 삼는다. Root 개인키와 중앙 First ICA 개인키는 Global의 AWS CloudHSM에서 관리하는 방향이다.
+Global과 CN이 공유하는 플랫폼 Root를 운영하고 C2PA를 첫 적용 대상으로 삼는다. 구조는 **Root → 공용 First ICA → 하위 Issuing ICA → leaf**다.
 
-2026-09-16 KST의 요구사항과 공식 원문 검토를 반영한 **검토용 설계 초안**이다. 사용자 확정 사항, 설계 제안, 외부 해석 및 구현 검증이 필요한 사항을 구분한다. 운영 조직·담당자 지정은 보류한다.
-
-## 문서
+Root와 First를 새로 만드는 절차는 [Key Ceremony](key-ceremony.md)에서 시작한다. 현재는 설계안이며 생성 통제·운영 파라미터·참여자와 도구 검증이 남아 있다.
 
 | 문서 | 내용 |
 |---|---|
-| [Root Key Management System 설계 시작 가이드](design-start-guide.md) | 9개 설계 항목과 산출물·완료 기준·상태, 구체적인 작성 원칙과 작성 순서 |
-| [초기 메모](rough_requirements.md) | 사용자가 작성한 원문 |
-| [요구사항과 결정 상태](requirements.md) | 추가 결정, 범위, 보류 및 검증 과제 |
-| [설계 문답 기록](design-dialogue-log.md) | 질문·사용자 답변 원문과 관련 검토·결정 링크 |
-| [설계 검토 기록](reviews/README.md) | 선택지, 비교 전제·근거, 판단 과정과 남은 질문 |
-| [확정된 설계 결정](decisions/README.md) | 기존 확정 사항 색인과 새로 확정한 선택·이유·조건·반영 위치 |
-| [운영 모델](operating-model.md) | CA 계층, Global/CN 흐름, TSA 인계, OCSP, 수명주기·복구 |
-| [C2PA 요구사항 대응표](c2pa-requirements-matrix.md) | 근거 조항, 설계 반영 위치, 구현·인계 증빙과 해석 미확인 항목 |
-| [2인 통제 대안](dual-control-options.md) | 세 가지 방식, 권고안, 우회 경로와 검증 기준 |
-| [신뢰 앵커 교체와 양자내성 전환](trust-anchor-migration.md) | 기존 단말 FOTA, 별도 신뢰 목록 갱신, 정상 교체·침해 복구·PQC |
-| [원문 자료 목록](../references/root-key-sources.md) | 적용 원문, 버전, 확인일 및 범위 |
-| [Root·ICA C2PA 요구사항 분석 보고서](conformance-analysis/README.md) | 키·인증서, 운영, 세레모니, 등록 증거의 요구사항과 공식 근거, 설계 반영 후보 및 검토 결과 |
+| [Key Ceremony](key-ceremony.md) | 준비·생성·발급·종료 절차, 생성 전 확인, 증거와 중단 처리, 남은 결정 |
+| [CA 앱 기능](ca-software-requirements.md) | 구현할 기능, 외부 책임, 준비 시점, 수용 시험과 원문 대응 |
+| [다인 통제](dual-control-options.md) | 생성·서명·관리자 통제, CLI 세션과 승인 키, 우회 시험 |
+| [요구사항과 확정 범위](requirements.md) | 확정된 구성·운영 조건과 해석 확인 사항 |
+| [운영 모델](operating-model.md) | CA 계층, 하위 ICA 관리·인계, Global/CN 발급, OCSP·기록·백업 |
+| [신뢰 앵커 교체](trust-anchor-migration.md) | 단말 신뢰 갱신, 침해 복구와 PQC 전환 |
+| [C2PA 요구사항 대응표](c2pa-requirements-matrix.md) | 원문 요구의 설계 반영 위치와 남은 운영·감사 증빙 |
+| [Conformance 분석](conformance-analysis/README.md) | 원문 조항별 키·프로파일·운영·ceremony·등록 요구와 해석 차이 |
 
-## 우선 제안
-
-1. 저빈도 CA 서명은 CloudHSM 다인 승인과 작업 시 실행하는 전용 서명 환경으로 시작한다. Lambda는 접수·승인 기록·배포를 담당하는 후보로 둔다.
-2. OCSP는 발급 CA별로 직접 위임한 응답자 인증서를 사용한다. 하나의 공통 OCSP ICA가 전체 계층의 응답을 서명하는 구조는 채택하지 않는다.
-3. 기존 단말에는 FOTA로 신뢰 저장소 갱신 기능을 도입하고, 이후에는 인증된 신뢰 목록을 펌웨어와 별도로 갱신한다. 변경 불가능한 ROM/OTP 키는 별도 제약으로 다룬다.
-
-이는 사용자 승인으로 확정된 구현 선택이 아니다. 실서비스 인증서·키·클라우드 자원은 만들지 않았다. CloudHSM PoC, 단말 능력 확인 및 문서상 모호한 프로파일 해석은 아래 상세 문서의 검증 항목으로 남아 있다.
-
-## C2PA 검토 상태
-
-같은 키로 인증서 갱신 금지, 만료 후 최소 1년의 발급 기록 보존과 Claim OCSP 제공, 백업·복구 계획의 연간 검토, Phone/TV의 구체적인 TSA 인계 조건을 설계에 반영했다. 등록 대상의 독립 입회·서명된 키 생성 script, 하위 CA 발급·폐지 조건과 공개 정책도 연결했다.
-
-이는 **문서 누락 보완**이며 실제 C2PA 적합성 확인 완료를 뜻하지 않는다. 상위 미등록 Root의 적용 범위(V01), TSA First→Issuing 프로파일 해석(V02), HSM 다인 통제와 플랫폼 구현 증빙이 남아 있다. 대응표는 이번 Root/First 운영 검토 범위를 추적하며 CP 전체 심사 체크리스트를 대체하지 않는다.
-
-작성과 근거 확인은 [프로젝트 지침](../AGENTS.md)을 따른다. 이 디렉터리의 문서를 표준·규격의 독립적인 사실 근거로 사용하지 않는다.
+정책 근거는 [conformance-public](../conformance-public/docs/v0.2/README.md)과 [specifications](../specifications/README.md)의 원문으로 확인한다. 출처·버전은 [자료 목록](../references/root-key-sources.md)과 [분석의 조사 기준](conformance-analysis/00-sources-and-scope.md)에 있다.

@@ -344,12 +344,12 @@ OCSP Responder Leaf는 위 공통 CA key size를 상속하지 않는다. Respond
 
 ### 4.4 CA CSR과 CA certificate 발급 gate
 
-Root, First Intermediate, Claim ICA와 TSA ICA key에는 3.4절의 C2PA CA-key cryptographic-module 통제를 적용한다. OCSP responder key를 HSM 또는 승인 cryptographic boundary에서 생성·사용하는 것은 이 project의 `ARCH-DECISION`이다. 각 key의 PKCS#10 CSR은 다음 gate를 통과한다.
+Root, First Intermediate, Claim ICA와 TSA ICA key에는 3.4절의 C2PA CA-key cryptographic-module 통제를 적용한다. OCSP responder key를 HSM 또는 승인 cryptographic boundary에서 생성·사용하는 것은 이 project의 `ARCH-DECISION`이다. 각 key의 PKCS#10 CSR은 다음 gate를 통과한다. 이 절의 CA/OCSP CSR schema 검사는 프로젝트가 선택한 ceremony 입력 정책이며 C2PA 공통 의무가 아니다. Claim Signing/TSA Subscriber Leaf는 [CSR 확장 미사용 정책](02-Certificate-Enrollment.md#csr-extension-policy)을 적용하며 아래 요청 확장 검사를 전이하지 않는다.
 
 1. raw DER가 trailing data 없는 단일 PKCS#10 object인지 확인한다.
 2. CSR `CertificationRequestInfo` signature를 CSR SPKI로 실제 검증한다.
 3. duplicate attribute/extension, ambiguous encoding과 unknown critical request를 거부한다.
-4. decoded CSR을 해당 공식 `*.csr.schema.json`과 고정 digest로 검증한다.
+4. 프로젝트 ceremony 입력 정책으로 채택한 참고용 `*.csr.schema.json`과 고정 digest로 decoded CSR을 검증한다.
 5. Subject, key algorithm/size/curve, BC/KU/EKU/policy와 AIA/CDP 요청을 profile과 비교한다.
 6. CSR requested extension을 최종 certificate에 복사하지 않고 CA-controlled template을 다시 구성한다.
 7. Issuer, serial, validity, SKI, AKI, AIA/CDP와 policy는 ceremony-approved profile에서 결정한다.
@@ -487,7 +487,7 @@ PREPARED → CERTIFIED → TRUST_PUBLISHED
 ```
 
 1. 새 HSM key와 backup을 ceremony로 생성한다.
-2. CA CSR signature/PoP와 공식 CSR schema를 검증한다.
+2. CA CSR signature/PoP와 §4.4에서 프로젝트 ceremony 입력 정책으로 채택한 CSR schema를 검증한다.
 3. Parent가 새 CA certificate를 발급하고 4.5절의 3중 gate를 수행한다.
 4. AIA/OCSP/CRL endpoint와 chain retrieval을 먼저 게시·시험한다.
 5. 필요한 C2PA Trust List/TSA Trust List 등록과 active status를 확인한다.

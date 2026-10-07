@@ -171,14 +171,14 @@ CSR의 일반 attribute나 attestation payload에 넣지 않을 내용:
 - TA UUID, measurement, TCB, debug 상태
 - Attestation 인증서 체인
 
-공식 C2PA `tsaLeaf.csr.schema.json`에 따라 CSR의 `extensionRequest`에는 다음 값을 요청해야 한다. CA는 요청의 존재와 값을 schema로 검증하지만 그대로 신뢰하거나 복사하지 않고 최종 TSA Leaf를 독립적으로 구성한다.
+CSR schema는 참고용이다. [현행 공통 정책](../02-Certificate-Enrollment.md#csr-extension-policy)에 따라 `extensionRequest`는 생략할 수 있고 모든 CSR 요청 확장은 사용하지 않는다. 다음은 CA가 직접 생성·검증하는 **최종 TSA Leaf**의 주요 확장값이다.
 
 - `BasicConstraints`: critical, `cA=false`
 - `KeyUsage`: critical, `digitalSignature`, `contentCommitment`
 - `ExtendedKeyUsage`: critical, 정확히 `id-kp-timeStamping`
 - C2PA TSA Certificate Policy OID
 
-Subject와 SPKI의 승인된 RSA/EC 알고리즘·키 크기도 같은 공식 CSR schema로 검증한다.
+CSR 구조·PoP·SPKI의 승인된 RSA/EC 알고리즘·키 크기 및 프로젝트 Subject 입력 정책은 유지한다. 이 절의 CSR 확장 미사용 정책은 Attestation Leaf의 확장·체인·서명·SPKI 결속 검증을 생략한다는 뜻이 아니다.
 
 ## 5. 구성요소별 책임
 
