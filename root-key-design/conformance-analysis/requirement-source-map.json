@@ -1,0 +1,3359 @@
+{
+  "audited_on": "2026-10-08",
+  "scope": "Policy statements in this report; source locations are not themselves proof of conformance.",
+  "source_manifest": "source-manifest.json",
+  "external_sources": [
+    {
+      "source_id": "RFC5280",
+      "title": "RFC 5280, May 2008",
+      "checked_on": "2026-10-08",
+      "url": "https://www.rfc-editor.org/rfc/rfc5280.html",
+      "scope": "Sections 4.2.1.1 and 4.2.1.2 only; read from RFC Editor, no pinned local copy or hash claimed."
+    }
+  ],
+  "requirements": [
+    {
+      "id": "K01",
+      "sources": [
+        {
+          "source": "rootCA.cert.yaml",
+          "lines": [
+            12,
+            15
+          ],
+          "section": "Root/Subject Public Key Info",
+          "note": "CA SPKI/최소 키 크기/곡선을 지정한 YAML 값; 직접 SHALL 문장은 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/rootCA.cert.yaml#L12-L15",
+          "span_sha256_lf": "ae3fb6f65edaddca77387adf09b79aecb1e44a855e20fb9f2743394aafc6ee94"
+        },
+        {
+          "source": "intermediateCa.cert.yaml",
+          "lines": [
+            12,
+            15
+          ],
+          "section": "Intermediate CA/Subject Public Key Info",
+          "note": "CA SPKI/최소 키 크기/곡선을 지정한 YAML 값; 직접 SHALL 문장은 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCa.cert.yaml#L12-L15",
+          "span_sha256_lf": "ae3fb6f65edaddca77387adf09b79aecb1e44a855e20fb9f2743394aafc6ee94"
+        },
+        {
+          "source": "claimSigningIssuingCA.cert.yaml",
+          "lines": [
+            12,
+            15
+          ],
+          "section": "Claim Signing Issuing CA/Subject Public Key Info",
+          "note": "CA SPKI/최소 키 크기/곡선을 지정한 YAML 값; 직접 SHALL 문장은 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.cert.yaml#L12-L15",
+          "span_sha256_lf": "ae3fb6f65edaddca77387adf09b79aecb1e44a855e20fb9f2743394aafc6ee94"
+        },
+        {
+          "source": "tsaIssuingCA.cert.yaml",
+          "lines": [
+            12,
+            15
+          ],
+          "section": "TSA Issuing CA/Subject Public Key Info",
+          "note": "CA SPKI/최소 키 크기/곡선을 지정한 YAML 값; 직접 SHALL 문장은 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.yaml#L12-L15",
+          "span_sha256_lf": "ae3fb6f65edaddca77387adf09b79aecb1e44a855e20fb9f2743394aafc6ee94"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4071,
+            4137
+          ],
+          "section": "13.2.1 Signature Algorithms",
+          "note": "claim 서명 목록을 CA 키 허용 목록으로 확장하지 않음",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4071-L4137",
+          "span_sha256_lf": "f73222444a2f7a720d9894607911e463d8f2ee7f7dcdef55f06dd96c0063c4f1"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "K02",
+      "sources": [
+        {
+          "source": "rootCA.cert.yaml",
+          "lines": [
+            8,
+            8
+          ],
+          "section": "Root/Signature Algorithm",
+          "note": "YAML 서명 알고리즘 값; RSA SHA2/PSS 또는 ECDSA SHA2",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/rootCA.cert.yaml#L8-L8",
+          "span_sha256_lf": "e639361cb8bc3a3ad0d32add92ad0a6b9a78e1e103c60408ec2c8410d97838ec"
+        },
+        {
+          "source": "intermediateCa.cert.yaml",
+          "lines": [
+            8,
+            8
+          ],
+          "section": "Intermediate CA/Signature Algorithm",
+          "note": "YAML 서명 알고리즘 값; RSA SHA2/PSS 또는 ECDSA SHA2",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCa.cert.yaml#L8-L8",
+          "span_sha256_lf": "e639361cb8bc3a3ad0d32add92ad0a6b9a78e1e103c60408ec2c8410d97838ec"
+        },
+        {
+          "source": "claimSigningIssuingCA.cert.yaml",
+          "lines": [
+            8,
+            8
+          ],
+          "section": "Claim Signing Issuing CA/Signature Algorithm",
+          "note": "YAML 서명 알고리즘 값; RSA SHA2/PSS 또는 ECDSA SHA2",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.cert.yaml#L8-L8",
+          "span_sha256_lf": "e639361cb8bc3a3ad0d32add92ad0a6b9a78e1e103c60408ec2c8410d97838ec"
+        },
+        {
+          "source": "tsaIssuingCA.cert.yaml",
+          "lines": [
+            8,
+            8
+          ],
+          "section": "TSA Issuing CA/Signature Algorithm",
+          "note": "YAML 서명 알고리즘 값; RSA SHA2/PSS 또는 ECDSA SHA2",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.yaml#L8-L8",
+          "span_sha256_lf": "e639361cb8bc3a3ad0d32add92ad0a6b9a78e1e103c60408ec2c8410d97838ec"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4605,
+            4670
+          ],
+          "section": "14.5.1.1 General Requirements",
+          "note": "shall: 인증서 서명 알고리즘 및 PSS 필드 존재·SHA256/384/512·MGF hash 일치",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4605-L4670",
+          "span_sha256_lf": "8e4e8843b8aef1ddb44f7c3ae59b30e76c9a966421b53df00f38a7d2ff30e3da"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "K03",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            779,
+            813
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "SHALL 통제·공개 관행: 안전 환경, trusted roles 다인/split knowledge, 모듈, 입회/기록, 로그; 8개 script 항목",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L779-L813",
+          "span_sha256_lf": "cd4603710caa456eb8bf19dc8f1773cb8096dbacc2ceb5c4375b3cb10dc3f645"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "K04",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            827,
+            833
+          ],
+          "section": "Controls for CA Keys / Key Storage",
+          "note": "SHALL 저장/사용: root와 issuing 명시; FIPS140-2 L2+ 및 배치 문구; 모듈 밖 평문 금지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L827-L833",
+          "span_sha256_lf": "87a474500d473f38af570630b9146b1db6c29eb42df455917b8bcd19321daf03"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "K05",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            835,
+            839
+          ],
+          "section": "Key Usage and Access Control",
+          "note": "SHALL multi-party로 단독 physical/logical 접근 방지; root/intermediate 키 사용은 모듈 직접 수행",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L835-L839",
+          "span_sha256_lf": "bc7b71b8c41e16cfbabb45558c9474946f9046648eda13ca83aec588c73df621"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "K06",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            841,
+            853
+          ],
+          "section": "Key Backup and Recovery / Key Archival",
+          "note": "SHALL 계획 연간검토·백업 inventory/다인·off-site·평문 금지 및 CA private key archive 금지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L841-L853",
+          "span_sha256_lf": "7fad71ceb31068588226ecec46494b2372a416fe08a34f0c888b4c5bf523d13e"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P01",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            949,
+            992
+          ],
+          "section": "Certificate Profiles for Certification Authorities / Root",
+          "note": "CP 내장 YAML; 확장 Presence/Critical/Value의 MUST/OPTIONAL/SHOULD와 서술형 core field 값 구분",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L949-L992",
+          "span_sha256_lf": "18c90bcff54038fa30b7a6e9f03e74dd61d1eae23e9271b654bbf5f63fac86ce"
+        },
+        {
+          "source": "rootCA.cert.yaml",
+          "lines": [
+            1,
+            40
+          ],
+          "section": "Root",
+          "note": "별도 YAML은 CP 내장 블록과 .strip() 후 동일; 수명 Root20년/First5년 예시, Claim1827일/TSA5479일 최대치",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/rootCA.cert.yaml#L1-L40",
+          "span_sha256_lf": "09152450a95f436fe46263db9d93bd8b35cc197a24236288565d52825fe7107d"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P02",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            994,
+            1042
+          ],
+          "section": "Certificate Profiles for Certification Authorities / Intermediate CA",
+          "note": "CP 내장 YAML; 확장 Presence/Critical/Value의 MUST/OPTIONAL/SHOULD와 서술형 core field 값 구분",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L994-L1042",
+          "span_sha256_lf": "c840d85e156f34c5166852936b42669a531aa0d95e4d37d78c10c88be6b85115"
+        },
+        {
+          "source": "intermediateCa.cert.yaml",
+          "lines": [
+            1,
+            45
+          ],
+          "section": "Intermediate CA",
+          "note": "별도 YAML은 CP 내장 블록과 .strip() 후 동일; 수명 Root20년/First5년 예시, Claim1827일/TSA5479일 최대치",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCa.cert.yaml#L1-L45",
+          "span_sha256_lf": "0162741e4f074e498416570f975ec0a7dd4c48daf89fd99958990b1978765586"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P03",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1044,
+            1096
+          ],
+          "section": "Certificate Profiles for Certification Authorities / Claim Signing Issuing CA",
+          "note": "CP 내장 YAML; 확장 Presence/Critical/Value의 MUST/OPTIONAL/SHOULD와 서술형 core field 값 구분",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1044-L1096",
+          "span_sha256_lf": "cc9d3875ae6dfcbdc878d8d01a9925e46da77616d669fc768e04cbcb5eb50a2b"
+        },
+        {
+          "source": "claimSigningIssuingCA.cert.yaml",
+          "lines": [
+            1,
+            49
+          ],
+          "section": "Claim Signing Issuing CA",
+          "note": "별도 YAML은 CP 내장 블록과 .strip() 후 동일; 수명 Root20년/First5년 예시, Claim1827일/TSA5479일 최대치",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.cert.yaml#L1-L49",
+          "span_sha256_lf": "96c2a5612c330a5eb03a2cf4b21891eb6db5f3174a59ba3cf8d66f1664a77192"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P04",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1098,
+            1150
+          ],
+          "section": "Certificate Profiles for Certification Authorities / TSA Issuing CA",
+          "note": "CP 내장 YAML; 확장 Presence/Critical/Value의 MUST/OPTIONAL/SHOULD와 서술형 core field 값 구분",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1098-L1150",
+          "span_sha256_lf": "8664d3559181f94764b76eb370da5dc12e59158f02813886ad8bdb5c02bd6d24"
+        },
+        {
+          "source": "tsaIssuingCA.cert.yaml",
+          "lines": [
+            1,
+            49
+          ],
+          "section": "TSA Issuing CA",
+          "note": "별도 YAML은 CP 내장 블록과 .strip() 후 동일; 수명 Root20년/First5년 예시, Claim1827일/TSA5479일 최대치",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.yaml#L1-L49",
+          "span_sha256_lf": "e9bbfe720250c1189b9364807817cc2a094fe7e2994a6da0d7644bb30a6ec0d5"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P05",
+      "sources": [
+        {
+          "source": "SPEC",
+          "lines": [
+            4697,
+            4746
+          ],
+          "section": "14.5.1.1 General Requirements",
+          "note": "private credential store 이외 인증서의 필드·CA/leaf·AKI/SKI·KU 규칙; leaf EKU와 anyExtendedKeyUsage 금지",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4697-L4746",
+          "span_sha256_lf": "23180673a7e1beb8493f645137b2f26c7335231e3681fdb4f490aa5a5d1ddb33"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4755,
+            4772
+          ],
+          "section": "14.5.1.2 Certificate Trust Chain",
+          "note": "private store credential은 CA가 될 수 없음; validator의 CA EKU 무시는 CP 발급 의무 면제 아님",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4755-L4772",
+          "span_sha256_lf": "dce8f66b8b3a6bc91381a7d2560a8c6f63a5e06a8228e97bbdb274fc1063b634"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4730,
+            4746
+          ],
+          "section": "§14.5.1.1 General Requirements / EKU",
+          "note": "leaf anyEKU 금지, TSA/OCSP 각각 단독 목적 적격성",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4730-L4746",
+          "span_sha256_lf": "c385cc51aa477e7a77d5aa07e58beb48a7f27625debf512b774ab06a8955af3b"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4763,
+            4772
+          ],
+          "section": "§14.5.1.2 Certificate Trust Chain",
+          "note": "일반 경로 leaf Claim/TSA/OCSP 세 목적 중 하나만; CA EKU 무시와 구별",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4763-L4772",
+          "span_sha256_lf": "04bd63910d2ae315de4d979f5318ff26675d02d31d1fd35951338d381c04cb5f"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P06",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1204,
+            1267
+          ],
+          "section": "Certificate Profiles for Leaf Certificates / C2PA Claim Signing Leaf Certificates - Assurance Level 1",
+          "note": "CP 내장 YAML: 최대366일/AL1/CP·CPL UUID/EKU·KU·criticality/AIA MUST/CDP OPTIONAL; core field 값은 직접 SHALL 문장이 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1204-L1267",
+          "span_sha256_lf": "cda0e2cd609b9f25ffd85fce47489743876ff6c1e49c16d8b23ef4590772ccd3"
+        },
+        {
+          "source": "claimSigningLeaf.al1.cert.yaml",
+          "lines": [
+            1,
+            60
+          ],
+          "section": "C2PA Claim Signing Leaf Certificates - Assurance Level 1",
+          "note": "동일한 별도 YAML: 최대366일/AL1/CP·CPL UUID/EKU·KU·criticality/AIA MUST/CDP OPTIONAL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.yaml#L1-L60",
+          "span_sha256_lf": "bc83f33e1b7947f6cd40a1a715ccd737f9c52cfccdb11af22810b74c3f7c1831"
+        },
+        {
+          "source": "claimSigningLeaf.al1.cert.schema.json",
+          "lines": [
+            1407,
+            1455
+          ],
+          "section": "AIA details / caIssuers contains",
+          "note": "Claim AL1 AIA caIssuers SHOULD를 contains로 강제",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.schema.json#L1407-L1455",
+          "span_sha256_lf": "6628641612cacac79fa13117bfe14d994251b5eb9ebbd75ee686186cf3888d18"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4743,
+            4743
+          ],
+          "section": "§14.5.1.1 General Requirements / EKU",
+          "note": "Claim leaf와 TSA/OCSP 동시 목적 적격성 금지",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4743-L4743",
+          "span_sha256_lf": "309a119b785743d62268a1576c819c4d39eb1b3d361ad1d472700f248e7cf873"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P07",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1269,
+            1332
+          ],
+          "section": "Certificate Profiles for Leaf Certificates / C2PA Claim Signing Leaf Certificates - Assurance Level 2",
+          "note": "CP 내장 YAML: 최대90일/AL2/CP·CPL UUID/EKU·KU·criticality/AIA MUST/CDP OPTIONAL; core field 값은 직접 SHALL 문장이 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1269-L1332",
+          "span_sha256_lf": "707de0e38317180b2fdd145b6bf182ccace7d068ceadbe72c4041c11c8d98e66"
+        },
+        {
+          "source": "claimSigningLeaf.al2.cert.yaml",
+          "lines": [
+            1,
+            60
+          ],
+          "section": "C2PA Claim Signing Leaf Certificates - Assurance Level 2",
+          "note": "동일한 별도 YAML: 최대90일/AL2/CP·CPL UUID/EKU·KU·criticality/AIA MUST/CDP OPTIONAL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.yaml#L1-L60",
+          "span_sha256_lf": "b2d5ac631e4aeaa92f08840d5d9c6446584e28d6a6234d35f19902d648ce840a"
+        },
+        {
+          "source": "claimSigningLeaf.al2.cert.schema.json",
+          "lines": [
+            1407,
+            1455
+          ],
+          "section": "AIA details / caIssuers contains",
+          "note": "Claim AL2 AIA caIssuers SHOULD를 contains로 강제",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.schema.json#L1407-L1455",
+          "span_sha256_lf": "6628641612cacac79fa13117bfe14d994251b5eb9ebbd75ee686186cf3888d18"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4743,
+            4743
+          ],
+          "section": "§14.5.1.1 General Requirements / EKU",
+          "note": "Claim leaf와 TSA/OCSP 동시 목적 적격성 금지",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4743-L4743",
+          "span_sha256_lf": "309a119b785743d62268a1576c819c4d39eb1b3d361ad1d472700f248e7cf873"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P08",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1334,
+            1386
+          ],
+          "section": "Certificate Profiles for Leaf Certificates / TSA Time-Stamp Signing Leaf Certificates",
+          "note": "CP 내장 YAML: 최대4110일/timeStamping critical EKU 하나/CP/KU/AIA 또는 CDP; 파일명 schema.yaml이지만 human-readable profile; core field 값은 직접 SHALL 문장이 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1334-L1386",
+          "span_sha256_lf": "8618c8263a68a2faca6a8f7ce4031e0675e2fe2f8a6ceba387416c819c619070"
+        },
+        {
+          "source": "tsaLeaf.cert.schema.yaml",
+          "lines": [
+            1,
+            49
+          ],
+          "section": "TSA Time-Stamp Signing Leaf Certificates",
+          "note": "동일한 별도 YAML: 최대4110일/timeStamping critical EKU 하나/CP/KU/AIA 또는 CDP; 파일명 schema.yaml이지만 human-readable profile",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaLeaf.cert.schema.yaml#L1-L49",
+          "span_sha256_lf": "7d16d8e5fb44d0dc07c56ee6b8e3b32cd25637f2192e5280ffc08845f357b028"
+        },
+        {
+          "source": "tsaLeaf.cert.schema.json",
+          "lines": [
+            1244,
+            1434
+          ],
+          "section": "AIA with OCSP OR CDP; AIA details",
+          "note": "caIssuers 강제; CDP+caIssuers-only AIA의 OCSP누락 허용",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaLeaf.cert.schema.json#L1244-L1434",
+          "span_sha256_lf": "9c63c7d8ec8e5723f69b016de7a9482af309df86febae8a5c076712865edac14"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            6061,
+            6080
+          ],
+          "section": "§15.8.2 Validating the TimeStampToken",
+          "note": "TSA token의 signatureAlgorithm은 §13.2, MessageImprint는 §13.1을 참조; certificate signatureAlgorithm과 구별",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L6061-L6080",
+          "span_sha256_lf": "853992b5a1b47f2369223b3bcf8e700563305ec92529dd0194b4cb44e67ca215"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "P09",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1154,
+            1202
+          ],
+          "section": "Certificate Profiles for Leaf Certificates / OCSP Responder Leaf Certificates",
+          "note": "CP 내장 YAML: 수명 상한 미지정/OCSPSigning 하나/non-critical NoCheck=NULL/AIA·CDP 금지; core field 값은 직접 SHALL 문장이 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1154-L1202",
+          "span_sha256_lf": "fb466d74747c5b41f45ca3acc2427d1ddd42435e53c1b832ec328b38ae468a0e"
+        },
+        {
+          "source": "ocspResponderLeaf.cert.yaml",
+          "lines": [
+            1,
+            45
+          ],
+          "section": "OCSP Responder Leaf Certificates",
+          "note": "동일한 별도 YAML: 수명 상한 미지정/OCSPSigning 하나/non-critical NoCheck=NULL/AIA·CDP 금지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/ocspResponderLeaf.cert.yaml#L1-L45",
+          "span_sha256_lf": "c55cc538ef1dd174d38f2187cbbb118e1b2bc2bb86a3e1316c1403c0ae8cfc6c"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "U01",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            539,
+            549
+          ],
+          "section": "Key Pair and Certificate Usage / 1",
+          "note": "SHALL NOT except: self-signed Root, subordinate/cross-certified CA, OCSP responder cert, CRL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L539-L549",
+          "span_sha256_lf": "c638bd3518fca5c9b9cb7e68dec906c72dbb8b7f32f9bc15a5c4fb51cf132d07"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "U02",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            551,
+            557
+          ],
+          "section": "Key Pair and Certificate Usage / 2",
+          "note": "pathLen=1 ICA 인증서 서명 용도 제한; 모든 서명으로 확대하지 않음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L551-L557",
+          "span_sha256_lf": "f3dd19188682a7e8db26cf6a7162a38745efeb9dedf74e85fd9a0cdb03fa40d2"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "U03",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            559,
+            561
+          ],
+          "section": "Key Pair and Certificate Usage / 3–4",
+          "note": "Subscriber Claim/TSA cert는 pathLen=0 subordinate CA만 발급; 구체 key use는 KU",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L559-L561",
+          "span_sha256_lf": "5cb6437a5eeb0a4bc8968ca82252914d7189d5b63bea0a72dea83499e7ec578f"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "U04",
+      "sources": [
+        {
+          "source": "SPEC",
+          "lines": [
+            4708,
+            4715
+          ],
+          "section": "14.5.1.1 General Requirements / Basic Constraints",
+          "note": "shall: Claim/time-stamp/OCSP response는 end-entity만 서명; cA·keyCertSign 불가",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4708-L4715",
+          "span_sha256_lf": "1435c620db6083b2252e90b08ed726d724a8d070ef319b159ea55ddbb3d92408"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "U05",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            569,
+            571
+          ],
+          "section": "Key Pair and Certificate Usage / 8–9",
+          "note": "OCSP response는 responder를 발급한 CA가 발급한 인증서에만 사용; 다른 사용은 misuse",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L569-L571",
+          "span_sha256_lf": "4801a0000ea543a830a727b75daa845c1be5f79945b392a26521eeff29c9bba8"
+        },
+        {
+          "source": "ocspResponderLeaf.cert.yaml",
+          "lines": [
+            17,
+            45
+          ],
+          "section": "OCSP Responder / Extensions",
+          "note": "P09로 인계한 필수 확장/criticality와 금지 AIA/CDP",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/ocspResponderLeaf.cert.yaml#L17-L45",
+          "span_sha256_lf": "0a7c46787f33adb8571b71f7516266a8f5c3e113a3e38ab3f8cbf2e97dd192e9"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "U06",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            815,
+            823
+          ],
+          "section": "Key Pair Generation and Installation by Subscribers",
+          "note": "SHALL: Subscriber/허용 KMS 생성; CA SHALL NOT Claim signing 키 생성; 증명된 GP 용도만 사용",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L815-L823",
+          "span_sha256_lf": "ddb3809d5caf642616788325aea8a5d0c48d53e1b0af77b18e1479e7494ed232"
+        }
+      ],
+      "report_document": "01-key-and-certificate-requirements.md"
+    },
+    {
+      "id": "O01",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            367,
+            371
+          ],
+          "section": "Publication",
+          "note": "CP가 정한 업무 관행 공개; 공개 CPS 또는 C2PA와 협의한 다른 방법",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L367-L371",
+          "span_sha256_lf": "f29fd61574804e83d0db2f4ea00e5e86c3ad46a2e4daf8391b88354b447c514a"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            645,
+            657
+          ],
+          "section": "Documented Procedures",
+          "note": "모든 CA 운영 절차 최신 문서; 열거된 다섯 절차 포함",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L645-L657",
+          "span_sha256_lf": "61aa6268b11a060d8c6cbda8bb83a510f961875e77c50ff1e4a2c68d23c2e802"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O02",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            511,
+            515
+          ],
+          "section": "Certificate Issuance",
+          "note": "Root 인증서 서명 최소 2명 SHALL 및 한 명의 deliberate command(소문자 must); 모든 CA cert 발급 통제",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L511-L515",
+          "span_sha256_lf": "0fbc4b8bcc2ca0aff8e16592ab63108269064c3257c04c8b33d03aac46f91b82"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            659,
+            665
+          ],
+          "section": "Separation of Duties",
+          "note": "Root 인증서 서명 2인 통제 반복 명시",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L659-L665",
+          "span_sha256_lf": "1c47241b0d79782b7b9ba2211a4e8459f806d68ceeff8abec6de51b0de168cdf"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O03",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            659,
+            665
+          ],
+          "section": "Separation of Duties",
+          "note": "중요 직무 분리 및 물리·CA 작업 접근 dual control",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L659-L665",
+          "span_sha256_lf": "1c47241b0d79782b7b9ba2211a4e8459f806d68ceeff8abec6de51b0de168cdf"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            835,
+            839
+          ],
+          "section": "Key Usage and Access Control",
+          "note": "Root/Intermediate 서명키 물리·논리 단독 접근 금지; 모듈 내 직접 사용",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L835-L839",
+          "span_sha256_lf": "bc7b71b8c41e16cfbabb45558c9474946f9046648eda13ca83aec588c73df621"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O04",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            625,
+            641
+          ],
+          "section": "Physical Security Controls",
+          "note": "통제된 시설·민감구역 권한/MFA·장비 보호 SHALL; site security 수단 예시는 소문자 should",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L625-L641",
+          "span_sha256_lf": "87402c65ff64e429f11adc5a58837c6f605d38173a6763d954e6d990a7fab5b5"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O05",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            675,
+            685
+          ],
+          "section": "Personnel Controls",
+          "note": "background/clearance; permanent staff 채용 시·Trusted Roles 매 5년 검사; 전체 운영 인력 교육/재교육",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L675-L685",
+          "span_sha256_lf": "b6f59e548c8c2c1b1b9bc22131bc82d41b77a7f3952966f7b3bbc1729b3b6021"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O06",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            687,
+            691
+          ],
+          "section": "Access Control",
+          "note": "need-to-know, 최소 권한, 강한 비밀번호·MFA·정기 권한 검토",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L687-L691",
+          "span_sha256_lf": "ed25dca28fbaa8b59211ff3ecafaa15678cf863b92a2e919410e2b10ab134c6d"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O07",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            667,
+            673
+          ],
+          "section": "Change Management",
+          "note": "모든 변경 문서화·시행 전 시험 승인; rollback 또는 roll-forward",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L667-L673",
+          "span_sha256_lf": "98fac7b3e54e8f5fc6b2563e823b895165a2d856dc0e2604afb01423a58cb720"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O08",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            867,
+            871
+          ],
+          "section": "Computer Security Controls",
+          "note": "보안조치 SHALL; secure coding/code signing/updates는 예시; CA 시스템 MFA",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L867-L871",
+          "span_sha256_lf": "cebc62eb40a85f231920d0ddb967ead183caf237e4f1e676437b4e2b87f7b6d5"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            873,
+            879
+          ],
+          "section": "Lifecycle Security Controls",
+          "note": "인증서/데이터 CIA·발급/폐지 변조 방지·상태정보 접근성",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L873-L879",
+          "span_sha256_lf": "97933e244727a6ef0179a13769336f772932a634b2dc5aaddd2b5f63ac9fbee8"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O09",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            881,
+            903
+          ],
+          "section": "Network Security Controls",
+          "note": "11개 통제; 방화벽은 내부망 무단접근 방지 수단 예시",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L881-L903",
+          "span_sha256_lf": "23d9f3a6f0eb9a6636e4622da6d3a2c9d571a002333886e330f5e480b7d93a5e"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O10",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            863,
+            865
+          ],
+          "section": "Activation Data",
+          "note": "activation data compromise/disclosure 방지; 암호·물리 접근 통제",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L863-L865",
+          "span_sha256_lf": "180a0749667dcc5e3f74851bf250f0736bef04b87b74b43708132af295ed1daa"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O11",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            373,
+            375
+          ],
+          "section": "Repositories",
+          "note": "모든 발급 인증서 내부 기록·만료 후 최소 1년·필수 필드·접근 통제·감사",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L373-L375",
+          "span_sha256_lf": "0adfccec133bb91df27e512ecee97ea661f659ad9860632dcfe79ee2510f9492"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O12",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            693,
+            711
+          ],
+          "section": "Audit Logging Procedures",
+          "note": "모든 인증서 시스템/사용자 활동 상세 로그·식별자/시간/행동/파라미터·보호/정기 검토",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L693-L711",
+          "span_sha256_lf": "1d34a7e549da1c6a7da8b42747fcd92689c998d230014b79a63e41c45a601e68"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O13",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            713,
+            729
+          ],
+          "section": "Records Archival",
+          "note": "기록종류/보존기간/보호/검색 정책·법규·안전한 저장·적시 정확 retrieval; 권한자 한정은 소문자 should",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L713-L729",
+          "span_sha256_lf": "b473f300790077658bd60ce02459fe2082daddbe1e9125c06eb258703394f79c"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O14",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            841,
+            849
+          ],
+          "section": "Key Backup and Recovery",
+          "note": "정식 계획 연간 검토·사본추적/원본동일 다인통제·CA 사본 최소 하나 off-site·평문 금지; 다른 키 허용 backup 보호",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L841-L849",
+          "span_sha256_lf": "966b20a4e24bc52689cdf118cd9ae3cdf0b420f97feadcec675bf4b3044b9760"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            615,
+            619
+          ],
+          "section": "Key Escrow and Recovery",
+          "note": "NOT supported의 범위는 인접 Subscriber 책임 및 별도 CA backup 요구와 함께 해석",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L615-L619",
+          "span_sha256_lf": "3c4f57dce55e2711af3613b9813db52e305f637394003dceb75d9d79ca2e3216"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O15",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            755,
+            761
+          ],
+          "section": "Backup and Recovery",
+          "note": "모든 중요 데이터 secure backup 및 문서화 recovery SHALL; off-site/정기시험은 소문자 should",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L755-L761",
+          "span_sha256_lf": "42994957be9f695e703c821ab5ae0c6ffacb9dc5fe085f77f174ec55adff6b62"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O16",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            851,
+            857
+          ],
+          "section": "Key Archival / Key Destruction",
+          "note": "CA 개인키 archival 금지; CA destruction No stipulation",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L851-L857",
+          "span_sha256_lf": "4cce9cdf61d5b88407940833a994c66a1eb40cbbaf90a67477d411904e4cc3d8"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            611,
+            619
+          ],
+          "section": "End of Subscription / Key Escrow and Recovery",
+          "note": "Subscriber 구독/활동 종료 시 모범관행 파기 SHALL 및 Subscriber Agreement 보호/관리 책임 명시 SHALL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L611-L619",
+          "span_sha256_lf": "13641b71d156deed1444ae7e049abcf5d96b8280a363915c2c3b07ac8abc568d"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O17",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            731,
+            743
+          ],
+          "section": "Key Changeover",
+          "note": "CA rotation 절차 SHALL; CA가 Subscriber agility 장려 SHOULD; 사전 통지 SHOULD; disruption/chain은 소문자 should",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L731-L743",
+          "span_sha256_lf": "d3ef7f5d683a2817cef9e66ef8878589dc241a7063588bde758b8f8811888419"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O18",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            573,
+            585
+          ],
+          "section": "Certificate Renewal / Certificate Re-key / Certificate Modification",
+          "note": "해당 CA가 이미 발급한 키의 새 인증서 금지; re-key 신규 검증; Subject 변경 Initial Identity Validation",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L573-L585",
+          "span_sha256_lf": "a6896a417feb1a46ba35e0db29c4566844cd206d597f8911da7e6075e5ad057c"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            479,
+            481
+          ],
+          "section": "Identification and Authentication for Re-key Requests",
+          "note": "Subscriber re-key 신규 신청과 동일 검증",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L479-L481",
+          "span_sha256_lf": "24557808d38bbe6c06146bb67704f6cb93fa870c706c4613d06103be15742b7b"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            539,
+            549
+          ],
+          "section": "Key Pair and Certificate Usage",
+          "note": "Root의 cross-certified CA cert 서명 허용; renewal 범위와 구분",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L539-L549",
+          "span_sha256_lf": "c638bd3518fca5c9b9cb7e68dec906c72dbb8b7f32f9bc15a5c4fb51cf132d07"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O19",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            745,
+            753
+          ],
+          "section": "Incident Response Plan",
+          "note": "보안침해·key compromise·재난·중단 계획 SHALL; 역할/연락/escalation/drills 소문자 should",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L745-L753",
+          "span_sha256_lf": "f4e702d29aa6ef38114a992e1061c42dc6701359c0f6d81f924a861bd9a0d32a"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1446,
+            1452
+          ],
+          "section": "Security Incident Reviews",
+          "note": "원인/영향/교훈 검토·actionable recommendations·Steering Committee 및 TWG Conformance TF 보고 SHALL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1446-L1452",
+          "span_sha256_lf": "b695753cfd864a13ca94619d6bae504ce8f235b2d25fb97013a8696ec439fa3c"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O20",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            763,
+            771
+          ],
+          "section": "CA or RA Termination",
+          "note": "orderly 종료/RA위임 철회; 보안사고 필요 신속조치 외 충분한 전환시간 사전통지 SHALL; 처분 소문자 should",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L763-L771",
+          "span_sha256_lf": "8c2c3162f224c6c3da5a1e34e8c2b4e8e32833b86ac4a28162cda2cb51ff3630"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O21",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            587,
+            603
+          ],
+          "section": "Certificate Revocation",
+          "note": "7가지 폐지 사유 중 하나면 SHALL revoke; C2PA/Subscriber 요청은 인증 및 유효성 검증",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L587-L603",
+          "span_sha256_lf": "d449a905bde05e35974a8476846e81cd4223e978c81a61af9ffc80955ab039f2"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O22",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            483,
+            485
+          ],
+          "section": "Identification and Authentication for Revocation Requests",
+          "note": "Subscriber/C2PA 요청 검증 완료 후 72시간; 다른 사유 일반 SLA와 구분",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L483-L485",
+          "span_sha256_lf": "ec033fca8d0f1e64b20fc265124f3b389e326b2986048362e4600558f1686ca1"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O23",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            605,
+            607
+          ],
+          "section": "Certificate Status Services",
+          "note": "Claim Signing 모든 인증서 OCSP를 required record keeping time까지 제공 SHALL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L605-L607",
+          "span_sha256_lf": "967abd5c4acf98e84b54c921737d169fbe0ac3fba8042f9eb1d95a733eee9c20"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            373,
+            375
+          ],
+          "section": "Repositories",
+          "note": "위 보존기간의 기준: 만료 후 최소 1년",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L373-L375",
+          "span_sha256_lf": "0adfccec133bb91df27e512ecee97ea661f659ad9860632dcfe79ee2510f9492"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O24",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            605,
+            609
+          ],
+          "section": "Certificate Status Services",
+          "note": "Subordinate CA/Time Stamping OCSP MAY; 미제공 시 CRL MUST; Claim CRL은 OCSP 추가 선택",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L605-L609",
+          "span_sha256_lf": "89afeb9e40ce87bc8f6da472b5bd0de2edb5905a34febbf7bf4b518424e3ea5a"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O25",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1388,
+            1394
+          ],
+          "section": "CRL Profile / OCSP Profile",
+          "note": "CRL 구현 시 RFC5280 §5 minimum SHALL; OCSP RFC6960 minimum MUST",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1388-L1394",
+          "span_sha256_lf": "a79e609ec38014fb7ef109a56497fc39426b704d187c084fa3f3020b44f3642f"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O26",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1520,
+            1532
+          ],
+          "section": "CA Representations",
+          "note": "CA 보증의 대상 및 범위",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1520-L1532",
+          "span_sha256_lf": "47e945e279b2099ccfece2f3e7b29906d75068bac1b0cadb91bf46e3f9ca0bb8"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1558,
+            1562
+          ],
+          "section": "CA Representations — Status / Revocation",
+          "note": "유효기간 내 모든 cert valid/revoked 정보 24x7 공개 repository",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1558-L1562",
+          "span_sha256_lf": "7b70e284c8044a536810e73cf46663752b4559242cfa7ee7207f6101b22902ed"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O27",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1400,
+            1434
+          ],
+          "section": "Compliance Audits",
+          "note": "감사·산업표준/법규·전체 운영 범위·요청 시 보고/언어/시정 SHOULD; risk/assurance 주기 SHALL, 연간 recommended",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1400-L1434",
+          "span_sha256_lf": "c444d3ab72643660a947c197ff451a100048aaf496d3566a2a7567c63a63f828"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1436,
+            1444
+          ],
+          "section": "Other Assessments — Vulnerability Assessments and Penetration Tests",
+          "note": "정기 평가·적격 전문가·GP 플랫폼/attestation 서비스·remediation plan SHOULD",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1436-L1444",
+          "span_sha256_lf": "ccc46b1f32a31bd92860819fd853c5d671d5ef9e478fb77d661ad125f9967e3f"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "O28",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1520,
+            1564
+          ],
+          "section": "CA Representations",
+          "note": "Root가 Issuing CA 수행/보증/CP준수 및 책임/배상 의무를 Issuer 자신처럼 부담 SHALL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1520-L1564",
+          "span_sha256_lf": "e05b5cd838fa1af84a795367d3ac278da1165a71b48ae8c229551588ebbab154"
+        }
+      ],
+      "report_document": "02-management-and-operations.md"
+    },
+    {
+      "id": "C01",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            781,
+            785
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "(2) detailed script 절차에 따른 생성 통제 SHALL과 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L781-L785",
+          "span_sha256_lf": "4250992820135b3734952b9840cadc7f04d2562cd136859ae701dfbb848cfd06"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            797,
+            799
+          ],
+          "section": "Key Pair Generation and Installation by CAs — script (4)(a)",
+          "note": "역할 및 참여자 책임 정의; 목록 서문 includes",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L797-L799",
+          "span_sha256_lf": "1e0d86d1620b73cd3a54d24dd633db62792ac64e02c194586116b144b7ab1c07"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C02",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            783,
+            783
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "(2) detailed script 절차에 따른 생성 통제 SHALL과 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L783-L783",
+          "span_sha256_lf": "c4fd07c0152953656280ed63298529be83b2da2d62f0006f69b7a99532e9fa4f"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            797,
+            801
+          ],
+          "section": "Key Pair Generation and Installation by CAs — script (4)(b)",
+          "note": "ceremony 수행 승인",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L797-L801",
+          "span_sha256_lf": "22e245bd49f9f2f67ef1213ec931fda42e66ed542e9a998759bb8e17183b34bf"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C03",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            783,
+            783
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "(2) detailed script 절차에 따른 생성 통제 SHALL과 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L783-L783",
+          "span_sha256_lf": "c4fd07c0152953656280ed63298529be83b2da2d62f0006f69b7a99532e9fa4f"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            797,
+            803
+          ],
+          "section": "Key Pair Generation and Installation by CAs — script (4)(c)",
+          "note": "암호 hardware/Cloud HSM 및 activation materials",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L797-L803",
+          "span_sha256_lf": "c31fc11606f174b9619658579314c93bfcc9bc464e65e93166300f9337c3784d"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            863,
+            865
+          ],
+          "section": "Activation Data",
+          "note": "비밀값 기재 금지 제안의 보호통제 배경",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L863-L865",
+          "span_sha256_lf": "180a0749667dcc5e3f74851bf250f0736bef04b87b74b43708132af295ed1daa"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C04",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            783,
+            783
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "(2) detailed script 절차에 따른 생성 통제 SHALL과 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L783-L783",
+          "span_sha256_lf": "c4fd07c0152953656280ed63298529be83b2da2d62f0006f69b7a99532e9fa4f"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            797,
+            805
+          ],
+          "section": "Key Pair Generation and Installation by CAs — script (4)(d)",
+          "note": "ceremony 중 수행할 구체적 단계; 명령/중단조건 형식은 설계 제안",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L797-L805",
+          "span_sha256_lf": "e950666cad01f8f4300f274cdc9aa57b492922c6aedd9a0b5ae6c1364fde3b7e"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C05",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            783,
+            783
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "(2) detailed script 절차에 따른 생성 통제 SHALL과 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L783-L783",
+          "span_sha256_lf": "c4fd07c0152953656280ed63298529be83b2da2d62f0006f69b7a99532e9fa4f"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            807,
+            807
+          ],
+          "section": "Key Pair Generation and Installation by CAs — script (4)(e)",
+          "note": "Cloud HSM을 쓰지 않을 경우 장소 물리보안 요구",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L807-L807",
+          "span_sha256_lf": "47d800a4e017ce90f49144182854ba933eaeacd7d080c9296fed90459ed75fb9"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            625,
+            641
+          ],
+          "section": "Physical Security Controls",
+          "note": "cloud 단서가 일반 CA 보안통제를 면제하지 않음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L625-L641",
+          "span_sha256_lf": "87402c65ff64e429f11adc5a58837c6f605d38173a6763d954e6d990a7fab5b5"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C06",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            783,
+            783
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "(2) detailed script 절차에 따른 생성 통제 SHALL과 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L783-L783",
+          "span_sha256_lf": "c4fd07c0152953656280ed63298529be83b2da2d62f0006f69b7a99532e9fa4f"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            809,
+            809
+          ],
+          "section": "Key Pair Generation and Installation by CAs — script (4)(f)",
+          "note": "Cloud HSM을 쓰지 않을 경우 종료 후 hardware/activation materials 안전 보관",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L809-L809",
+          "span_sha256_lf": "08fab9c256db704f304b687200762d0e499e5fa4444c30a07c6953641ae39d0f"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            841,
+            849
+          ],
+          "section": "Key Backup and Recovery",
+          "note": "cloud 단서가 backup 보호 의무를 면제하지 않음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L841-L849",
+          "span_sha256_lf": "966b20a4e24bc52689cdf118cd9ae3cdf0b420f97feadcec675bf4b3044b9760"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            863,
+            865
+          ],
+          "section": "Activation Data",
+          "note": "cloud 단서가 activation 보호 의무를 면제하지 않음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L863-L865",
+          "span_sha256_lf": "180a0749667dcc5e3f74851bf250f0736bef04b87b74b43708132af295ed1daa"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C07",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            783,
+            783
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "(2) detailed script 절차에 따른 생성 통제 SHALL과 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L783-L783",
+          "span_sha256_lf": "c4fd07c0152953656280ed63298529be83b2da2d62f0006f69b7a99532e9fa4f"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            811,
+            811
+          ],
+          "section": "Key Pair Generation and Installation by CAs — script (4)(g)",
+          "note": "참여자·입회자의 실제 수행 일치 여부 sign-off",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L811-L811",
+          "span_sha256_lf": "8c65a4ab7469e557afc5d2774248f85f1bd50bc9c0f5819572934b09ec59dd92"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            378,
+            382
+          ],
+          "section": "Certificate Policy",
+          "note": "등록할 Root/ICA 키: 독립 입회 evidence 및 signed script; 적합 WebTrust 보고서 waiver 가능",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L378-L382",
+          "span_sha256_lf": "51fbc798f55db9ab90445267d2e13a8efe401f5676d00a6bc02f1280b13662e0"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            458,
+            460
+          ],
+          "section": "Certification Authority Evidence Request",
+          "note": "등록 키: 독립 입회한 scripted process가 C2PA 검토 가능",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L458-L460",
+          "span_sha256_lf": "20a6a3e0cd298bed097ee1ae36a82467a4425c308caa866422b8842b5b0becfd"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C08",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            783,
+            783
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "(2) detailed script 절차에 따른 생성 통제 SHALL과 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L783-L783",
+          "span_sha256_lf": "c4fd07c0152953656280ed63298529be83b2da2d62f0006f69b7a99532e9fa4f"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            813,
+            813
+          ],
+          "section": "Key Pair Generation and Installation by CAs — script (4)(h)",
+          "note": "모든 script deviation 기록; 무편차 명시는 제안",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L813-L813",
+          "span_sha256_lf": "0f64e9a77f70cf355c4ed9fe2828e4957f4ccb017759d5810442a33d5b94ffbf"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C09",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            781,
+            795
+          ],
+          "section": "Key Pair Generation and Installation by CAs",
+          "note": "lifecycle integrity·공개관행/script·안전환경·trusted roles/다인/split knowledge·적합모듈·입회/기록·logging",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L781-L795",
+          "span_sha256_lf": "b0b1477122106973c2a6fab65992f3d70e1ff40097c6ce4a67c607e9bc09d1a4"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "C10",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            511,
+            515
+          ],
+          "section": "Certificate Issuance",
+          "note": "CA cert 문서화/다인통제; Root cert 서명 2명 SHALL 및 한 명의 deliberate command(소문자 must)",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L511-L515",
+          "span_sha256_lf": "0fbc4b8bcc2ca0aff8e16592ab63108269064c3257c04c8b33d03aac46f91b82"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            659,
+            665
+          ],
+          "section": "Separation of Duties",
+          "note": "Root cert 서명 2 trusted roles 반복 명시",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L659-L665",
+          "span_sha256_lf": "1c47241b0d79782b7b9ba2211a4e8459f806d68ceeff8abec6de51b0de168cdf"
+        }
+      ],
+      "report_document": "03-ceremony-script-requirements.md"
+    },
+    {
+      "id": "E01",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            376,
+            378
+          ],
+          "section": "§6.4 / Certificate Policy",
+          "note": "CA TL 신청 MUST; CA 계약은 CP 준수 확약",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L376-L378",
+          "span_sha256_lf": "438141a872ef6338e4598ed47156a2a4dd5a555e66b3a81267042e32bd22ba61"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            402,
+            416
+          ],
+          "section": "§6.6.1–3 / Expression of Interest; Legal Agreement Execution; Program Intake Form",
+          "note": "역할별 신청·계약·Intake, TSA-only 불수락",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L402-L416",
+          "span_sha256_lf": "df10a33372480ef9e9f2430561d0e281bf463c3277b940e9ecf36753da01aac1"
+        },
+        {
+          "source": "GOVERNANCE",
+          "lines": [
+            472,
+            474
+          ],
+          "section": "Legal Agreements",
+          "note": "CA/GP/VP 각각 법적 계약 MUST",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Governance%20Framework.md#L472-L474",
+          "span_sha256_lf": "1a430f15085d3389c44780043864969c2d64a90452badcde6e63aa5cdb5907a9"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E02",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            378,
+            382
+          ],
+          "section": "§6.4 / Certificate Policy",
+          "note": "등록 희망 CA/TSA Root 및/또는 Intermediate profile 증거",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L378-L382",
+          "span_sha256_lf": "51fbc798f55db9ab90445267d2e13a8efe401f5676d00a6bc02f1280b13662e0"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            458,
+            460
+          ],
+          "section": "§6.6.4 / Certification Authority Evidence Request",
+          "note": "등록 희망 Root/ICA profile 충족 증거",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L458-L460",
+          "span_sha256_lf": "20a6a3e0cd298bed097ee1ae36a82467a4425c308caa866422b8842b5b0becfd"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E03",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            382,
+            382
+          ],
+          "section": "§6.4 / Certificate Policy",
+          "note": "등록 키 independent witness + signed script",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L382-L382",
+          "span_sha256_lf": "908c0b378a121f5b41313a2484d33bd4c3bc39d31aab2d7897b49f7f89d55751"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            458,
+            460
+          ],
+          "section": "§6.6.4 / Certification Authority Evidence Request",
+          "note": "scripted process 및 C2PA 검토 가능성",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L458-L460",
+          "span_sha256_lf": "20a6a3e0cd298bed097ee1ae36a82467a4425c308caa866422b8842b5b0becfd"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            779,
+            813
+          ],
+          "section": "§6.1.1 / Key Pair Generation and Installation by CAs",
+          "note": "일반 CA 생성통제·독립 입회 및/또는 기록·script 8개 항목",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L779-L813",
+          "span_sha256_lf": "cd4603710caa456eb8bf19dc8f1773cb8096dbacc2ceb5c4375b3cb10dc3f645"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E04",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            382,
+            382
+          ],
+          "section": "§6.4 / Certificate Policy",
+          "note": "적합 ceremonies/scripts를 입증하는 WebTrust for CA 보고서에 의한 waive 가능성",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L382-L382",
+          "span_sha256_lf": "908c0b378a121f5b41313a2484d33bd4c3bc39d31aab2d7897b49f7f89d55751"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            458,
+            460
+          ],
+          "section": "§6.6.4 / Certification Authority Evidence Request",
+          "note": "후반 절은 waive를 다시 명시하지 않음; 수용 범위 Q07",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L458-L460",
+          "span_sha256_lf": "20a6a3e0cd298bed097ee1ae36a82467a4425c308caa866422b8842b5b0becfd"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            779,
+            813
+          ],
+          "section": "§6.1.1 / Key Pair Generation and Installation by CAs",
+          "note": "WebTrust 보고서로 실제 CP 생성통제 면제 단정 금지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L779-L813",
+          "span_sha256_lf": "cd4603710caa456eb8bf19dc8f1773cb8096dbacc2ceb5c4375b3cb10dc3f645"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E05",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            414,
+            422
+          ],
+          "section": "§6.6.3 / Program Intake Form",
+          "note": "새 CA/TSA Root·ICA set별 Intake; ladder-up PEM blank-line 분리",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L414-L422",
+          "span_sha256_lf": "74cad07b612cecb917496f5e65ca12804656adf01fedbeb03aa5bce1bbffe9da"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E06",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            420,
+            422
+          ],
+          "section": "§6.6.3 / Program Intake Form",
+          "note": "test CA/TSA entries 불수락",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L420-L422",
+          "span_sha256_lf": "9f0d859fc02ff1a7063eb5aa85f775af4c8bc76e75c56b9f6d0aee7ffa3ddcca"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E07",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            422,
+            422
+          ],
+          "section": "§6.6.3 / Program Intake Form",
+          "note": "공유 Root면 CA/TSA 양쪽 구역 기록 should",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L422-L422",
+          "span_sha256_lf": "edde572d2b304c4048bebb8a88f7ad80e9e7f348546cd2d174ea611366b245e1"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E08",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            462,
+            478
+          ],
+          "section": "§6.6.5–8 / Evidence Assessment and Approval; Application Approval; Notice; Public Record Posting",
+          "note": "관리자·별도 Approver·보완·Notice·공개 절차; 최소 2명",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L462-L478",
+          "span_sha256_lf": "890bf9c0b632042c1d0c9f51066a2a1314f7ba44552a00db4e86fc2d1d963e9e"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            504,
+            508
+          ],
+          "section": "§6.7.2 / Security Controls Over C2PA Machine-Readable Lists",
+          "note": "목록 접근통제·모든 변경 multi-party approval quorum",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L504-L508",
+          "span_sha256_lf": "a206fb4f5ba397a2cf9dd3161d5837a5636116876469d1e169ba68138d3a65be"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E09",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            401,
+            455
+          ],
+          "section": "§3.2 / Initial Identity Validation",
+          "note": "조직·주소·신뢰자료·대표자 권한·요청 검증",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L401-L455",
+          "span_sha256_lf": "e295df5684c3403e02f5a1959d2bb342d00ed1662ba27373714b180ae3f99461"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            469,
+            481
+          ],
+          "section": "§3.3–5 / Identification and Authentication; On-Going Subscriber Identification; Re-key Requests",
+          "note": "secure enrollment·key ownership·398일 재인증·re-key 신규 검증",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L469-L481",
+          "span_sha256_lf": "b3f52361753dde7168045d602f82af8fc2194443b30853d089c82c378f605eac"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            489,
+            509
+          ],
+          "section": "§4.1–3 / Certificate Application; Processing; CA Access Credentials",
+          "note": "신청 완전성·정확성·신원 확인 및 승인 Subscriber에 자격증명 연결",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L489-L509",
+          "span_sha256_lf": "a0dfde136701969406d1b0700494f32bd3c8b2629f6af055449e0895f50ea1d5"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E10",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            457,
+            467
+          ],
+          "section": "§3.2.3 / Proof of Conformance; Maximum Assurance Level",
+          "note": "Notice 수령·검증 SHALL, public CPL MAY, DN/status/maxAL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L457-L467",
+          "span_sha256_lf": "9dccd52d74488421a030c448ce3aed4c18df8700ff7d42b0696918c86c381809"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            489,
+            505
+          ],
+          "section": "§4.1–2 / Certificate Application; Certificate Application Processing",
+          "note": "CPL record number·AL·attestationMethods·CA decode/process 확인",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L489-L505",
+          "span_sha256_lf": "34a05d6361b7abfa2d73350b55e3a050d49848aba906480a068c9a5b12a1ebc2"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            374,
+            374
+          ],
+          "section": "§6.4 / Certificate Policy",
+          "note": "성공한 GP만 발급; Notice 및 공개 CPL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L374-L374",
+          "span_sha256_lf": "a9de144d515652a24c870b367169d40d9ada7f341d9b32427ff3594f579f5567"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            472,
+            474
+          ],
+          "section": "§6.6.7 / Notice of Conformance",
+          "note": "공개 전 signed Notice로 production 발급 가능",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L472-L474",
+          "span_sha256_lf": "fa957de78e8c0b0bd99ff4bac0f3389bd651e65b52daaf2e5a254c52130febe2"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            486,
+            502
+          ],
+          "section": "§6.7.1 / Use of C2PA Machine-Readable Lists",
+          "note": "conformant CPL record에만 발급 MUST",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L486-L502",
+          "span_sha256_lf": "1d14cf7f6d0649477d3f9237c0c8f20a4ccb26f947cb780c7cc156fc3eaa20c1"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E11",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            465,
+            467
+          ],
+          "section": "§3.2.3 / Maximum Assurance Level",
+          "note": "maxAL 상한·그 이하 전 수준 발급 SHALL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L465-L467",
+          "span_sha256_lf": "281fbc8e148608b4741c3b064acc9a7bf2dd4aa082c94c329a545df3dbb8ca02"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            519,
+            529
+          ],
+          "section": "§4.4 / Certificate Issuance",
+          "note": "dynamic evidence 검증·성공 시 MAY·실패 시 lower AL 재평가 MAY",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L519-L529",
+          "span_sha256_lf": "8d27f7c457318da5780f07fb8008c83f7acda48c7cf8249e932898de23c2d177"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1684,
+            1695
+          ],
+          "section": "Requirements for Validating Dynamic Evidence / Assurance Level 1",
+          "note": "AL1 인증된 GP instance 확인",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1684-L1695",
+          "span_sha256_lf": "24b133b7e2eeeb9c98f16b2769bc04cf93e1be67b4b171bb51c4e940aa736bf7"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1697,
+            1759
+          ],
+          "section": "Requirements for Assurance Level 2 Certificates",
+          "note": "하드웨어 증거·keystore·secure boot·patch/revision·O.3/O.4 범위",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1697-L1759",
+          "span_sha256_lf": "e14a09930c759cfa732ac365f02064c37288e2a80f5f97bb4a7758c2bffbd817"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1764,
+            1768
+          ],
+          "section": "Platform-specific Guidance",
+          "note": "nonce CA challenge 일치·provider 권고",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1764-L1768",
+          "span_sha256_lf": "43a8d4cd6a0c6e588996e1abd2f0aeb361e4e875751ae43797c2479154635d4d"
+        },
+        {
+          "source": "GP-SECURITY",
+          "lines": [
+            510,
+            518
+          ],
+          "section": "O.3 / Level 2 / Requirements 4",
+          "note": "revision 방식: 적격 최소 revision·취약 revision CA 통지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Generator%20Product%20Security%20Requirements.md#L510-L518",
+          "span_sha256_lf": "3455f14e55e4a334976bf7b5a9acf41d9c0bc6855a667ab556001e865b131538"
+        },
+        {
+          "source": "GP-SECURITY",
+          "lines": [
+            586,
+            594
+          ],
+          "section": "O.4 / Level 2 / Requirements 5",
+          "note": "GP TOE 소프트웨어 revision 방식: 적격 최소·취약 revision CA 통지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Generator%20Product%20Security%20Requirements.md#L586-L594",
+          "span_sha256_lf": "b3d43b51ce6f94fce0d178c090b90d80882b837a603de01f370fd082be2a4272"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E12",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            379,
+            399
+          ],
+          "section": "§3.1 / Naming",
+          "note": "ASCII DN·CPL 일치·anonymous/pseudonymous 및 instance identity 금지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L379-L399",
+          "span_sha256_lf": "57f557e384805d1a89c8795db0c5941f56550f6d94065591a86091a8d02976d7"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            815,
+            823
+          ],
+          "section": "§6.1.2 / Key Pair Generation and Installation by Subscribers",
+          "note": "Subscriber/KMS 생성·CA 생성 금지·claim signing 용도",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L815-L823",
+          "span_sha256_lf": "ddb3809d5caf642616788325aea8a5d0c48d53e1b0af77b18e1479e7494ed232"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1204,
+            1332
+          ],
+          "section": "§7.1.2 / C2PA Claim Signing Leaf Certificates — Assurance Level 1/2",
+          "note": "CA의 Claim leaf 발급정책; P06/P07 상세",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1204-L1332",
+          "span_sha256_lf": "fb23f49dff7964607621272fefef9bfb17e0b95bff65fe9400bc50b149d3d45a"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E13",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1520,
+            1564
+          ],
+          "section": "§9.6.1 / CA Representations",
+          "note": "제품명 권리·발급권한·정확성 검증과 CP/CPS 기술, 계약/ToU·상태·폐지·Root 책임",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1520-L1564",
+          "span_sha256_lf": "e05b5cd838fa1af84a795367d3ac278da1165a71b48ae8c229551588ebbab154"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            531,
+            537
+          ],
+          "section": "§4.5 / Certificate Acceptance",
+          "note": "Subscriber Agreement acceptance·적격 GP의 claim 전용 사용",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L531-L537",
+          "span_sha256_lf": "6d2a5a024bbb61ddbc0f814a114615bcb9e17dff69be24c028508983e71aeec8"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            363,
+            375
+          ],
+          "section": "§2 / Publication and Repository Responsibilities",
+          "note": "공개 관행 대체수단과 내부 발급기록",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L363-L375",
+          "span_sha256_lf": "7cb6ab2ca06eb57a326a22dd1829b374bf53e33b8c367c8574d0c294dd20447c"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            587,
+            609
+          ],
+          "section": "§4.10–11 / Certificate Revocation; Certificate Status Services",
+          "note": "폐지·상태 서비스; O21–O26 상세",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L587-L609",
+          "span_sha256_lf": "83328d3eb7ad4fe57bd3be86ff8c443286b8065682592b31e19866632027f8d8"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E14",
+      "sources": [
+        {
+          "source": "ADDITIONAL",
+          "lines": [
+            14,
+            34
+          ],
+          "section": "Required Use of the specVersion Key",
+          "note": "Spec 2.4+ GP Intake/CPL·sample 버전 일치",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/Additional%20Conformance%20Requirements%20Against%20the%20Content%20Credentials%20Specification.md#L14-L34",
+          "span_sha256_lf": "483a29da333337c3e642bf9b3b45795957a58551b44ce1f171f606ecdd9909fa"
+        },
+        {
+          "source": "ADDITIONAL",
+          "lines": [
+            36,
+            52
+          ],
+          "section": "Mandatory Presence of allActionsIncluded Field",
+          "note": "Spec 2.2/2.4 true/false 값",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/Additional%20Conformance%20Requirements%20Against%20the%20Content%20Credentials%20Specification.md#L36-L52",
+          "span_sha256_lf": "0441690ae3adbf487a3e4470559b74cc5dce3f904dfea52a4313abc1f3743cda"
+        },
+        {
+          "source": "ADDITIONAL",
+          "lines": [
+            54,
+            78
+          ],
+          "section": "Support of crJSON format for evaluation of product with validation functionality",
+          "note": "모든 Spec, VP 또는 검증 GP; 4 inputs 및 결과 제출",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/Additional%20Conformance%20Requirements%20Against%20the%20Content%20Credentials%20Specification.md#L54-L78",
+          "span_sha256_lf": "60b9f3ec7aef8c73ca3f2a02fdc2e5e4ec0de6bec2fb9424f205e24a5f160dff"
+        },
+        {
+          "source": "ADDITIONAL",
+          "lines": [
+            80,
+            99
+          ],
+          "section": "Mandatory Presence of digitalSourceType Field in Selected pre-defined C2PA Actions",
+          "note": "Spec2.2/2.4 대상·예외 actions, 예외는 일괄 금지 아님",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/Additional%20Conformance%20Requirements%20Against%20the%20Content%20Credentials%20Specification.md#L80-L99",
+          "span_sha256_lf": "71fb74c3d9bedb840c39cd1eced41460624dc10b9d0acd9b579f4e89a51d99b4"
+        },
+        {
+          "source": "ADDITIONAL",
+          "lines": [
+            101,
+            117
+          ],
+          "section": "Prohibition of digitalSourceType Field in c2pa.opened Actions",
+          "note": "Spec2.4 금지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/Additional%20Conformance%20Requirements%20Against%20the%20Content%20Credentials%20Specification.md#L101-L117",
+          "span_sha256_lf": "1b96a97ddf97621e33517f7f0c9527d72d5409a69028ff4e682c2946ae80d769"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            438,
+            456
+          ],
+          "section": "§6.6.4 / Architecture Document; Product Sample Evidence",
+          "note": "GP Markdown GPSA·구현유형·media samples",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L438-L456",
+          "span_sha256_lf": "2e714b7f2fec98406f2955deecb63b6acc8c41a159af48e2117763829ea12de7"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            482,
+            484
+          ],
+          "section": "§6.6.9 / Definition of Material Change Requiring New Conformance Program Application",
+          "note": "제품 material change 재신청·새 CPL record id",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L482-L484",
+          "span_sha256_lf": "89823fdac85ca378f9acb56ffb990a691c7595ea97a5c4ef092efcd5a8f66cd4"
+        },
+        {
+          "source": "GP-SECURITY",
+          "lines": [
+            234,
+            250
+          ],
+          "section": "Generator Product Target of Evaluation",
+          "note": "제품과 의존 하위시스템의 TOE 경계",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Generator%20Product%20Security%20Requirements.md#L234-L250",
+          "span_sha256_lf": "f6018505f8efdd3a60366b4d9f2aad09c0754dd76b0b9b5a8cb9d22a7ff89940"
+        },
+        {
+          "source": "GP-SECURITY",
+          "lines": [
+            324,
+            328
+          ],
+          "section": "Definition of security requirements / Notes",
+          "note": "모든 implementation classes; 해당시 static·dynamic 둘 다 증거",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Generator%20Product%20Security%20Requirements.md#L324-L328",
+          "span_sha256_lf": "57a0e4a009ee42fbed92787f984e23101c082392e6ca3586304ad7eb58eb80f8"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E15",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            1456,
+            1516
+          ],
+          "section": "§9.1–5 / Fees; Financial Responsibility; Confidentiality; Privacy; Intellectual Property",
+          "note": "요금 공개·정보공유 제한·개인정보 목적 등",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1456-L1516",
+          "span_sha256_lf": "30f8f614f96f4cd725ef0ccdfdd058309c916d4f8b7c047deb6d7c833b47d768"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1578,
+            1618
+          ],
+          "section": "§9.7–10 / Disclaimers; Liability; Indemnities; Term and Termination",
+          "note": "No stipulation 세부 절과 CP 발효/지속 구분",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1578-L1618",
+          "span_sha256_lf": "2339c707e3a6fdc1edb7d186e89666fbb320883902e1259455ea0ccf4a1d96d5"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1620,
+            1646
+          ],
+          "section": "§9.11–13 / Notices; Amendments; Dispute Resolution Procedures",
+          "note": "서면 통지·연락처·중대 변경 알림, dispute No stipulation",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1620-L1646",
+          "span_sha256_lf": "5cdba5395f46b1c3c4cea4d284ac3a19db5e230eb633d90e286a7a6d5a1d42c2"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1648,
+            1678
+          ],
+          "section": "§9.14–16 / Governing Law; Applicable Law; Miscellaneous",
+          "note": "준거법·관할·계약 관계·일부 No stipulation",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1648-L1678",
+          "span_sha256_lf": "74b1b832b6a7ef7e324845bffa255c01f2794c38cf1bd057555f6df9f8a3fb32"
+        },
+        {
+          "source": "GOVERNANCE",
+          "lines": [
+            472,
+            474
+          ],
+          "section": "Legal Agreements",
+          "note": "역할별 C2PA 법적 계약",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Governance%20Framework.md#L472-L474",
+          "span_sha256_lf": "1a430f15085d3389c44780043864969c2d64a90452badcde6e63aa5cdb5907a9"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "E16",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            510,
+            518
+          ],
+          "section": "§6.7.3–4 / Removal; Dispute Mediation and Arbitration",
+          "note": "정식통지·Task Force 출석·Steering 최종결정·mediation 및 계약상 arbitration",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L510-L518",
+          "span_sha256_lf": "dbd8fcf2cfa3272985ffc84a83e993887564a1061d5328befd93211786f791f1"
+        },
+        {
+          "source": "GOVERNANCE",
+          "lines": [
+            444,
+            450
+          ],
+          "section": "Participant Revocation; Appeals Process",
+          "note": "revoked record 표기·이의제기",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Governance%20Framework.md#L444-L450",
+          "span_sha256_lf": "7f531f7ee6d1a39b5b870446069e6cd5d7ea56f3fcf6fe412f79361cc5de3638"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "T01",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            517,
+            517
+          ],
+          "section": "§4.4(3) / Certificate Issuance",
+          "note": "TSA certificate의 CA 업무관행상 identification/authentication/verification",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L517-L517",
+          "span_sha256_lf": "ec17fd8d5eba4c2647bb2fc27002c168b263026ebe14532c6e491b114ec12b44"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            905,
+            913
+          ],
+          "section": "§6.7 / Time-Stamping Authorities",
+          "note": "CA의 RFC3161 TSA 운영·등록 MAY; backend/on-device",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L905-L913",
+          "span_sha256_lf": "a5697f305ccee9564ad2e30a58bfb845149a76e4e9d136193f3466b685da7e91"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            915,
+            927
+          ],
+          "section": "§6.7.1 / General TSA Requirements",
+          "note": "CA 관행공개·time-stamp 정확도·UTC(k) lowercase shall·전용 active key1·SHA2 요청",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L915-L927",
+          "span_sha256_lf": "74f4b983f9f24b9e71861fd0ff34763f772b63d4eb99ececb5200233d0fa43bc"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            929,
+            931
+          ],
+          "section": "§6.7.2 / Backend TSA",
+          "note": "TSU key 생성/저장의 적격 보안기기 대안",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L929-L931",
+          "span_sha256_lf": "baceb4c999b7d56d62801748fca8521831cc750565378221d094c43375206d51"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            933,
+            939
+          ],
+          "section": "§6.7.3 / On-Device TSA",
+          "note": "매24h 동기화 시도·TEE; 조건부 문장 Q16",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L933-L939",
+          "span_sha256_lf": "ba03dc63350b4c4ad1dca8baf448b492c721042b377efbbaf0e4a22b7f4073fc"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1334,
+            1386
+          ],
+          "section": "§7.1.2 / TSA Time-Stamp Signing Leaf Certificates",
+          "note": "TSA leaf 정책 P08",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1334-L1386",
+          "span_sha256_lf": "8618c8263a68a2faca6a8f7ce4031e0675e2fe2f8a6ceba387416c819c619070"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            12,
+            12
+          ],
+          "section": "§1.1 / Standard Terms",
+          "note": "대문자만 BCP14 규범강도; L919 lowercase 구별",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L12-L12",
+          "span_sha256_lf": "da01cfa3014ef7b12205135d1ed563289bf8e0fbe8fbaca21e8dcfeab149e5d0"
+        }
+      ],
+      "report_document": "04-conformance-and-evidence.md"
+    },
+    {
+      "id": "Q01",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            783,
+            795
+          ],
+          "section": "Key Pair Generation and Installation by CAs / 2–3",
+          "note": "생성 FIPS140-2/140-3/CC 대안",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L783-L795",
+          "span_sha256_lf": "e9e79c45848d32837f19c9fdf746ca1be3a0d25e57898b3776948a3df4854174"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            829,
+            833
+          ],
+          "section": "Controls for CA Keys / Key Storage",
+          "note": "저장은 FIPS140-2와 root/issuing·3-tier/cloud 문구; 문구 차이/범위 해석 유지",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L829-L833",
+          "span_sha256_lf": "800d25cd2df64c24197cdd180a7813bc472574d846f5c8ace3a48c31e00190d1"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q02",
+      "sources": [
+        {
+          "source": "tsaIssuingCA.cert.yaml",
+          "lines": [
+            9,
+            9
+          ],
+          "section": "TSA Issuing CA / Issuer Name",
+          "note": "서술형 issuer는 signing Root Subject",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.yaml#L9-L9",
+          "span_sha256_lf": "b808d14334498d441554d04f622b938f06ef624e9852c74398237bf011cff4ca"
+        },
+        {
+          "source": "tsaIssuingCA.cert.yaml",
+          "lines": [
+            22,
+            25
+          ],
+          "section": "TSA Issuing CA / Authority Key Identifier",
+          "note": "MUST keyIdentifier 설명에는 root or intermediate; 계층 승인 범위 미확정",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.yaml#L22-L25",
+          "span_sha256_lf": "44b70a5e1d61063c1ba4729bd1eb1e5810b19a1edaf809bb6720064811f7f86b"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1105,
+            1125
+          ],
+          "section": "Certificate Profiles / TSA Issuing CA",
+          "note": "내장 YAML도 동일한 issuer/AKI 차이",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1105-L1125",
+          "span_sha256_lf": "5b8b1eeca536f1664298b8f45257e8c860377b3547e937d08a36c99d220dceb0"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q03",
+      "sources": [
+        {
+          "source": "intermediateCa.cert.yaml",
+          "lines": [
+            22,
+            25
+          ],
+          "section": "First Intermediate CA / Authority Key Identifier",
+          "note": "SKI 대상이 축약된 문구",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCa.cert.yaml#L22-L25",
+          "span_sha256_lf": "a3766645b7f07dd0143540b1b96600dc2a49ac7204134fc0af3016a5ee4760aa"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1018,
+            1021
+          ],
+          "section": "Certificate Profiles / Intermediate CA / Authority Key Identifier",
+          "note": "내장 YAML도 동일",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1018-L1021",
+          "span_sha256_lf": "a3766645b7f07dd0143540b1b96600dc2a49ac7204134fc0af3016a5ee4760aa"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4721,
+            4724
+          ],
+          "section": "14.5.1.1 General Requirements",
+          "note": "RFC5280 §4.2.1.1–.2 규범참조; 보충 RFC5280 §4.2.1.1–.2 원문 확인; 아래 RFC 링크 참조",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4721-L4724",
+          "span_sha256_lf": "39243edede8a3a97f2ef2129101be45eb53767f628bcc94a116ffb14e0f46c78"
+        },
+        {
+          "source": "RFC5280",
+          "section": "4.2.1.1 Authority Key Identifier; 4.2.1.2 Subject Key Identifier",
+          "url": "https://www.rfc-editor.org/rfc/rfc5280.html#section-4.2.1.2",
+          "note": "발급자 CA SKI를 그 CA가 발급한 인증서 AKI keyIdentifier에 사용. 로컬 Git 원문 묶음과 구분한 보충 원문."
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q04",
+      "sources": [
+        {
+          "source": "intermediateCa.cert.yaml",
+          "lines": [
+            38,
+            45
+          ],
+          "section": "First Intermediate CA / AIA and CDP",
+          "note": "AIA의 OCSP MUST/caIssuers SHOULD",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCa.cert.yaml#L38-L45",
+          "span_sha256_lf": "79ea8175a947f9cf981c1b4f4892b02c4b572eaddfc45f9cf5f38b25a63ea195"
+        },
+        {
+          "source": "claimSigningIssuingCA.cert.yaml",
+          "lines": [
+            42,
+            49
+          ],
+          "section": "Claim Issuing CA / AIA and CDP",
+          "note": "AIA의 OCSP MUST/caIssuers SHOULD",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.cert.yaml#L42-L49",
+          "span_sha256_lf": "79ea8175a947f9cf981c1b4f4892b02c4b572eaddfc45f9cf5f38b25a63ea195"
+        },
+        {
+          "source": "tsaIssuingCA.cert.yaml",
+          "lines": [
+            42,
+            49
+          ],
+          "section": "TSA Issuing CA / AIA and CDP",
+          "note": "AIA의 OCSP MUST/caIssuers SHOULD",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.yaml#L42-L49",
+          "span_sha256_lf": "ac9b4a37c38dcbca076f746da80171aa77420a4f8bb51741b6b48dc6ccc2a8e9"
+        },
+        {
+          "source": "intermediateCA.cert.schema.json",
+          "lines": [
+            1218,
+            1440
+          ],
+          "section": "c2paFirstIntermediateCaConstraints / AIA-CDP",
+          "note": "contains로 caIssuers 강제; CDP+caIssuers-only AIA의 OCSP 누락 미검출; oneOf로 OCSP+caIssuers AIA와 CDP 동시 포함 거부. 모두 해당 제약 조각 범위.",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCA.cert.schema.json#L1218-L1440",
+          "span_sha256_lf": "75d93780abd0331bf1a78c0087e6968d7cf577435af8f02f2c33e3a54027a223"
+        },
+        {
+          "source": "claimSigningIssuingCA.cert.schema.json",
+          "lines": [
+            1231,
+            1453
+          ],
+          "section": "c2paClaimSigningIssuingCaConstraints / AIA-CDP",
+          "note": "caIssuers 강제 및 CDP+caIssuers-only AIA의 OCSP 누락 미검출; anyOf이므로 OCSP+caIssuers AIA와 CDP 동시 포함 허용. 모두 해당 제약 조각 범위.",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.cert.schema.json#L1231-L1453",
+          "span_sha256_lf": "73b593e634d5befbba2fa671afaeb54acb5e95e46ba7bedfb4df40120b093765"
+        },
+        {
+          "source": "tsaIssuingCA.cert.schema.json",
+          "lines": [
+            1210,
+            1432
+          ],
+          "section": "c2paTsaIssuingCaConstraints / AIA-CDP",
+          "note": "caIssuers 강제 및 CDP+caIssuers-only AIA의 OCSP 누락 미검출; anyOf이므로 OCSP+caIssuers AIA와 CDP 동시 포함 허용. 모두 해당 제약 조각 범위.",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.cert.schema.json#L1210-L1432",
+          "span_sha256_lf": "73b593e634d5befbba2fa671afaeb54acb5e95e46ba7bedfb4df40120b093765"
+        },
+        {
+          "source": "claimSigningLeaf.al1.cert.schema.json",
+          "lines": [
+            1407,
+            1455
+          ],
+          "section": "AIA details / caIssuers contains",
+          "note": "Claim AL1 AIA caIssuers SHOULD를 contains로 강제",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.schema.json#L1407-L1455",
+          "span_sha256_lf": "6628641612cacac79fa13117bfe14d994251b5eb9ebbd75ee686186cf3888d18"
+        },
+        {
+          "source": "claimSigningLeaf.al2.cert.schema.json",
+          "lines": [
+            1407,
+            1455
+          ],
+          "section": "AIA details / caIssuers contains",
+          "note": "Claim AL2 AIA caIssuers SHOULD를 contains로 강제",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.schema.json#L1407-L1455",
+          "span_sha256_lf": "6628641612cacac79fa13117bfe14d994251b5eb9ebbd75ee686186cf3888d18"
+        },
+        {
+          "source": "tsaLeaf.cert.schema.json",
+          "lines": [
+            1244,
+            1434
+          ],
+          "section": "AIA with OCSP OR CDP; AIA details",
+          "note": "caIssuers 강제; CDP+caIssuers-only AIA의 OCSP누락 허용",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaLeaf.cert.schema.json#L1244-L1434",
+          "span_sha256_lf": "9c63c7d8ec8e5723f69b016de7a9482af309df86febae8a5c076712865edac14"
+        },
+        {
+          "source": "intermediateCA.csr.schema.json",
+          "lines": [
+            1014,
+            1082
+          ],
+          "section": "Check AIA details if requested",
+          "note": "CSR에서 AIA 요청시 noncritical/HTTP 검사; caIssuers·OCSP method contains 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/intermediateCA.csr.schema.json#L1014-L1082",
+          "span_sha256_lf": "e5aa5b4861e995439def46f55233aeeff87ebf4ef70fce55cc203931f2a83e57"
+        },
+        {
+          "source": "claimSigningIssuingCA.csr.schema.json",
+          "lines": [
+            1079,
+            1147
+          ],
+          "section": "Check AIA details if requested",
+          "note": "CSR에서 AIA 요청시 noncritical/HTTP 검사; caIssuers·OCSP method contains 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.csr.schema.json#L1079-L1147",
+          "span_sha256_lf": "e5aa5b4861e995439def46f55233aeeff87ebf4ef70fce55cc203931f2a83e57"
+        },
+        {
+          "source": "tsaIssuingCA.csr.schema.json",
+          "lines": [
+            1058,
+            1126
+          ],
+          "section": "Check AIA details if requested",
+          "note": "CSR에서 AIA 요청시 noncritical/HTTP 검사; caIssuers·OCSP method contains 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaIssuingCA.csr.schema.json#L1058-L1126",
+          "span_sha256_lf": "bad41012b348f800955522c024e1ece290409967d5aa6c36763b3944683f5228"
+        },
+        {
+          "source": "claimSigningLeaf.al1.csr.schema.json",
+          "lines": [
+            1189,
+            1257
+          ],
+          "section": "Check AIA details if requested",
+          "note": "CSR에서 AIA 요청시 noncritical/HTTP 검사; caIssuers·OCSP method contains 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.csr.schema.json#L1189-L1257",
+          "span_sha256_lf": "bad41012b348f800955522c024e1ece290409967d5aa6c36763b3944683f5228"
+        },
+        {
+          "source": "claimSigningLeaf.al2.csr.schema.json",
+          "lines": [
+            1189,
+            1257
+          ],
+          "section": "Check AIA details if requested",
+          "note": "CSR에서 AIA 요청시 noncritical/HTTP 검사; caIssuers·OCSP method contains 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.csr.schema.json#L1189-L1257",
+          "span_sha256_lf": "bad41012b348f800955522c024e1ece290409967d5aa6c36763b3944683f5228"
+        },
+        {
+          "source": "tsaLeaf.csr.schema.json",
+          "lines": [
+            1088,
+            1156
+          ],
+          "section": "Check AIA details if requested",
+          "note": "CSR에서 AIA 요청시 noncritical/HTTP 검사; caIssuers·OCSP method contains 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaLeaf.csr.schema.json#L1088-L1156",
+          "span_sha256_lf": "e5aa5b4861e995439def46f55233aeeff87ebf4ef70fce55cc203931f2a83e57"
+        },
+        {
+          "source": "claimSigningLeaf.al1.cert.schema.json",
+          "lines": [
+            1247,
+            1306
+          ],
+          "section": "Mandatory AIA with OCSP",
+          "note": "Claim leaf는 CDP가 있어도 AIA OCSP 필수이므로 해당 누락 우회 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.schema.json#L1247-L1306",
+          "span_sha256_lf": "25d714ef431514d743596ab1091328092bba833cab292d555d8d24d55a464b03"
+        },
+        {
+          "source": "claimSigningLeaf.al2.cert.schema.json",
+          "lines": [
+            1247,
+            1306
+          ],
+          "section": "Mandatory AIA with OCSP",
+          "note": "Claim leaf는 CDP가 있어도 AIA OCSP 필수이므로 해당 누락 우회 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.schema.json#L1247-L1306",
+          "span_sha256_lf": "25d714ef431514d743596ab1091328092bba833cab292d555d8d24d55a464b03"
+        },
+        {
+          "source": "claimSigningLeaf.al1.cert.yaml",
+          "lines": [
+            43,
+            50
+          ],
+          "section": "Claim AL1 / AIA and CDP",
+          "note": "AIA OCSP MUST, caIssuers SHOULD, CDP OPTIONAL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.yaml#L43-L50",
+          "span_sha256_lf": "8b6f699ffaa5613e0ca8f0edcf4f46b0575ec63876279a60e1dac8a3354b2c07"
+        },
+        {
+          "source": "claimSigningLeaf.al2.cert.yaml",
+          "lines": [
+            43,
+            50
+          ],
+          "section": "Claim AL2 / AIA and CDP",
+          "note": "AIA OCSP MUST, caIssuers SHOULD, CDP OPTIONAL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.yaml#L43-L50",
+          "span_sha256_lf": "8b6f699ffaa5613e0ca8f0edcf4f46b0575ec63876279a60e1dac8a3354b2c07"
+        },
+        {
+          "source": "tsaLeaf.cert.schema.yaml",
+          "lines": [
+            42,
+            49
+          ],
+          "section": "TSA leaf / AIA and CDP",
+          "note": "OCSP AIA 또는 CDP, AIA 안 OCSP MUST·caIssuers SHOULD",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/tsaLeaf.cert.schema.yaml#L42-L49",
+          "span_sha256_lf": "79ea8175a947f9cf981c1b4f4892b02c4b572eaddfc45f9cf5f38b25a63ea195"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q05",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            98,
+            106
+          ],
+          "section": "C2PA Trust List; C2PA TSA Trust List",
+          "note": "Root 또는 subordinate anchor",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L98-L106",
+          "span_sha256_lf": "265a1b9291576680fd2d0ff625709ce4c8eead4ee7f37c296166f0a38a16add7"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1564,
+            1564
+          ],
+          "section": "§9.6.1 / CA Representations",
+          "note": "Root의 Issuing 책임",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1564-L1564",
+          "span_sha256_lf": "ed27241e66c8bfee4758c4000c9ec686dab6c54a364cdf0954134ee00c3c6263"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q06",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            541,
+            549
+          ],
+          "section": "Key Pair and Certificate Usage / 1",
+          "note": "Cross-certified CA certificate 서명 용도 허용",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L541-L549",
+          "span_sha256_lf": "1e45bfbaff4665679a0ecdf5ac64683c4f755836368b733b3d625c3104db4539"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            573,
+            585
+          ],
+          "section": "Certificate Renewal / Re-key / Modification",
+          "note": "동일 키 renewal 및 해당 CA의 기존 발급 이력 한정",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L573-L585",
+          "span_sha256_lf": "a6896a417feb1a46ba35e0db29c4566844cd206d597f8911da7e6075e5ad057c"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q07",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            382,
+            382
+          ],
+          "section": "§6.4 / Certificate Policy",
+          "note": "WebTrust 보고서 waive 가능성",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L382-L382",
+          "span_sha256_lf": "908c0b378a121f5b41313a2484d33bd4c3bc39d31aab2d7897b49f7f89d55751"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            458,
+            460
+          ],
+          "section": "§6.6.4 / Certification Authority Evidence Request",
+          "note": "독립입회·scripted·C2PA review availability",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L458-L460",
+          "span_sha256_lf": "20a6a3e0cd298bed097ee1ae36a82467a4425c308caa866422b8842b5b0becfd"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            793,
+            813
+          ],
+          "section": "§6.1.1 / Key Pair Generation and Installation by CAs",
+          "note": "independent and/or recorded·sign-off·deviation",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L793-L813",
+          "span_sha256_lf": "bce061f4f09e1f4ce7e9fbe7b4a075036355b6ef8b617efeb149916ca3c774e6"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q08",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            457,
+            467
+          ],
+          "section": "§3.2.3 / Proof of Conformance; Maximum Assurance Level",
+          "note": "Notice SHALL·CPL MAY, DN/status/maxAL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L457-L467",
+          "span_sha256_lf": "9dccd52d74488421a030c448ce3aed4c18df8700ff7d42b0696918c86c381809"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            474,
+            474
+          ],
+          "section": "§6.6.7 / Notice of Conformance",
+          "note": "public posting 이전 production 발급",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L474-L474",
+          "span_sha256_lf": "de2e77cc245bbe2caaa7729b40df7f8ce242dafa5d9b1bd83629fac2c2c1a5b9"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            498,
+            498
+          ],
+          "section": "§6.7.1 / Use of C2PA Machine-Readable Lists",
+          "note": "conformant CPL record only MUST",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L498-L498",
+          "span_sha256_lf": "fb886d94ff0e3605b08df9737411a8ec3e45032e59128e98d9758b014c8205fd"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q09",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            605,
+            609
+          ],
+          "section": "Certificate Status Services",
+          "note": "Claim OCSP SHALL, subordinate/TSA OCSP 미제공시 CRL MUST",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L605-L609",
+          "span_sha256_lf": "89afeb9e40ce87bc8f6da472b5bd0de2edb5905a34febbf7bf4b518424e3ea5a"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1388,
+            1394
+          ],
+          "section": "CRL Profile / OCSP Profile",
+          "note": "일반 CRL not require 문구 및 구현시 RFC5280 SHALL; OCSP RFC6960 MUST",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1388-L1394",
+          "span_sha256_lf": "a79e609ec38014fb7ef109a56497fc39426b704d187c084fa3f3020b44f3642f"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            4777,
+            4799
+          ],
+          "section": "14.5.2 Certificate Revocation",
+          "note": "claim generator OCSP should/CRL shall not; AIA 관련 revocation 정보",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4777-L4799",
+          "span_sha256_lf": "279916d17418ed9f30a42e07562b365c370663ff6ed020ca1e16796b6c88a05f"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            6137,
+            6164
+          ],
+          "section": "15.9 Validate the Credential Revocation Information",
+          "note": "CA와 signer status 검증 경계; status 미제공자의 validator 처리로 CA 의무를 낮추지 않음",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L6137-L6164",
+          "span_sha256_lf": "cbe6bb77d9cda2bba152b723e4568ac76ddcb85d5096d41c582dd334cad4c2c0"
+        },
+        {
+          "source": "SPEC",
+          "lines": [
+            6221,
+            6243
+          ],
+          "section": "15.9.2 Determining revocation from online OCSP response",
+          "note": "validator query 선택성/skip/inaccessible은 CA status 제공 의무 면제 아님",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L6221-L6243",
+          "span_sha256_lf": "bc8197c52bc6aafa0b32ec7c978c5028845f490f873136fecb557380f9234baf"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q10",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            467,
+            467
+          ],
+          "section": "§3.2.3 / Maximum Assurance Level",
+          "note": "모든 수준 지원 SHALL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L467-L467",
+          "span_sha256_lf": "957168432d9c28deb3adfaa8ae5a293ad418acd3dbbf03328d77a30c5cf982f5"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            521,
+            529
+          ],
+          "section": "§4.4 / Certificate Issuance",
+          "note": "maxAL evidence vs 요청 AL downgrade MAY",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L521-L529",
+          "span_sha256_lf": "18c51b3237bd4f841ec9275d26c038cc5ade56bd13b73b4f7628d1f670090c26"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1713,
+            1751
+          ],
+          "section": "Requirements for Assurance Level 2 Certificates",
+          "note": "evidence 실패시 a certificate 발급금지 wording",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1713-L1751",
+          "span_sha256_lf": "2e442a0e8a1725f7d8e1beb01edd5b6beb813e7e85f259752f4526e86e7c72ce"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            444,
+            444
+          ],
+          "section": "§6.6.4 / Architecture Document Required of Generator Product Applicants",
+          "note": "maxAL2 GP의 AL1/2 신청 가능",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L444-L444",
+          "span_sha256_lf": "210647b1302b345ead84bdcb90c2785f5b9e9da176e668d79e2d18c628493a78"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q11",
+      "sources": [
+        {
+          "source": "rootCA.cert.yaml",
+          "lines": [
+            22,
+            25
+          ],
+          "section": "Root CA / Authority Key Identifier",
+          "note": "Presence OPTIONAL; 존재시 non-critical과 자기 SKI keyIdentifier MUST",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/rootCA.cert.yaml#L22-L25",
+          "span_sha256_lf": "1ee458b9f8fc287fe18b6f69e33110bd1cbafbc49a1c9dc377eeaf21d2045105"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            973,
+            976
+          ],
+          "section": "Certificate Profiles / Root / Authority Key Identifier",
+          "note": "내장 YAML 동일 OPTIONAL",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L973-L976",
+          "span_sha256_lf": "1ee458b9f8fc287fe18b6f69e33110bd1cbafbc49a1c9dc377eeaf21d2045105"
+        },
+        {
+          "source": "rootCA.cert.schema.json",
+          "lines": [
+            1013,
+            1045
+          ],
+          "section": "c2paRootCaConstraints / extensions / Authority Key Identifier",
+          "note": "필수 contains로 AKI 요구; certificate schema에 대한 차이이며 CSR 확장 주장하지 않음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/rootCA.cert.schema.json#L1013-L1045",
+          "span_sha256_lf": "2350b923045da5075d344e873470781e772902748860208d87e176d4b983b221"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q12",
+      "sources": [
+        {
+          "source": "SPEC",
+          "lines": [
+            4486,
+            4495
+          ],
+          "section": "14.4.1 C2PA Signers",
+          "note": "표준 id-kp-documentSigning=1.3.6.1.5.5.7.3.36; 과거 EKU 호환성 설명",
+          "url": "https://github.com/c2pa-org/specifications/blob/9c58c8c27044e44e8601f6ab13f1bcac1376eb1f/build/site/specifications/2.4/specs/C2PA_Specification.html#L4486-L4495",
+          "span_sha256_lf": "2bb56439a0e7f677ecdf08d6c53812c45f02218ce4340219a26df5af43dd7aba"
+        },
+        {
+          "source": "claimSigningIssuingCA.cert.schema.json",
+          "lines": [
+            1129,
+            1155
+          ],
+          "section": "Extended Key Usage constraints",
+          "note": "documentSigning 분기가 1.2.840.113583.1.1.5 사용; 표준 OID+claimSigning만으로 이 제약 실패",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.cert.schema.json#L1129-L1155",
+          "span_sha256_lf": "4a05d260a14b871a6930f33ed856b46e2db908543a99c44420ba6ed36dad1090"
+        },
+        {
+          "source": "claimSigningIssuingCA.csr.schema.json",
+          "lines": [
+            980,
+            1006
+          ],
+          "section": "Extended Key Usage constraints",
+          "note": "documentSigning 분기가 1.2.840.113583.1.1.5 사용; 표준 OID+claimSigning만으로 이 제약 실패",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningIssuingCA.csr.schema.json#L980-L1006",
+          "span_sha256_lf": "de7836c0b82b9031dea45c26a6f654a173e3d82a0e34f86724b0d7b1e90ac760"
+        },
+        {
+          "source": "claimSigningLeaf.al1.cert.schema.json",
+          "lines": [
+            1156,
+            1182
+          ],
+          "section": "Extended Key Usage constraints",
+          "note": "documentSigning 분기가 1.2.840.113583.1.1.5 사용; 표준 OID+claimSigning만으로 이 제약 실패",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.cert.schema.json#L1156-L1182",
+          "span_sha256_lf": "ced5ba86cb1caebf60671ce0c2630f2263e400811cd9992009a70ed860d7d3e1"
+        },
+        {
+          "source": "claimSigningLeaf.al1.csr.schema.json",
+          "lines": [
+            1002,
+            1028
+          ],
+          "section": "Extended Key Usage constraints",
+          "note": "documentSigning 분기가 1.2.840.113583.1.1.5 사용; 표준 OID+claimSigning만으로 이 제약 실패",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al1.csr.schema.json#L1002-L1028",
+          "span_sha256_lf": "5f08b2cfde5909dacb44418e5307866b96d86e18d9f8bad560b9101591bf076b"
+        },
+        {
+          "source": "claimSigningLeaf.al2.cert.schema.json",
+          "lines": [
+            1156,
+            1182
+          ],
+          "section": "Extended Key Usage constraints",
+          "note": "documentSigning 분기가 1.2.840.113583.1.1.5 사용; 표준 OID+claimSigning만으로 이 제약 실패",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.cert.schema.json#L1156-L1182",
+          "span_sha256_lf": "ced5ba86cb1caebf60671ce0c2630f2263e400811cd9992009a70ed860d7d3e1"
+        },
+        {
+          "source": "claimSigningLeaf.al2.csr.schema.json",
+          "lines": [
+            1002,
+            1028
+          ],
+          "section": "Extended Key Usage constraints",
+          "note": "documentSigning 분기가 1.2.840.113583.1.1.5 사용; 표준 OID+claimSigning만으로 이 제약 실패",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/cert-profiles/claimSigningLeaf.al2.csr.schema.json#L1002-L1028",
+          "span_sha256_lf": "5f08b2cfde5909dacb44418e5307866b96d86e18d9f8bad560b9101591bf076b"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q13",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            841,
+            849
+          ],
+          "section": "Key Backup and Recovery",
+          "note": "CA off-site 사본 SHALL; site의 구체 분리 단위 미정",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L841-L849",
+          "span_sha256_lf": "966b20a4e24bc52689cdf118cd9ae3cdf0b420f97feadcec675bf4b3044b9760"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            755,
+            761
+          ],
+          "section": "Backup and Recovery",
+          "note": "중요 데이터 backup과 CA key backup의 강도 구분",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L755-L761",
+          "span_sha256_lf": "42994957be9f695e703c821ab5ae0c6ffacb9dc5fe085f77f174ec55adff6b62"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q14",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            841,
+            857
+          ],
+          "section": "Key Backup and Recovery / Key Archival / Key Destruction",
+          "note": "backup 의무, archive 금지, destruction No stipulation",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L841-L857",
+          "span_sha256_lf": "9b0031a3f384f46f89c549c95ff56655a048c37f6fb83a81ee66b61739d66639"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            373,
+            375
+          ],
+          "section": "Repositories",
+          "note": "인증서 발급기록 만료+1년",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L373-L375",
+          "span_sha256_lf": "0adfccec133bb91df27e512ecee97ea661f659ad9860632dcfe79ee2510f9492"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            693,
+            729
+          ],
+          "section": "Audit Logging Procedures / Records Archival",
+          "note": "로그 통제와 종류별 보존정책; 일률적 보존연수 미지정",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L693-L729",
+          "span_sha256_lf": "17ac6ca9cf30f69e75e195e17b173367494f8a51ced36caca707402dd41d3109"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            378,
+            382
+          ],
+          "section": "Certificate Policy",
+          "note": "등록 ceremony 증거 요구; 보존기간 수치는 없음",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L378-L382",
+          "span_sha256_lf": "51fbc798f55db9ab90445267d2e13a8efe401f5676d00a6bc02f1280b13662e0"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            458,
+            460
+          ],
+          "section": "Certification Authority Evidence Request",
+          "note": "C2PA 검토 가능한 scripted 과정",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L458-L460",
+          "span_sha256_lf": "20a6a3e0cd298bed097ee1ae36a82467a4425c308caa866422b8842b5b0becfd"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q15",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            789,
+            813
+          ],
+          "section": "Key Pair Generation and Installation by CAs / 3–4",
+          "note": "입회 및/또는 recorded와 participants/witnesses sign-off 병존",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L789-L813",
+          "span_sha256_lf": "2ac1d2fadcd597268c2a5fabe71d7410b4bdf57d26a77e86d6378abd95cd570e"
+        },
+        {
+          "source": "PROGRAM",
+          "lines": [
+            378,
+            382
+          ],
+          "section": "Certificate Policy",
+          "note": "등록 시 독립 입회·signed script 및 조건부 증거 대체",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L378-L382",
+          "span_sha256_lf": "51fbc798f55db9ab90445267d2e13a8efe401f5676d00a6bc02f1280b13662e0"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q16",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            12,
+            12
+          ],
+          "section": "§1.1 / Standard Terms",
+          "note": "대문자 규범 정의",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L12-L12",
+          "span_sha256_lf": "da01cfa3014ef7b12205135d1ed563289bf8e0fbe8fbaca21e8dcfeab149e5d0"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            919,
+            921
+          ],
+          "section": "§6.7.1 / General TSA Requirements",
+          "note": "UTC(k) lowercase shall와 accuracy SHALL/SHOULD",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L919-L921",
+          "span_sha256_lf": "c8a4b4b9ee0064683e42a182751463062aa6452e4c0b540ba704bb85cfa2738e"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            935,
+            939
+          ],
+          "section": "§6.7.3 / On-Device TSA",
+          "note": "In such a case·following procedure의 TEE 범위 모호성",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L935-L939",
+          "span_sha256_lf": "788b7d47374e750f2d5d3f585971915d4bd9d5491921e0d8dacda4450ccca2f5"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q17",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            371,
+            371
+          ],
+          "section": "§2.1 / Publication",
+          "note": "CPS 또는 C2PA 협의 공개 대안",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L371-L371",
+          "span_sha256_lf": "2c09cfbd04e658bb03ef2060b406a8c736c5b7915862fcba47c4eaf4d2a0488c"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            1534,
+            1556
+          ],
+          "section": "§9.6.1 / CA Representations",
+          "note": "제품명/권한/정확성 절차 CA CP/CPS 기술 보증",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L1534-L1556",
+          "span_sha256_lf": "519f49679e1a8b00c421ecc7625d6ee4ec64a024c4fe4ba02bedf412941098f7"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q18",
+      "sources": [
+        {
+          "source": "PROGRAM",
+          "lines": [
+            510,
+            518
+          ],
+          "section": "§6.7.3–4 / Removal; Dispute Mediation",
+          "note": "CA/TSA removal",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Conformance%20Program.md#L510-L518",
+          "span_sha256_lf": "dbd8fcf2cfa3272985ffc84a83e993887564a1061d5328befd93211786f791f1"
+        },
+        {
+          "source": "GOVERNANCE",
+          "lines": [
+            444,
+            450
+          ],
+          "section": "Participant Revocation; Appeals Process",
+          "note": "revoked 표기·이의제기",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Governance%20Framework.md#L444-L450",
+          "span_sha256_lf": "7f531f7ee6d1a39b5b870446069e6cd5d7ea56f3fcf6fe412f79361cc5de3638"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q19",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            615,
+            619
+          ],
+          "section": "Key Escrow and Recovery",
+          "note": "escrow/recovery 미지원 및 Subscriber 보호·관리 책임",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L615-L619",
+          "span_sha256_lf": "3c4f57dce55e2711af3613b9813db52e305f637394003dceb75d9d79ca2e3216"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            841,
+            849
+          ],
+          "section": "Key Backup and Recovery",
+          "note": "별도 CA backup/recovery SHALL 및 기타 허용 backup 보호",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L841-L849",
+          "span_sha256_lf": "966b20a4e24bc52689cdf118cd9ae3cdf0b420f97feadcec675bf4b3044b9760"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    },
+    {
+      "id": "Q20",
+      "sources": [
+        {
+          "source": "CP",
+          "lines": [
+            483,
+            485
+          ],
+          "section": "Identification and Authentication for Revocation Requests",
+          "note": "인증·진위·유효성 검증 완료 후 72시간",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L483-L485",
+          "span_sha256_lf": "ec033fca8d0f1e64b20fc265124f3b389e326b2986048362e4600558f1686ca1"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            587,
+            609
+          ],
+          "section": "Certificate Revocation / Certificate Status Services",
+          "note": "폐지 사유와 status 제공",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L587-L609",
+          "span_sha256_lf": "83328d3eb7ad4fe57bd3be86ff8c443286b8065682592b31e19866632027f8d8"
+        },
+        {
+          "source": "CP",
+          "lines": [
+            763,
+            771
+          ],
+          "section": "CA or RA Termination",
+          "note": "종료 절차·보안사고 예외·충분한 전환 시간",
+          "url": "https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L763-L771",
+          "span_sha256_lf": "8c2c3162f224c6c3da5a1e34e8c2b4e8e32833b86ac4a28162cda2cb51ff3630"
+        }
+      ],
+      "report_document": "05-design-inputs-and-open-questions.md"
+    }
+  ]
+}

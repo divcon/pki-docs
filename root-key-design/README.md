@@ -2,11 +2,11 @@
 
 Global과 CN이 공유하는 플랫폼 Root를 운영하고 C2PA를 첫 적용 대상으로 삼는다. 구조는 **Root → 공용 First ICA → 하위 Issuing ICA → leaf**다.
 
-Root와 First를 새로 만드는 절차는 [Key Ceremony](key-ceremony.md)에서 시작한다. 현재는 설계안이며 생성 통제·운영 파라미터·참여자와 도구 검증이 남아 있다.
+Root와 First를 새로 만드는 절차는 [Key Ceremony](ceremony/README.md)에서 시작한다. 현재는 설계안이며 생성 통제·운영 파라미터·참여자와 도구 검증이 남아 있다.
 
 | 문서 | 내용 |
 |---|---|
-| [Key Ceremony](key-ceremony.md) | 준비·생성·발급·종료 절차, 생성 전 확인, 증거와 중단 처리, 남은 결정 |
+| [Ceremony](ceremony/README.md) | 전체 순서, 키 생성·CA 인증서 발급 스크립트, 추후 CloudHSM 구현 옵션 |
 | [CA 앱 기능](ca-software-requirements.md) | 구현할 기능, 외부 책임, 준비 시점, 수용 시험과 원문 대응 |
 | [다인 통제](dual-control-options.md) | 생성·서명·관리자 통제, CLI 세션과 승인 키, 우회 시험 |
 | [요구사항과 확정 범위](requirements.md) | 확정된 구성·운영 조건과 해석 확인 사항 |

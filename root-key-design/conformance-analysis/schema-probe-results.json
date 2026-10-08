@@ -1,0 +1,230 @@
+{
+  "scope": "Selected JSON policy constraints only; synthetic decoded values, no DER/CSR/signature/chain/official-checker claim",
+  "aia": [
+    {
+      "file": "intermediateCA.cert.schema.json",
+      "constraint_paths": [
+        "$defs/c2paFirstIntermediateCaConstraints/allOf/5",
+        "$defs/c2paFirstIntermediateCaConstraints/allOf/6",
+        "$defs/c2paFirstIntermediateCaConstraints/allOf/7"
+      ],
+      "cases": {
+        "ocsp_only": false,
+        "ocsp_and_caIssuers": true,
+        "cdp_only": true,
+        "cdp_and_caIssuers_without_ocsp": true,
+        "ocsp_and_caIssuers_and_cdp": false
+      }
+    },
+    {
+      "file": "claimSigningIssuingCA.cert.schema.json",
+      "constraint_paths": [
+        "$defs/c2paClaimSigningIssuingCaConstraints/allOf/5",
+        "$defs/c2paClaimSigningIssuingCaConstraints/allOf/6",
+        "$defs/c2paClaimSigningIssuingCaConstraints/allOf/7"
+      ],
+      "cases": {
+        "ocsp_only": false,
+        "ocsp_and_caIssuers": true,
+        "cdp_only": true,
+        "cdp_and_caIssuers_without_ocsp": true,
+        "ocsp_and_caIssuers_and_cdp": true
+      }
+    },
+    {
+      "file": "tsaIssuingCA.cert.schema.json",
+      "constraint_paths": [
+        "$defs/c2paTsaIssuingCaConstraints/allOf/5",
+        "$defs/c2paTsaIssuingCaConstraints/allOf/6",
+        "$defs/c2paTsaIssuingCaConstraints/allOf/7"
+      ],
+      "cases": {
+        "ocsp_only": false,
+        "ocsp_and_caIssuers": true,
+        "cdp_only": true,
+        "cdp_and_caIssuers_without_ocsp": true,
+        "ocsp_and_caIssuers_and_cdp": true
+      }
+    },
+    {
+      "file": "claimSigningLeaf.al1.cert.schema.json",
+      "constraint_paths": [
+        "$defs/c2paClaimSigningLeafAL1Constraints/allOf/4/properties/decoded/properties/tbsCertificate/properties/extensions/allOf/6",
+        "$defs/c2paClaimSigningLeafAL1Constraints/allOf/5",
+        "$defs/c2paClaimSigningLeafAL1Constraints/allOf/6"
+      ],
+      "cases": {
+        "ocsp_only": false,
+        "ocsp_and_caIssuers": true,
+        "cdp_only": false,
+        "cdp_and_caIssuers_without_ocsp": false,
+        "ocsp_and_caIssuers_and_cdp": true
+      }
+    },
+    {
+      "file": "claimSigningLeaf.al2.cert.schema.json",
+      "constraint_paths": [
+        "$defs/c2paClaimSigningLeafAL2Constraints/allOf/4/properties/decoded/properties/tbsCertificate/properties/extensions/allOf/6",
+        "$defs/c2paClaimSigningLeafAL2Constraints/allOf/5",
+        "$defs/c2paClaimSigningLeafAL2Constraints/allOf/6"
+      ],
+      "cases": {
+        "ocsp_only": false,
+        "ocsp_and_caIssuers": true,
+        "cdp_only": false,
+        "cdp_and_caIssuers_without_ocsp": false,
+        "ocsp_and_caIssuers_and_cdp": true
+      }
+    },
+    {
+      "file": "tsaLeaf.cert.schema.json",
+      "constraint_paths": [
+        "$defs/c2paTsaLeafConstraints/allOf/5",
+        "$defs/c2paTsaLeafConstraints/allOf/6"
+      ],
+      "cases": {
+        "ocsp_only": false,
+        "ocsp_and_caIssuers": true,
+        "cdp_only": true,
+        "cdp_and_caIssuers_without_ocsp": true,
+        "ocsp_and_caIssuers_and_cdp": true
+      }
+    }
+  ],
+  "csr_aia": [
+    {
+      "file": "intermediateCA.csr.schema.json",
+      "constraint_path": "$defs/c2paFirstIntermediateCaCsrConstraints/allOf/3",
+      "ocsp_method_oid_count_in_whole_file": 0,
+      "caIssuers_method_oid_count_in_whole_file": 0,
+      "cases": {
+        "not_requested": true,
+        "ocsp_only": true,
+        "caIssuers_only": true,
+        "ocsp_and_caIssuers": true,
+        "critical_true": false
+      }
+    },
+    {
+      "file": "claimSigningIssuingCA.csr.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningIssuingCaCsrConstraints/allOf/3",
+      "ocsp_method_oid_count_in_whole_file": 0,
+      "caIssuers_method_oid_count_in_whole_file": 0,
+      "cases": {
+        "not_requested": true,
+        "ocsp_only": true,
+        "caIssuers_only": true,
+        "ocsp_and_caIssuers": true,
+        "critical_true": false
+      }
+    },
+    {
+      "file": "tsaIssuingCA.csr.schema.json",
+      "constraint_path": "$defs/c2paTsaIssuingCaCsrConstraints/allOf/3",
+      "ocsp_method_oid_count_in_whole_file": 0,
+      "caIssuers_method_oid_count_in_whole_file": 0,
+      "cases": {
+        "not_requested": true,
+        "ocsp_only": true,
+        "caIssuers_only": true,
+        "ocsp_and_caIssuers": true,
+        "critical_true": false
+      }
+    },
+    {
+      "file": "claimSigningLeaf.al1.csr.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningLeafAL1CsrConstraints/allOf/3",
+      "ocsp_method_oid_count_in_whole_file": 0,
+      "caIssuers_method_oid_count_in_whole_file": 0,
+      "cases": {
+        "not_requested": true,
+        "ocsp_only": true,
+        "caIssuers_only": true,
+        "ocsp_and_caIssuers": true,
+        "critical_true": false
+      }
+    },
+    {
+      "file": "claimSigningLeaf.al2.csr.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningLeafAL2CsrConstraints/allOf/3",
+      "ocsp_method_oid_count_in_whole_file": 0,
+      "caIssuers_method_oid_count_in_whole_file": 0,
+      "cases": {
+        "not_requested": true,
+        "ocsp_only": true,
+        "caIssuers_only": true,
+        "ocsp_and_caIssuers": true,
+        "critical_true": false
+      }
+    },
+    {
+      "file": "tsaLeaf.csr.schema.json",
+      "constraint_path": "$defs/c2paTsaLeafCsrConstraints/allOf/3",
+      "ocsp_method_oid_count_in_whole_file": 0,
+      "caIssuers_method_oid_count_in_whole_file": 0,
+      "cases": {
+        "not_requested": true,
+        "ocsp_only": true,
+        "caIssuers_only": true,
+        "ocsp_and_caIssuers": true,
+        "critical_true": false
+      }
+    }
+  ],
+  "eku": [
+    {
+      "file": "claimSigningIssuingCA.cert.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningIssuingCaConstraints/allOf/4/properties/decoded/properties/tbsCertificate/properties/extensions/allOf/4/contains/properties/extnValue/properties/extendedKeyUsage",
+      "standard_documentSigning": false,
+      "emailProtection": true
+    },
+    {
+      "file": "claimSigningIssuingCA.csr.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningIssuingCaCsrConstraints/allOf/2/properties/decoded/properties/certificationRequestInfo/properties/requestedExtensions/allOf/2/contains/properties/extnValue/properties/extendedKeyUsage",
+      "standard_documentSigning": false,
+      "emailProtection": true
+    },
+    {
+      "file": "claimSigningLeaf.al1.cert.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningLeafAL1Constraints/allOf/4/properties/decoded/properties/tbsCertificate/properties/extensions/allOf/4/contains/properties/extnValue/properties/extendedKeyUsage",
+      "standard_documentSigning": false,
+      "emailProtection": true
+    },
+    {
+      "file": "claimSigningLeaf.al1.csr.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningLeafAL1CsrConstraints/allOf/2/properties/decoded/properties/certificationRequestInfo/properties/requestedExtensions/allOf/2/contains/properties/extnValue/properties/extendedKeyUsage",
+      "standard_documentSigning": false,
+      "emailProtection": true
+    },
+    {
+      "file": "claimSigningLeaf.al2.cert.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningLeafAL2Constraints/allOf/4/properties/decoded/properties/tbsCertificate/properties/extensions/allOf/4/contains/properties/extnValue/properties/extendedKeyUsage",
+      "standard_documentSigning": false,
+      "emailProtection": true
+    },
+    {
+      "file": "claimSigningLeaf.al2.csr.schema.json",
+      "constraint_path": "$defs/c2paClaimSigningLeafAL2CsrConstraints/allOf/2/properties/decoded/properties/certificationRequestInfo/properties/requestedExtensions/allOf/2/contains/properties/extnValue/properties/extendedKeyUsage",
+      "standard_documentSigning": false,
+      "emailProtection": true
+    }
+  ],
+  "root_aki": {
+    "scope": "Root AKI contains constraint only",
+    "without_aki": false,
+    "with_aki": true
+  },
+  "checked_on": "2026-10-08",
+  "source_revision": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+  "source_manifest": "source-manifest.json",
+  "validator": "jsonschema 4.10.3 / Draft202012Validator",
+  "input_policy": {
+    "AIA": "extnID 1.3.6.1.5.5.7.1.1, critical false, authorityInfoAccess AccessDescription with HTTP URI; accessMethod OID .48.1=OCSP, .48.2=caIssuers under 1.3.6.1.5.5.7",
+    "CDP": "extnID 2.5.29.31, critical false, cRLDistributionPoints distributionPoint.fullName uniformResourceIdentifier HTTP URI",
+    "certificate_wrapper": "decoded.tbsCertificate.extensions array",
+    "csr_wrapper": "decoded.certificationRequestInfo.requestedExtensions array",
+    "EKU": "array of objects with oid; c2pa-kp-claimSigning 1.3.6.1.4.1.62558.2.1 plus documentSigning 1.3.6.1.5.5.7.3.36 or emailProtection 1.3.6.1.5.5.7.3.4",
+    "Root_AKI": "Only the AKI contains clause: one non-critical extension, with an extnValue keyIdentifier_hex placeholder; compare extnID 2.5.29.14 (no AKI) and 2.5.29.35 (AKI). This does not validate keyIdentifier against a real issuer or subject key."
+  },
+  "case_count": 74
+}

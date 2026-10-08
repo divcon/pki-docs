@@ -31,7 +31,7 @@
 | N05 | TSA의 시간 추적성·선언 정확도·오차 초과 시 발급 중단·전용 키·허용 해시를 적용한다. On-device는 TEE 실행·키 생성·보관 및 적어도 24시간마다 온라인 동기화 시도가 필요하다. Backend는 별도의 TSU 암호 장치 기준을 따른다. | [TSA 인계](operating-model.md#tsa-handoff) |
 | N06 | 발급·폐지·접근·해당 시 attestation 검증 등을 감사하고, 기록 보호·정기 검토·검색·복원 절차를 둔다. 사업 관행은 공개 CPS 또는 C2PA와 협의한 다른 방법으로 고지한다. | [기록·공개 정책](operating-model.md#records) |
 | N07 | Claim 발급의 제품 자격·Assurance Level·해당 시 Dynamic Evidence, Subscriber 식별·동의 및 키 생성·용도 제한을 하위 CA에 인계한다. CP의 폐지 사유를 처리할 경로를 둔다. | [발급 인계](operating-model.md#issuance), [폐지](operating-model.md#revocation) |
-| N08 | Trust List 등록 증빙에는 인증서 프로파일 검증과 독립 입회한 키 생성 ceremony의 서명된 script를 준비한다. Program의 WebTrust 대체 증빙 예외는 해당 조건이 확인된 경우에만 사용한다. | [생성·등록 증빙](key-ceremony.md#생성-전-확인) |
+| N08 | Trust List 등록 증빙에는 인증서 프로파일 검증과 독립 입회한 키 생성 ceremony의 서명된 script를 준비한다. Program의 WebTrust 대체 증빙 예외는 해당 조건이 확인된 경우에만 사용한다. | [생성·등록 증빙](ceremony/key-generation.md#생성-전-확인) |
 
 근거 조항과 실제로 남은 검증은 [C2PA 요구사항 대응표](c2pa-requirements-matrix.md)에 연결한다. 위 목록은 CP 전체 의무를 빠짐없이 열거한 목록이 아니다.
 
@@ -45,6 +45,6 @@
 | V04 | 단말 신뢰 저장소·검증·갱신·오프라인·롤백·FOTA와 복구 권한 | [신뢰 앵커 교체](trust-anchor-migration.md) |
 | V05 | PQC의 HSM·C2PA 프로파일·단말 검증기·업데이트 경로 지원 | [PQC 전환](trust-anchor-migration.md#7-양자내성-전환) |
 
-Ceremony의 도구·프로파일·담당자·증거 관련 미정 사항은 [ceremony의 남은 결정](key-ceremony.md#남은-결정과-운영-인계)에서 관리한다. CA 앱은 작은 앱으로 구현하는 방향이며 서버/스크립트 형태·언어·DB·API는 미정이다. EC2·Lambda·S3·웹 승인 포털은 확정 구성이 아니다.
+Ceremony의 도구·프로파일·담당자·증거 관련 미정 사항은 [ceremony의 남은 결정](ceremony/README.md)에서 관리한다. CA 앱은 작은 앱으로 구현하는 방향이며 서버/스크립트 형태·언어·DB·API는 미정이다. EC2·Lambda·S3·웹 승인 포털은 확정 구성이 아니다.
 
 중앙은 Root/First 운영, 하위 CA 인계, 발급 인증서의 상태 제공, 기록·감사·복구와 신뢰 전환을 담당한다. 적용 조항별 절차·담당·증거 연결과 실제 구현 검증은 남아 있다.

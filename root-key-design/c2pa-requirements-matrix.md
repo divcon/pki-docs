@@ -10,7 +10,7 @@
 |---|---|---|---|
 | M01 | [Certificate Profiles][CP-PROFILES], [Key Pair and Certificate Usage][CP-USAGE]: 용도별 CA·leaf 프로파일과 허용 키 사용을 준수 | [계층](operating-model.md#hierarchy), [발급 검사](operating-model.md#issuance) | 문서 반영. 실제 인증서의 알고리즘·확장·pathLen·체인 프로파일 검사 필요. TSA 계층은 V02 미확인 |
 | M02 | [Certificate Issuance][CP-ISSUANCE], [Procedural Controls][CP-PROCEDURAL]: Root의 모든 인증서 서명은 2인 참여, 그중 1인의 명시적 실행 명령. CA 인증서 발급은 문서화된 다인 통제·split knowledge 원칙 적용 | [2인 통제 대안](dual-control-options.md) | 문서 반영. HSM quorum과 절차의 조합이 단독 서명·관리·복구 우회를 막는지 V03 PoC 필요. N/M 값은 미정 |
-| M03 | [CA 키 생성][CP-KEYGEN] 및 [Program의 Certificate Policy][PROGRAM-CP]: ceremony script와 생성 증빙. 등록 대상은 독립 입회·서명된 script 또는 명시된 WebTrust 예외 조건 | [생성·등록 증빙](key-ceremony.md#생성-전-확인) | 문서 보완. 실제 ceremony·프로파일 검증·등록 증빙 미작성. CP의 기록만으로 Program의 독립 입회를 대체하지 않음 |
+| M03 | [CA 키 생성][CP-KEYGEN] 및 [Program의 Certificate Policy][PROGRAM-CP]: ceremony script와 생성 증빙. 등록 대상은 독립 입회·서명된 script 또는 명시된 WebTrust 예외 조건 | [생성·등록 증빙](ceremony/key-generation.md#생성-전-확인) | 문서 보완. 실제 ceremony·프로파일 검증·등록 증빙 미작성. CP의 기록만으로 Program의 독립 입회를 대체하지 않음 |
 | M04 | [Certificate Renewal][CP-RENEWAL], [Re-key][CP-REKEY], [Modification][CP-MODIFICATION]: 해당 CA가 이미 발급한 키로 새 인증서 발급 금지. Subscriber re-key는 신규 검증, 발급 인증서 수정 금지 | [새 키로 교체](operating-model.md#rekey), [신뢰 앵커 교체](trust-anchor-migration.md) | 문서 보완. 동일 키 재발급 거부, 같은 인증서 재전달, 새 키 교체, 불확정 서명 복구 시험 필요 |
 | M05 | [Repositories][CP-REPOSITORIES]: 모든 발급 인증서의 serial·subject·유효기간·확장과 값·폐지 상태를 만료 후 최소 1년 보존. 보관소 접근 통제·정기 감사 | [기록 보존](operating-model.md#records) | 문서 보완. 저장·보존·검색·삭제 정책과 복원 시험 필요. 조기 폐지로 보존 기산점을 앞당기지 않음 |
 | M06 | [Certificate Status Services][CP-STATUS]: Claim OCSP는 필수 기록 보존 기간까지 제공. 하위 CA·TS 인증서는 OCSP가 없으면 CRL 필요 | [OCSP 운영](operating-model.md#ocsp) | 문서 보완. 만료·CA 교체·운영 종료 후에도 유효한 응답을 제공할 원장·응답자 교체·이관 검증 필요. CRL 미사용 결정 유지 |
@@ -42,7 +42,7 @@
 | 분야 | 준비할 산출물 | 준비 시점 |
 |---|---|---|
 | 적용 범위·공개 정책 | 조항별 적용표, 공개 CPS 또는 협의된 고지, 해석 확인 | 생성에 적용할 관행은 생성 전, 나머지는 해당 운영·등록 전 |
-| 생성·인증서 검증 | 승인된 스크립트·설정표·입회·로그·인증서 검사 | [Ceremony 시작 조건](key-ceremony.md#생성-전-확인)에 따라 준비·수행 |
+| 생성·인증서 검증 | 승인된 스크립트·설정표·입회·로그·인증서 검사 | [Ceremony 시작 조건](ceremony/key-generation.md#생성-전-확인)에 따라 준비·수행 |
 | 인력·접근·보안 | 역할·교육·권한 검토, 실제 모듈·시스템·네트워크 설정과 점검 기록 | 키 생성 전부터 지속 |
 | 기록·변경·사고 대응 | 보존·검색·복구·정기 검토, 변경 승인과 사고 처리 절차 | 생성일부터 기록·보호, 이후 정기 수행 |
 | 백업·복구·종료 | 책임·보호된 사본·off-site 배치·공식 계획과 검토 증거 | 생성 직후 보호 책임 연결, 계획에 따라 지속 |
