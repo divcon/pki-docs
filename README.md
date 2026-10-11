@@ -23,7 +23,10 @@ C2PA 적용 설계와 Root Key 관련 설계·작업 내용을 관리하는 문�
 ├── root-key-design/
 │   └── README.md
 ├── references/
-│   └── sources.md
+│   ├── sources.md
+│   ├── root-key-sources.md
+│   ├── download-manifest.json   # 취득 URL·시각·해시·Git commit
+│   └── local/                   # 추가 원문 로컬 사본, Git 제외
 ├── specifications/               # 공식 자료 로컬 사본, Git 제외
 ├── conformance-public/           # 공식 자료 로컬 사본, Git 제외
 ├── rfc3161.txt                    # 공식 자료 로컬 사본, Git 제외

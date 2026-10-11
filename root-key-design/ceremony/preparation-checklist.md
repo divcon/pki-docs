@@ -46,7 +46,7 @@
 |---|---|---|
 | 준비 계획과 결정 대장 | 범위, 적용 기준, 역할·겸임 가능 여부, 입회자, 일정, 미결정 사항, 시작·중단·재개·완료 승인권자 | 총괄 / 첫 회의부터. 이 문서를 사용 |
 | 키와 인증서 설정표 | HSM 식별·키 속성·권한, 알고리즘, 인증서 필드·확장·주소, 프로파일 차이의 처리 | PKI 담당 + 보안 / 코드·리허설 기준 확정 전. 기존 두 실행 문서 사용 |
-| 행사 수행 스크립트와 실행 코드 목록 | 단계별 명령·승인·검사·기록·중단 조건, 코드·설정·검증 도구의 버전과 해시 | PKI 담당 / 리허설 전. [템플릿](ceremony-script-template.md)을 복사하고 [가이드](script-writing-guide.md)에 따라 작성 |
+| 행사 수행 스크립트와 실행 코드 목록 | 단계별 명령·승인·검사·기록·중단 조건, 코드·설정·검증 도구의 버전과 해시 | PKI 담당 / 리허설 전. [템플릿 폴더](root-first-template/script.md) 전체를 복사하고 [가이드](script-writing-guide.md)에 따라 작성 |
 | 환경과 통제 검증 보고서 | 모듈 적격성, 계정·권한, 생성/서명/관리/복구 우회 시험, 전체 리허설 결과와 미비점 | 보안 + 검증 담당 / 행사 승인 전. [통제 시험](../dual-control-options.md#검증-기준) 활용 |
 | 실제 수행 기록과 증거 목록 | 단계별 실제 결과·시각·수행자, 키·CSR·인증서 식별, 로그, 일탈, 참여자·입회자 서명 | 기록 담당 + 입회자 / 빈 양식은 행사 전, 내용은 수행 중 작성 |
 | 운영 정책과 인수서 | 공개 CPS 또는 합의한 공개 방식, 접근·변경관리, 백업/복구, 기록 보존, OCSP·폐지·사고·종료 책임 | 운영 + 보안 / 키 보호는 생성 전, 서비스는 운영 개시 전. [운영 모델](../operating-model.md) 구체화 |
@@ -197,7 +197,7 @@ CPS 또는 합의한 공개 업무관행, 모듈 인증·설정, 다인 통제·
 C2PA 근거는 Conformance v0.2 commit `2466172859fad1215f7aaf7e3768b41a0ac29abc`의 원문입니다. 신청 시 인정되는 버전 확정은 D01에서 처리합니다. AWS 문서는 2026-10-10 확인 기준이며 실제 배포 버전의 시험을 대신하지 않습니다.
 
 - 실행 상세: [키 생성](key-generation.md), [인증서 발급](certificate-issuance.md).
-- 스크립트 작성: [샘플](ceremony-script-sample.md), [템플릿](ceremony-script-template.md), [작성 가이드](script-writing-guide.md).
+- 스크립트 작성: [샘플](root-first-sample/script.md), [템플릿](root-first-template/script.md), [작성 가이드](script-writing-guide.md).
 - 프로젝트 설계 연결: [다인 통제](../dual-control-options.md), [운영 모델](../operating-model.md), [CA 앱 기능](../ca-software-requirements.md), [기존 해석 확인 사항](../conformance-analysis/05-design-inputs-and-open-questions.md). 이 문서들은 원문 요구의 독립적인 근거가 아닙니다.
 
 [cp-generation]: https://github.com/c2pa-org/conformance-public/blob/2466172859fad1215f7aaf7e3768b41a0ac29abc/docs/v0.2/C2PA%20Certificate%20Policy.md#L779-L813

@@ -4,7 +4,7 @@ Global과 CN이 공유하는 플랫폼 Root를 운영하고 C2PA를 첫 적용 �
 
 Root와 First를 새로 만드는 절차는 [Key Ceremony](ceremony/README.md)에서 시작한다. 현재는 설계안이며 생성 통제·운영 파라미터·참여자와 도구 검증이 남아 있다.
 
-무엇부터 준비할지 검토하려면 [세레모니 준비 체크리스트](ceremony/preparation-checklist.md)를 먼저 읽는다. 스크립트는 [완성 샘플](ceremony/ceremony-script-sample.md), [작성용 템플릿](ceremony/ceremony-script-template.md), [작성 가이드](ceremony/script-writing-guide.md)로 나누었다.
+무엇부터 준비할지 검토하려면 [세레모니 준비 체크리스트](ceremony/preparation-checklist.md)를 먼저 읽는다. 스크립트는 [완성 샘플](ceremony/root-first-sample/script.md), [작성용 템플릿](ceremony/root-first-template/script.md), [작성 가이드](ceremony/script-writing-guide.md)로 나누었다.
 
 | 문서 | 내용 |
 |---|---|

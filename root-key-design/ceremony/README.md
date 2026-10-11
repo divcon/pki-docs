@@ -4,12 +4,17 @@ Root와 공용 First ICA의 키를 새로 만들고 Root 자기서명 인증서�
 
 현재는 수행 스크립트 초안이다. 키 생성 통제·운영 파라미터·담당자·도구 검증이 남아 있다. 확정 범위는 [요구사항](../requirements.md)을 따른다.
 
-준비를 시작할 때는 [준비 체크리스트](preparation-checklist.md)를 먼저 읽는다. 스크립트는 [샘플](ceremony-script-sample.md)에서 완성 형태를 확인하고, [템플릿](ceremony-script-template.md)을 복사해 작성한다. 각 항목의 의미와 작성·검토 방법은 [작성 가이드](script-writing-guide.md)에 둔다.
+현재 작성 중인 행사 문서는 [root-first-001/script.md](root-first-001/script.md)에서 시작한다. 템플릿·샘플·현재 행사 모두 메인 스크립트, 설정, 실행 절차, 준비 현황, 수행 기록 양식과 증거 목록으로 구성한다. 행사별 미정 사항과 준비 상태는 [preparation.md](root-first-001/preparation.md)에서 관리한다. 실제 값·명령·승인은 아직 확정하지 않았다.
+
+작업을 이어갈 때는 [2026-10-11 작성 현황과 다음 작업](root-first-001/handoff-2026-10-11.md)을 먼저 읽는다. 확정 결정·잠정 관리안·미해결 사항과 다음 작업의 결과물을 정리했다. 최신 설정과 시험 상태는 행사별 settings.md·preparation.md에서 확인한다.
+
+준비를 시작할 때는 [준비 체크리스트](preparation-checklist.md)를 먼저 읽는다. 스크립트는 [샘플](root-first-sample/script.md)에서 완성 형태를 확인하고, [템플릿 폴더](root-first-template/script.md) 전체를 복사해 작성한다. 각 항목의 의미와 작성·검토 방법은 [작성 가이드](script-writing-guide.md)에 둔다.
 
 | 문서 | 담당 내용 | 결과물 |
 |---|---|---|
-| [스크립트 샘플](ceremony-script-sample.md) | 가상 행사 한 건의 설정·진행·모의 결과가 채워진 예시 | 완성 형태를 확인하는 문서 |
-| [스크립트 템플릿](ceremony-script-template.md) | 행사별 입력 필드, 기본 수행 절차, 빈 기록·서명란 | 실제 행사 스크립트의 작성 원본 |
+| [행사별 작업 폴더](root-first-001/script.md) | 이번 행사의 실제 값과 절차를 채울 문서 묶음 | `root-first-001/` 초안, 승인·수행 전 |
+| [스크립트 샘플](root-first-sample/script.md) | 가상 행사 한 건의 설정·진행·모의 결과가 채워진 예시 | 기본 6개 파일 + 첫날·재개 회차 기록 |
+| [스크립트 템플릿](root-first-template/script.md) | 행사별 입력 필드, 기본 수행 절차, 빈 기록·서명란 | 실제 행사 폴더의 작성 원본 6개 파일 |
 | [스크립트 작성 가이드](script-writing-guide.md) | 샘플의 가정, 템플릿 사용법, 필드 작성·검토 기준 | 작성자를 위한 설명 |
 | [키 생성](key-generation.md) | 키 생성의 설정·통제·검사 기술 참고 | 승인본에 반영할 생성 설정과 검사 기준 |
 | [CA 인증서 발급](certificate-issuance.md) | 인증서 발급·검증·인계의 기술 참고 | 승인본에 반영할 프로파일과 발급 검사 기준 |
@@ -18,7 +23,7 @@ Root와 공용 First ICA의 키를 새로 만들고 Root 자기서명 인증서�
 
 ## 전체 순서
 
-1. 템플릿을 복사해 행사별 승인본을 만든다. 기술 참고와 CloudHSM 절차를 반영하고 설정·담당자·실제 명령·입력값·기대 결과·중단 조건을 채운다.
+1. `root-first-template/` 전체를 행사별 폴더로 복사해 승인 묶음을 만든다. 현재 행사는 `root-first-001/`에서 이어서 작성한다. 기술 참고와 CloudHSM 절차를 반영하고 설정·담당자·실제 명령·입력값·기대 결과·중단 조건을 채운다.
 2. 계획을 승인하고 테스트 키로 전체 절차를 연습한다.
 3. 당일 참여자·환경을 확인한 뒤 입회·기록을 시작한다.
 4. Root 키를 생성한다.

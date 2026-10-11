@@ -2,6 +2,8 @@
 
 확인일: 2026-09-16 KST. 이 문서는 출처 안내다. 요구사항·사실의 근거는 아래 원문이며 설계 산출물 자체를 독립적인 근거로 취급하지 않는다.
 
+2026-10-11 로컬 확보: 아래에 기록된 두 Conformance commit, 추가 RFC·NIST 자료, TUF 1.0.36 및 AWS·제품 웹 문서를 확보했다. 위치와 재확보 방법은 [원문 자료 목록의 로컬 세팅](sources.md#2026-10-11-로컬-세팅), 취득 URL·시각·해시는 [다운로드 명세](download-manifest.json)를 참고한다. 아래 `/tmp` 설명은 과거 검토 당시의 기록이며, 해당 Conformance 원문은 현재 `references/local/conformance-public-7b2fcb3/`에도 보관한다. 웹 문서 사본은 이번 취득 시점의 내용이며 과거 검토 결과를 새로 검증했다는 뜻은 아니다.
+
 ## C2PA
 
 이번 검토는 공식 Conformance 저장소 commit `7b2fcb3ca5f60bbd4c6dfc6ccfaccaaa5ff9fc50`의 v0.2 문서를 기준으로 한다. v0.2 발행일은 2026-07-31이다. 기존 `conformance-public/` 로컬 checkout을 변경하지 않았다. 아래 파일은 `gh api`로 해당 commit을 지정해 읽었다. 다운로드한 원문은 `/tmp` 검토 사본이며 영구 보관을 전제하지 않는다.

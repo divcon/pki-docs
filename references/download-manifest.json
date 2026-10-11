@@ -1,0 +1,289 @@
+{
+  "downloaded_files": [
+    {
+      "title": "RFC 3161",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc3161.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc3161.txt",
+      "path": "rfc3161.txt",
+      "retrieved_at": "2026-10-11T08:14:07.787831+00:00",
+      "content_type": "text/plain;charset=utf-8",
+      "bytes": 54585,
+      "sha256": "39fd17644ff2d654bc83814a78b1c5b5e7517f496741f34ead5064943eb98240"
+    },
+    {
+      "title": "RFC 5816",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5816.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc5816.txt",
+      "path": "rfc5816.txt",
+      "retrieved_at": "2026-10-11T08:14:08.220432+00:00",
+      "content_type": "text/plain;charset=utf-8",
+      "bytes": 10216,
+      "sha256": "9a3eba6ecf14afc7820c51034a608d54d188344a43e9189b0e023d4a6a98f649"
+    },
+    {
+      "title": "RFC 5280",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc5280.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc5280.txt",
+      "path": "references/local/rfc/rfc5280.txt",
+      "retrieved_at": "2026-10-11T08:14:08.782279+00:00",
+      "content_type": "text/plain;charset=utf-8",
+      "bytes": 352580,
+      "sha256": "a2f2628c0a83b873fc4786abd921f9b2c02395954b655d190bf16b831633345d"
+    },
+    {
+      "title": "RFC 6960",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc6960.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc6960.txt",
+      "path": "references/local/rfc/rfc6960.txt",
+      "retrieved_at": "2026-10-11T08:14:09.259760+00:00",
+      "content_type": "text/plain;charset=utf-8",
+      "bytes": 82037,
+      "sha256": "7e63ffa1ea2ce2737d9aaf895a63776e9105ddbdfc97b8ae4029e3e825b4cdea"
+    },
+    {
+      "title": "RFC 6024",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc6024.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc6024.txt",
+      "path": "references/local/rfc/rfc6024.txt",
+      "retrieved_at": "2026-10-11T08:14:09.976867+00:00",
+      "content_type": "text/plain;charset=utf-8",
+      "bytes": 33415,
+      "sha256": "3a6be6f5700477403befc711f49ea1d4411c130dfac52811730c96f0f6435d8b"
+    },
+    {
+      "title": "RFC 9124",
+      "source_url": "https://www.rfc-editor.org/rfc/rfc9124.txt",
+      "resolved_url": "https://www.rfc-editor.org/rfc/rfc9124.txt",
+      "path": "references/local/rfc/rfc9124.txt",
+      "retrieved_at": "2026-10-11T08:14:10.544994+00:00",
+      "content_type": "text/plain;charset=utf-8",
+      "bytes": 85281,
+      "sha256": "0a1647c36503262689791fe2853dd6a450314ea8b8a7f9add65c806a6319d354"
+    },
+    {
+      "title": "EJBCA Cloud AWS",
+      "source_url": "https://docs.keyfactor.com/ejbca-cloud/latest/ejbca-cloud-aws",
+      "resolved_url": "https://docs.keyfactor.com/ejbca-cloud/latest/ejbca-cloud-aws",
+      "path": "references/local/products/ejbca-cloud-aws.html",
+      "retrieved_at": "2026-10-11T08:14:11.779491+00:00",
+      "content_type": "text/html",
+      "bytes": 57394,
+      "sha256": "b9c6382c7cf5af1635c734ba6d1bfa3c2540b5392c405cb9f42ff32ee7561bfe",
+      "html_title": "EJBCA Cloud AWS | Keyfactor Docs"
+    },
+    {
+      "title": "Microsoft AD CS CA 역할",
+      "source_url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certification-authority-role",
+      "resolved_url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certification-authority-role",
+      "path": "references/local/products/certification-authority-role.html",
+      "retrieved_at": "2026-10-11T08:14:12.289200+00:00",
+      "content_type": "text/html",
+      "bytes": 55452,
+      "sha256": "50c4076afc6ff0a95308cb5f5db846a33709186daa974370d1d11d4ee456c6f6",
+      "html_title": "What is the Certification Authority Role Service in Windows Server? | Microsoft Learn"
+    },
+    {
+      "title": "OpenSSL ca",
+      "source_url": "https://docs.openssl.org/master/man1/openssl-ca/",
+      "resolved_url": "https://docs.openssl.org/master/man1/openssl-ca/",
+      "path": "references/local/products/openssl-ca.html",
+      "retrieved_at": "2026-10-11T08:14:13.027484+00:00",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 76744,
+      "sha256": "7a5904996745c406f05c09fc3dcd7b914d54470535b036b3b126b5993ea70519",
+      "html_title": "openssl-ca - OpenSSL Documentation"
+    },
+    {
+      "title": "AWS quorum 사용",
+      "source_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/key-quorum-auth-chsm-cli-crypto-user.html",
+      "resolved_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/key-quorum-auth-chsm-cli-crypto-user.html",
+      "path": "references/local/aws/key-quorum-auth-chsm-cli-crypto-user.html",
+      "retrieved_at": "2026-10-11T08:14:13.842298+00:00",
+      "content_type": "text/html",
+      "bytes": 31706,
+      "sha256": "59b7ccdae136d8aa0fa57923e55e1e3ec13fb8fcf4a424c3861c40e498a37c50",
+      "html_title": "Key management and usage with quorum authentication enabled for AWS CloudHSM using CloudHSM CLI - AWS CloudHSM"
+    },
+    {
+      "title": "원문 PDF",
+      "source_url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf",
+      "resolved_url": "https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-57pt1r5.pdf",
+      "path": "references/local/nist/NIST.SP.800-57pt1r5.pdf",
+      "retrieved_at": "2026-10-11T08:14:16.088555+00:00",
+      "content_type": "application/pdf",
+      "bytes": 1688080,
+      "sha256": "cc32391022c1382ac7c91490f6bcc8838e0f889925270da23ef4e800e2ecb7ad"
+    },
+    {
+      "title": "ML-DSA 표준 소개 및 원문",
+      "source_url": "https://csrc.nist.gov/pubs/fips/204/final",
+      "resolved_url": "https://csrc.nist.gov/pubs/fips/204/final",
+      "path": "references/local/nist/fips-204-publication.html",
+      "retrieved_at": "2026-10-11T08:14:17.134986+00:00",
+      "content_type": "text/html; charset=utf-8",
+      "bytes": 44449,
+      "sha256": "d0f902ab9b4fa2ea504a0bbed516a82988753a8ce1da06dcad7aa1e13e022db7",
+      "html_title": "FIPS 204, Module-Lattice-Based Digital Signature Standard | CSRC"
+    },
+    {
+      "title": "CloudHSM key quorum",
+      "source_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/key-quorum-auth-chsm-cli.html",
+      "resolved_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/key-quorum-auth-chsm-cli.html",
+      "path": "references/local/aws/key-quorum-auth-chsm-cli.html",
+      "retrieved_at": "2026-10-11T08:14:17.470294+00:00",
+      "content_type": "text/html",
+      "bytes": 15281,
+      "sha256": "92cd27f1bfd20ce0b078f564af28b7a173c92ae5c7d41139ea8a5cf0b876378e",
+      "html_title": "Manage quorum authentication (M of N access control) using CloudHSM CLI - AWS CloudHSM"
+    },
+    {
+      "title": "Crypto-user 설정",
+      "source_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/key-quorum-auth-chsm-cli-first-time.html",
+      "resolved_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/key-quorum-auth-chsm-cli-first-time.html",
+      "path": "references/local/aws/key-quorum-auth-chsm-cli-first-time.html",
+      "retrieved_at": "2026-10-11T08:14:17.844282+00:00",
+      "content_type": "text/html",
+      "bytes": 37717,
+      "sha256": "462f840ad441f6fe2a00c2f0c9a8969198e6cb1dee09223e481214ab5cfb49a2",
+      "html_title": "Set up quorum authentication for AWS CloudHSM crypto-users using CloudHSM CLI - AWS CloudHSM"
+    },
+    {
+      "title": "Admin 설정",
+      "source_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/quorum-auth-chsm-cli-first-time.html",
+      "resolved_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/quorum-auth-chsm-cli-first-time.html",
+      "path": "references/local/aws/quorum-auth-chsm-cli-first-time.html",
+      "retrieved_at": "2026-10-11T08:14:18.249907+00:00",
+      "content_type": "text/html",
+      "bytes": 37458,
+      "sha256": "5fc35fcc9113b27bcc1bee535db5c17073057104dce13e1be3b68daf5dd89919",
+      "html_title": "Set up quorum authentication for AWS CloudHSM admins using CloudHSM CLI - AWS CloudHSM"
+    },
+    {
+      "title": "ECDSA CLI 서명",
+      "source_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/cloudhsm_cli-crypto-sign-ecdsa.html",
+      "resolved_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/cloudhsm_cli-crypto-sign-ecdsa.html",
+      "path": "references/local/aws/cloudhsm_cli-crypto-sign-ecdsa.html",
+      "retrieved_at": "2026-10-11T08:14:18.594544+00:00",
+      "content_type": "text/html",
+      "bytes": 22408,
+      "sha256": "3b5f966e067d320fd3909d460e4907d50dcb1bef7962deb4f31f0ea350a55be9",
+      "html_title": "Generate a signature with the ECDSA mechanism in CloudHSM CLI - AWS CloudHSM"
+    },
+    {
+      "title": "Client SDK 5 serverless 지원",
+      "source_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/sdk8-serverless.html",
+      "resolved_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/sdk8-serverless.html",
+      "path": "references/local/aws/sdk8-serverless.html",
+      "retrieved_at": "2026-10-11T08:14:18.941012+00:00",
+      "content_type": "text/html",
+      "bytes": 12182,
+      "sha256": "7491189cd3f9c0dd634a5b318d38901625265cb96fab87ea6a1398b82e72a155",
+      "html_title": "Serverless support for AWS CloudHSM Client SDK 5 - AWS CloudHSM"
+    },
+    {
+      "title": "PKCS#11 mechanisms",
+      "source_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-mechanisms.html",
+      "resolved_url": "https://docs.aws.amazon.com/cloudhsm/latest/userguide/pkcs11-mechanisms.html",
+      "path": "references/local/aws/pkcs11-mechanisms.html",
+      "retrieved_at": "2026-10-11T08:14:19.320850+00:00",
+      "content_type": "text/html",
+      "bytes": 40874,
+      "sha256": "d0693a9fb90037baa168c12e698a40c3f79592c4f1f2cc4e38f8c5e2c9ba26f9",
+      "html_title": "Supported mechanisms for the PKCS #11 library for AWS CloudHSM Client SDK 5 - AWS CloudHSM"
+    },
+    {
+      "title": "AWS 중국 서비스 목록",
+      "source_url": "https://www.amazonaws.cn/en/about-aws/regional-product-services/",
+      "resolved_url": "https://www.amazonaws.cn/en/about-aws/regional-product-services/",
+      "path": "references/local/aws/regional-product-services.html",
+      "retrieved_at": "2026-10-11T08:14:32.158937+00:00",
+      "content_type": "text/html;charset=utf-8",
+      "bytes": 513565,
+      "sha256": "d0a7ee1775eec13f0ee05d415745b978a59b54f4c9512e5f5b43c9d06ae317ee",
+      "html_title": "Region Table"
+    },
+    {
+      "title": "NIST FIPS 204 PDF",
+      "source_url": "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf",
+      "resolved_url": "https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.204.pdf",
+      "path": "references/local/nist/NIST.FIPS.204.pdf",
+      "retrieved_at": "2026-10-11T08:14:34.506643+00:00",
+      "content_type": "application/pdf",
+      "bytes": 3291746,
+      "sha256": "57239b9f84c03227eda3ca0991204dc7764c79af9ce2e6824eda774918d46b6b"
+    }
+  ],
+  "git_checkouts": [
+    {
+      "path": "specifications",
+      "source_url": "https://github.com/c2pa-org/specifications.git",
+      "commit": "9c58c8c27044e44e8601f6ab13f1bcac1376eb1f",
+      "kind": "clone",
+      "verified_at": "2026-10-11T08:15:39.785093+00:00"
+    },
+    {
+      "path": "conformance-public",
+      "source_url": "https://github.com/c2pa-org/conformance-public.git",
+      "commit": "2466172859fad1215f7aaf7e3768b41a0ac29abc",
+      "kind": "clone",
+      "verified_at": "2026-10-11T08:15:39.796753+00:00"
+    },
+    {
+      "path": "references/local/conformance-public-7b2fcb3",
+      "source_url": "https://github.com/c2pa-org/conformance-public.git",
+      "commit": "7b2fcb3ca5f60bbd4c6dfc6ccfaccaaa5ff9fc50",
+      "kind": "worktree",
+      "verified_at": "2026-10-11T08:15:39.806803+00:00",
+      "main_checkout": "conformance-public"
+    },
+    {
+      "path": "references/local/tuf-specification",
+      "source_url": "https://github.com/theupdateframework/specification.git",
+      "commit": "59e601ed29c0d2e497264ae8b31c11b8ef07df1e",
+      "kind": "clone",
+      "verified_at": "2026-10-11T08:15:39.816729+00:00"
+    }
+  ],
+  "verified_existing_checksums": [
+    {
+      "path": "rfc3161.txt",
+      "sha256": "39fd17644ff2d654bc83814a78b1c5b5e7517f496741f34ead5064943eb98240",
+      "recorded_in": "references/sources.md"
+    },
+    {
+      "path": "rfc5816.txt",
+      "sha256": "9a3eba6ecf14afc7820c51034a608d54d188344a43e9189b0e023d4a6a98f649",
+      "recorded_in": "references/sources.md"
+    },
+    {
+      "path": "references/local/conformance-public-7b2fcb3/docs/v0.2/C2PA Certificate Policy.md",
+      "sha256": "124fad3e3d578f40867557719f5599110a57be010e6aa4d3a3408695afdae77b",
+      "recorded_in": "references/root-key-sources.md"
+    },
+    {
+      "path": "references/local/conformance-public-7b2fcb3/docs/v0.2/C2PA Conformance Program.md",
+      "sha256": "23c8dedd6e39238b3f4d0b8b2ba0bad38fe717a683146440f6354c6a58e50586",
+      "recorded_in": "references/root-key-sources.md"
+    },
+    {
+      "path": "references/local/conformance-public-7b2fcb3/docs/v0.2/cert-profiles/tsaIssuingCA.cert.yaml",
+      "sha256": "e9bbfe720250c1189b9364807817cc2a094fe7e2994a6da0d7644bb30a6ec0d5",
+      "recorded_in": "references/root-key-sources.md"
+    },
+    {
+      "path": "references/local/conformance-public-7b2fcb3/docs/v0.2/cert-profiles/ocspResponderLeaf.cert.yaml",
+      "sha256": "c55cc538ef1dd174d38f2187cbbb118e1b2bc2bb86a3e1316c1403c0ae8cfc6c",
+      "recorded_in": "references/root-key-sources.md"
+    },
+    {
+      "path": "conformance-public/docs/v0.2/C2PA Certificate Policy.pdf",
+      "sha256": "bfae1e17c501dd33099f2c03e0c6f921ba310d481b23b6881948d56aaa6a2715",
+      "recorded_in": "references/root-key-sources.md"
+    },
+    {
+      "path": "conformance-public/docs/v0.2/C2PA Conformance Program.pdf",
+      "sha256": "d1d4b932320866479fc78abbcd81c35234bdb6f666ca8138fbca71b8bbdf198a",
+      "recorded_in": "references/root-key-sources.md"
+    }
+  ]
+}
