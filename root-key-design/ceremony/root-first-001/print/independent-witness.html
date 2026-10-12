@@ -1,0 +1,435 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Independent Witness 인쇄 책자</title><style>
+@page {size:A4;margin:14mm 13mm;}
+* {box-sizing:border-box} body {font-family:"Malgun Gothic","Apple SD Gothic Neo","Noto Sans CJK KR",sans-serif;color:#111;margin:0;font-size:10.5pt;line-height:1.55;background:#eee;word-break:keep-all;overflow-wrap:anywhere}
+.sheet {background:white;max-width:210mm;margin:7mm auto;padding:13mm;break-before:page} .sheet:first-child {break-before:auto}
+h1 {font-size:20pt;line-height:1.3;margin:0 0 5mm}h2 {font-size:14pt;margin:5mm 0 3mm}h3 {font-size:11pt;margin:4mm 0 2mm}
+.banner {border:2px solid #222;padding:3mm;font-size:13pt;font-weight:bold;margin-bottom:4mm}.meta {font-size:9pt;color:#444;border-bottom:1px solid #777;padding-bottom:2mm;margin-bottom:4mm}
+table {width:100%;border-collapse:collapse;margin:3mm 0;font-size:9.5pt;table-layout:fixed}th,td {border:1px solid #777;padding:2mm;vertical-align:top}th {background:#eee;text-align:left}thead {display:table-header-group}tr {break-inside:avoid}p,li {orphans:3;widows:3}pre {white-space:pre-wrap;font-size:8pt}code {font-family:inherit;font-size:.94em}blockquote {border-left:4px solid #777;margin:3mm 0;padding-left:3mm}
+.calls th:first-child,.calls td:first-child{width:22%}.calls td:last-child{width:26%}.form {border:1.2px solid #333;padding:3mm;margin:4mm 0;break-inside:avoid;min-height:40mm}.form h3{margin:0 0 2mm;font-size:11pt}.blank{min-height:14mm;border-bottom:1px dotted #777}.signature{font-size:9pt;margin-top:2mm}.notice{border:1px solid #555;padding:3mm;margin:4mm 0;font-weight:bold}.screen{max-width:210mm;margin:5mm auto;padding:5mm;background:#fff} .fine{font-size:9pt}.large{font-size:23pt;border-bottom:2px solid #333;padding:7mm 0}
+.field{font-size:9.5pt;margin-top:2mm}.write-line{min-height:8mm;border-bottom:1px dotted #777}
+@media print {body{background:white}.sheet{max-width:none;margin:0;padding:0}.screen{display:none}a {color:inherit;text-decoration:none}}
+</style></head><body><div class="screen">오프라인 인쇄본 · 브라우저에서 A4 / 배율 100% / 머리글·바닥글 끄기로 인쇄하세요. 현재 파일 안에 본문과 스타일이 포함되어 있습니다. 초안이며 승인/리허설 완료를 뜻하지 않습니다.</div><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · 사용법</div><div class="banner">Independent Witness · 사용법</div><h1>Independent Witness 인쇄 책자</h1><p>자기 책자의 현재 단계만 펼칩니다. 진행자가 <b>“단계.번호, 업무”</b>를 부르면 해당 행을 찾습니다. 먼저 수행하지 않습니다.</p><p>공용 기록지의 <b>같은 번호·본인 이름 칸</b>에 직접 기록합니다. 끝나면 “S01.2, Key Custodian 2, 완료”처럼 번호·담당·결과를 말합니다. 이상은 즉시 중단 요청합니다.</p><p>입회자는 단계 전체를 관찰합니다. 대기 표시는 역할 해제나 퇴장을 뜻하지 않습니다. 단계 종료와 다음 단계 이동은 Administrator가 선언합니다.</p><div class="notice">종이 확인 서명은 생성 계획·HSM 토큰의 전자서명을 대신하지 않습니다. 개인 승인키는 승인된 장치에서 본인이 사용합니다.</div><h1>Independent Witness 담당자 가이드</h1>
+<p>초안 · 당신은 승인된 범위를 독립적으로 관찰하고 실제 수행과 기록의 일치를 확인합니다. 다른 행사 역할을 겸하지 않으며 생성/서명 실행·quorum 승인·운영 자격증명/승인키 보관은 하지 않습니다. 기술 검증이나 시작·완료 승인을 대신하지 않습니다.</p>
+<p>시작 전에 임명·적격성/교육·독립성·관찰 범위와 접근 방법을 확인합니다. 관찰이 끊기거나 필수 절차를 볼 수 없으면 즉시 중단을 요청합니다. 이후 기록만 보고 관찰했다고 서명하지 않습니다. 공통 규칙 — 책자 앞면의 역할 규칙을 따릅니다.</p>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S00 · 지금 할 일</div><div class="banner">Independent Witness · S00 · 지금 할 일</div><h1>시작 확인</h1><p>현재 호출 번호: __________　내 이름: __________</p><div class="calls"><table>
+<thead>
+<tr>
+<th>호출 번호</th>
+<th>내 상태·할 일</th>
+<th>종이 기록 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S00.1</strong></td>
+<td><strong>수행</strong> — 입회 시작 시각·관찰 범위와 현장/화면을 볼 수 있는지 확인한다. 보이지 않으면 중단을 요청한다.</td>
+<td>S00.1 / Independent Witness</td>
+</tr>
+<tr>
+<td><strong>S00.2</strong></td>
+<td><strong>수행</strong> — 자료 2의 본인 인적 사항·임명·독립성·다른 역할 미겸임과 책자 ID를 확인한다. 기술 검증자나 quorum 승인자로 기록하지 않는다.</td>
+<td>S00.2 / Independent Witness</td>
+</tr>
+<tr>
+<td><strong>S00.3</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S00 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S00.4</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S00 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S00.5</strong></td>
+<td><strong>수행</strong> — 먼저 S00.1–S00.4의 관찰 누락·이견을 알린다. Administrator의 실제 선언 후 판정·선언 시각·본인 관찰 범위/제한을 기록하고 완료를 보고한다.</td>
+<td>S00.5 / Independent Witness</td>
+</tr>
+</tbody>
+</table>
+</div><p class="fine">세부 검사 기준은 바로 다음 면의 같은 단계에 있습니다. 기록은 공용 기록지 S00에 남깁니다.</p></section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S00 · 세부 확인</div><div class="banner">Independent Witness · S00 · 세부 확인</div><h1>시작 확인 — 확인 기준</h1><p>실행 순서는 앞면 호출 번호를 따릅니다. 아래는 해당 업무의 확인 기준입니다.</p>
+<p><strong>시작 확인 — 자기 역할의 세부 기준</strong></p>
+<p>S00.1에서 시작 시각·관찰 대상/범위·현장이나 화면을 실제로 볼 수 있는지 기록합니다. 독립성·미겸임과 본인 책자 ID·인적 사항은 S00.2에서 자료 2와 대조합니다. CU/등록 승인키는 당신의 확인 항목이 아닙니다.</p>
+<p>S00.3–S00.4는 자료가 실제 제시되고 담당자가 확인·기록하는지 계속 관찰합니다. 기술 결과를 독립 검증한 것으로 서명하지 않습니다. 시야나 입회가 끊기면 즉시 중단을 요청하고 해당 호출 번호·시각을 메모합니다.</p>
+<p>S00.5에서 먼저 S00.1–S00.4의 관찰 누락·이견을 알립니다. Administrator가 시작 또는 보류/중단을 실제로 선언한 뒤 그 내용과 시각을 같은 S00.5 칸에 남기고 “S00.5, Independent Witness, 선언 관찰 기록 완료”라고 보고합니다. 아직 듣지 않은 선언을 미리 기록하지 않습니다.</p>
+<p>기록은 앞면 호출표에 표시한 번호·본인 칸에 남깁니다.</p>
+<h3>S00에서 펼칠 자료</h3>
+<p>자료 1–5는 Administrator가 탭을 붙여 둔 실제 승인/근거 자료입니다. 출력된 설계 초안 자체를 준비 완료 증거로 사용하지 않습니다.</p>
+<table>
+<thead>
+<tr>
+<th>자료</th>
+<th>제시자·내용</th>
+<th>확인 기준</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>자료 1 — 행사 개요·수행 승인·승인본 목록</td>
+<td>Administrator. 행사 ID·범위·일시/장소, 행사 수행 승인자/기록, 문서·도구·설정 버전/해시, 같은 인쇄 묶음 ID</td>
+<td>수행 승인 기록이 있고 실제 배포본·행사 범위가 승인본과 일치</td>
+</tr>
+<tr>
+<td>자료 2 — 승인 명부·역할 적격성</td>
+<td>Administrator, 본인 확인은 각 참여자. 성명·소속·직책·역할/겸임·임명/교육 근거, 보유자 3명의 신원·CU/등록 공개키 연결, Witness 독립성/관찰 범위</td>
+<td>배정된 5명의 본인 확인, 세 보유자의 신원 구분, 실행/검증 분리와 Witness 독립성 충족</td>
+</tr>
+<tr>
+<td>자료 3 — 실제 환경 대조표</td>
+<td>Crypto Officer. AWS 계정·리전·클러스터·각 HSM 상태/모델/모드, 호스트·CLI·코드/설정 해시, 노드별 상태/지연의 승인값·실제값·조회 시각·원문</td>
+<td>실제 환경이 승인값과 일치하고 현재 조회 근거와 노드별 상태/지연 기준이 확인됨</td>
+</tr>
+<tr>
+<td>자료 4 — 승인 체계·필수 시험과 외부 확인</td>
+<td>Crypto Officer, 승인/외부 확인 근거는 Administrator가 인수. 생성 앱과 서명 quorum 각각 2 of 3의 승인자/등록키 연결, 관리자 최종 설정·별도 작업 권한, 시험 대상 버전/결과·미비점 해소, N01 외부 수용과 N03 폐기/잠금·관리 통제 검토</td>
+<td>실제 설정·등록키·권한이 승인값과 일치하고 필수 시험·외부 확인·폐기/잠금 조건 및 미비점 해소 증거 확보</td>
+</tr>
+<tr>
+<td>자료 5 — 기록·백업·생성 직후 보호 계획</td>
+<td>Crypto Officer(시험 결과), Administrator(보관·보호 계획). 로그 원천/입증 범위·시각 오차/누락·쓰기/조회 시험, 원본 보관/담당·종이와 전자 증거 연결, 신규 키 백업 포함 확인 방법·대기/임시 접근 종료·보호 인수 계획</td>
+<td>로그·저장/조회 준비와 보호 책임·백업 포함 확인/대기 절차 확보. 신규 키 백업 자체는 생성 후 별도 확인</td>
+</tr>
+</tbody>
+</table>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S01 · 지금 할 일</div><div class="banner">Independent Witness · S01 · 지금 할 일</div><h1>Root 키 생성</h1><p>현재 호출 번호: __________　내 이름: __________</p><div class="calls"><table>
+<thead>
+<tr>
+<th>호출 번호</th>
+<th>내 상태·할 일</th>
+<th>종이 기록 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S01.1</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S01 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S01.2</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S01 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S01.3</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S01 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S01.4</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S01 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S01.5</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S01 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S01.6</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S01 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S01.7</strong></td>
+<td><strong>수행</strong> — 계획 제시부터 승인·실행·검증·회수까지 실제 관찰과 일탈을 기록한다.</td>
+<td>S01.7 / Independent Witness</td>
+</tr>
+</tbody>
+</table>
+</div><p class="fine">세부 검사 기준은 바로 다음 면의 같은 단계에 있습니다. 기록은 공용 기록지 S01에 남깁니다.</p></section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S01 · 세부 확인</div><div class="banner">Independent Witness · S01 · 세부 확인</div><h1>Root 키 생성 — 확인 기준</h1><p>실행 순서는 앞면 호출 번호를 따릅니다. 아래는 해당 업무의 확인 기준입니다.</p>
+<p><strong>Root 키 생성</strong> · 열 기록지 — 기록지 S01</p>
+<p>Root 생성 계획 제시, 서로 다른 승인자의 승인, 승인 검사 후 실행, 결과 검증·접근 회수 순서를 관찰합니다.</p>
+<p>기록은 앞면 호출표에 표시한 번호·본인 칸에 남깁니다.</p>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S02 · 지금 할 일</div><div class="banner">Independent Witness · S02 · 지금 할 일</div><h1>Root 자기서명 인증서 발급</h1><p>현재 호출 번호: __________　내 이름: __________</p><div class="calls"><table>
+<thead>
+<tr>
+<th>호출 번호</th>
+<th>내 상태·할 일</th>
+<th>종이 기록 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S02.1</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S02 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S02.2</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S02 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S02.3</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S02 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S02.4</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S02 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S02.5</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S02 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S02.6</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S02 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S02.7</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S02 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S02.8</strong></td>
+<td><strong>수행</strong> — 본문/토큰 승인·실행·검증의 실제 관찰과 일탈을 기록한다.</td>
+<td>S02.8 / Independent Witness</td>
+</tr>
+</tbody>
+</table>
+</div><p class="fine">세부 검사 기준은 바로 다음 면의 같은 단계에 있습니다. 기록은 공용 기록지 S02에 남깁니다.</p></section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S02 · 세부 확인</div><div class="banner">Independent Witness · S02 · 세부 확인</div><h1>Root 자기서명 인증서 발급 — 확인 기준</h1><p>실행 순서는 앞면 호출 번호를 따릅니다. 아래는 해당 업무의 확인 기준입니다.</p>
+<p><strong>Root 자기서명 인증서 발급</strong> · 열 기록지 — 기록지 S02</p>
+<p>Root 본문·키 확인, 본문/토큰 승인, 실행 선언과 자기서명, 독립 검사 순서를 관찰합니다.</p>
+<p>기록은 앞면 호출표에 표시한 번호·본인 칸에 남깁니다.</p>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S03 · 지금 할 일</div><div class="banner">Independent Witness · S03 · 지금 할 일</div><h1>First ICA 키 생성</h1><p>현재 호출 번호: __________　내 이름: __________</p><div class="calls"><table>
+<thead>
+<tr>
+<th>호출 번호</th>
+<th>내 상태·할 일</th>
+<th>종이 기록 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S03.1</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S03 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S03.2</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S03 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S03.3</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S03 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S03.4</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S03 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S03.5</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S03 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S03.6</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S03 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S03.7</strong></td>
+<td><strong>수행</strong> — 계획 제시부터 승인·실행·검증·회수까지 실제 관찰과 일탈을 기록한다.</td>
+<td>S03.7 / Independent Witness</td>
+</tr>
+</tbody>
+</table>
+</div><p class="fine">세부 검사 기준은 바로 다음 면의 같은 단계에 있습니다. 기록은 공용 기록지 S03에 남깁니다.</p></section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S03 · 세부 확인</div><div class="banner">Independent Witness · S03 · 세부 확인</div><h1>First ICA 키 생성 — 확인 기준</h1><p>실행 순서는 앞면 호출 번호를 따릅니다. 아래는 해당 업무의 확인 기준입니다.</p>
+<p><strong>First ICA 키 생성</strong> · 열 기록지 — 기록지 S03</p>
+<p>Root와 별도 First 계획·승인, 승인 검사 후 생성, 결과 대조·접근 회수를 관찰합니다.</p>
+<p>기록은 앞면 호출표에 표시한 번호·본인 칸에 남깁니다.</p>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S04 · 지금 할 일</div><div class="banner">Independent Witness · S04 · 지금 할 일</div><h1>First CSR 생성</h1><p>현재 호출 번호: __________　내 이름: __________</p><div class="calls"><table>
+<thead>
+<tr>
+<th>호출 번호</th>
+<th>내 상태·할 일</th>
+<th>종이 기록 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S04.1</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S04 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S04.2</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S04 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S04.3</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S04 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S04.4</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S04 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S04.5</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S04 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S04.6</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S04 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S04.7</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S04 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S04.8</strong></td>
+<td><strong>수행</strong> — 본문/토큰 승인·실행·검증의 실제 관찰과 일탈을 기록한다.</td>
+<td>S04.8 / Independent Witness</td>
+</tr>
+</tbody>
+</table>
+</div><p class="fine">세부 검사 기준은 바로 다음 면의 같은 단계에 있습니다. 기록은 공용 기록지 S04에 남깁니다.</p></section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S04 · 세부 확인</div><div class="banner">Independent Witness · S04 · 세부 확인</div><h1>First CSR 생성 — 확인 기준</h1><p>실행 순서는 앞면 호출 번호를 따릅니다. 아래는 해당 업무의 확인 기준입니다.</p>
+<p><strong>First CSR 생성</strong> · 열 기록지 — 기록지 S04</p>
+<p>First CSR 본문/키 승인, 신규 토큰 승인, 실행과 CSR 독립 검사 순서를 관찰합니다.</p>
+<p>기록은 앞면 호출표에 표시한 번호·본인 칸에 남깁니다.</p>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S05 · 지금 할 일</div><div class="banner">Independent Witness · S05 · 지금 할 일</div><h1>First 인증서 발급</h1><p>현재 호출 번호: __________　내 이름: __________</p><div class="calls"><table>
+<thead>
+<tr>
+<th>호출 번호</th>
+<th>내 상태·할 일</th>
+<th>종이 기록 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S05.1</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S05 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S05.2</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S05 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S05.3</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S05 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S05.4</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S05 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S05.5</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S05 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S05.6</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S05 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S05.7</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S05 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S05.8</strong></td>
+<td><strong>수행</strong> — 본문/토큰 승인·실행·검증의 실제 관찰과 일탈을 기록한다.</td>
+<td>S05.8 / Independent Witness</td>
+</tr>
+</tbody>
+</table>
+</div><p class="fine">세부 검사 기준은 바로 다음 면의 같은 단계에 있습니다. 기록은 공용 기록지 S05에 남깁니다.</p></section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S05 · 세부 확인</div><div class="banner">Independent Witness · S05 · 세부 확인</div><h1>First 인증서 발급 — 확인 기준</h1><p>실행 순서는 앞면 호출 번호를 따릅니다. 아래는 해당 업무의 확인 기준입니다.</p>
+<p><strong>First 인증서 발급</strong> · 열 기록지 — 기록지 S05</p>
+<p>First 발급 전 상태 제공 조건 확인, First 본문/Root 키 승인, 신규 토큰 승인·실행 선언·발급·독립 검사를 관찰합니다.</p>
+<p>기록은 앞면 호출표에 표시한 번호·본인 칸에 남깁니다.</p>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S06 · 지금 할 일</div><div class="banner">Independent Witness · S06 · 지금 할 일</div><h1>전체 결과와 수행 확인 서명</h1><p>현재 호출 번호: __________　내 이름: __________</p><div class="calls"><table>
+<thead>
+<tr>
+<th>호출 번호</th>
+<th>내 상태·할 일</th>
+<th>종이 기록 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S06.1</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S06 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S06.2</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S06 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S06.3</strong></td>
+<td><strong>수행</strong> — 고정 기록을 자신의 실제 수행·관찰 범위와 대조하고 본인 행에 범위·제한·확인 서명을 남긴다. 관찰하지 않은 작업은 서명하지 않는다.</td>
+<td>S06.3 / Independent Witness</td>
+</tr>
+<tr>
+<td><strong>S06.4</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S06 / 단계 마감의 입회란</td>
+</tr>
+</tbody>
+</table>
+</div><p class="fine">세부 검사 기준은 바로 다음 면의 같은 단계에 있습니다. 기록은 공용 기록지 S06에 남깁니다.</p></section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S06 · 세부 확인</div><div class="banner">Independent Witness · S06 · 세부 확인</div><h1>전체 결과와 수행 확인 서명 — 확인 기준</h1><p>실행 순서는 앞면 호출 번호를 따릅니다. 아래는 해당 업무의 확인 기준입니다.</p>
+<p><strong>전체 결과와 수행 확인 서명</strong> · 열 기록지 — 기록지 S06</p>
+<p>제시된 실제 수행 기록·증거 목록·일탈을 자신의 관찰 기록과 대조합니다. 고정 목록을 대상으로 관찰 범위·준수 판단·제한을 기재해 S06 본인 행에 확인 서명합니다.</p>
+<p>기록은 앞면 호출표에 표시한 번호·본인 칸에 남깁니다.</p>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S07 · 지금 할 일</div><div class="banner">Independent Witness · S07 · 지금 할 일</div><h1>운영 인계와 접근 종료</h1><p>현재 호출 번호: __________　내 이름: __________</p><div class="calls"><table>
+<thead>
+<tr>
+<th>호출 번호</th>
+<th>내 상태·할 일</th>
+<th>종이 기록 위치</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>S07.1</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S07 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S07.2</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S07 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S07.3</strong></td>
+<td><strong>수행</strong> — 실제 관찰한 인수·종료 범위에만 확인 기록을 남긴다.</td>
+<td>S07.3 / Independent Witness</td>
+</tr>
+<tr>
+<td><strong>S07.4</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S07 / 단계 마감의 입회란</td>
+</tr>
+<tr>
+<td><strong>S07.5</strong></td>
+<td><strong>계속 관찰</strong> — 이 순서의 실제 수행·일탈 확인.</td>
+<td>기록지 S07 / 단계 마감의 입회란</td>
+</tr>
+</tbody>
+</table>
+</div><p class="fine">세부 검사 기준은 바로 다음 면의 같은 단계에 있습니다. 기록은 공용 기록지 S07에 남깁니다.</p></section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · S07 · 세부 확인</div><div class="banner">Independent Witness · S07 · 세부 확인</div><h1>운영 인계와 접근 종료 — 확인 기준</h1><p>실행 순서는 앞면 호출 번호를 따릅니다. 아래는 해당 업무의 확인 기준입니다.</p>
+<p><strong>운영 인계와 접근 종료</strong> · 열 기록지 — 기록지 S07</p>
+<p>승인된 관찰 범위 내에서 인수·접근 종료·추가 기록을 확인합니다. S06 이후 직접 관찰한 부분에만 별도 확인을 남깁니다.</p>
+<p>기록은 앞면 호출표에 표시한 번호·본인 칸에 남깁니다.</p>
+</section><section class="sheet"><div class="meta">root-first-001 · 인쇄 초안 f4f677197ae7 · 미승인 · Independent Witness · 보류·재개</div><div class="banner">Independent Witness · 보류·재개</div><h1>중단했을 때</h1><p>보류·재개 기록지 — 공용 기록지「보류·재개」에 중단까지의 관찰과 한계를 남깁니다. 임시 종료 시 자신의 관찰 범위에 서명합니다. 후속 참석은 승인된 입회 조건에 따르고, 범위 변경은 재승인 여부를 확인합니다. 부재했던 작업을 소급해 관찰 서명하지 않습니다.</p>
+<p>공용 기록지 「보류·재개」를 사용합니다. 승인 없는 생성·서명·삭제를 하지 않습니다.</p></section></body></html>

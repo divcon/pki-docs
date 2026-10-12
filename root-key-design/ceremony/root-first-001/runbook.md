@@ -8,10 +8,10 @@
 
 접속 경로와 구성 요소의 역할은 [settings.md의 실행 환경과 역할 분담](settings.md#실행-환경과-역할-분담)을 따릅니다. 아래는 사용자가 정한 작업 흐름이며, 실제 명령·파일 경로·도구 버전은 아직 미정입니다. 실제 수행 순서는 script.md의 S01 Root 키 생성 → S02 Root 인증서 발급 → S03 First 키 생성 → S04 First CSR 생성 → S05 First 인증서 발급입니다.
 
-1. **작업자 O**가 외부 단말에서 jumphost를 경유해 작업자 계정으로 전용 EC2에 접속합니다.
-2. **작업자 O**가 해당 키 생성 단계에서 승인된 생성 절차에 따라 EC2의 CloudHSM CLI로 키 생성을 요청하고, 생성한 공개키를 요청·본문 작성 애플리케이션의 입력에 연결합니다.
-3. **같은 전용 EC2의 별도 애플리케이션**이 해당 서명 단계에서 아래 서명 대상과 사람이 확인할 내용을 작성하고 EC2 내부의 작업 파일로 저장합니다. 본문·사용 키·알고리즘·입력 형식을 승인 대상으로 고정하고, 작업자 O가 작성된 파일을 확인해 CLI 서명 입력으로 사용합니다. 실제 작업 디렉터리·파일명·접근 권한·입력 대조 방법은 미정입니다.
-4. **작업자 O**가 공통 Q01–Q08에 따라 승인을 확인하고 EC2의 CloudHSM CLI로 서명을 요청합니다. 반환된 서명값을 보존한 후, 조립 도구로 CSR·인증서를 완성하고 독립 검사와 발급·증거 기록을 수행합니다. 조립 도구는 미정입니다.
+1. **작업자 Crypto Officer**가 외부 단말에서 jumphost를 경유해 작업자 계정으로 전용 EC2에 접속합니다.
+2. **작업자 Crypto Officer**가 해당 키 생성 단계에서 승인된 생성 절차에 따라 EC2의 CloudHSM CLI로 키 생성을 요청하고, 생성한 공개키를 요청·본문 작성 애플리케이션의 입력에 연결합니다.
+3. **같은 전용 EC2의 별도 애플리케이션**이 해당 서명 단계에서 아래 서명 대상과 사람이 확인할 내용을 작성하고 EC2 내부의 작업 파일로 저장합니다. 본문·사용 키·알고리즘·입력 형식을 승인 대상으로 고정하고, 작업자 Crypto Officer가 작성된 파일을 확인해 CLI 서명 입력으로 사용합니다. 실제 작업 디렉터리·파일명·접근 권한·입력 대조 방법은 미정입니다.
+4. **작업자 Crypto Officer**가 공통 Q01–Q08에 따라 승인을 확인하고 EC2의 CloudHSM CLI로 서명을 요청합니다. 반환된 서명값을 보존한 후, 조립 도구로 CSR·인증서를 완성하고 독립 검사와 발급·증거 기록을 수행합니다. 조립 도구는 미정입니다.
 
 | 작업 | 애플리케이션이 준비할 서명 대상 | CLI가 사용할 HSM 키 | 기존 실행 작업 |
 |---|---|---|---|
@@ -21,29 +21,35 @@
 
 CSR과 인증서는 위 본문에 서명을 반영해야 완성됩니다. 본문 준비·CLI 서명·최종 조립을 각 실행 정의에 구분해 기록합니다.
 
+### 실행 준비 시점
+
+**개발 구현 상세는 현재 협의에서 후속 작성으로 미룬다.** 이 문서의 실제 도구·명령·형식 결정은 후속 개발 작업이며, 세레모니의 승인 정책·역할·준비 완료 기준과 구분한다.
+
+[CSR·인증서 사전 고정과 당일 작성](preparation.md#csr인증서-사전-고정과-당일-작성)에 따라 본문 생성 도구·버전·설정 템플릿, raw/digest 방식, 서명 변환·조립 명령, 파일 경로·명명 규칙, 독립 검증 도구·명령을 행사 전에 확정하고 테스트 키로 리허설한다. 당일에는 실제 공개키·Serial·발급 시각 등을 승인된 템플릿에 반영해 실행용 설정과 본문을 생성한다. 아래 CMD의 미작성 부분을 행사 당일 처음 설계하는 것으로 해석하지 않는다.
+
 ## 키와 서명 옵션
 
 [알고리즘 결정](settings.md#키와-서명-알고리즘-결정), [개인키 용도·추출 정책](settings.md#개인키-용도와-추출-검토), [관리 통제 기본안](settings.md#키-관리와-관리자-통제)에 따라 아래 값을 실제 명령 작성 시 반영합니다. **아래는 명령 종류와 일부 옵션이며, 완성된 실행 명령이 아닙니다.** 관리 quorum과 잠금은 재검토를 전제로 잠정 반영했습니다. 나머지 속성·라벨·계정·입출력·CLI 버전과 raw/digest 전달 방식은 아직 미정입니다. 폐기 계획·잠금 시험 완료 전 운영 키 생성은 금지합니다.
 
 | 실행 작업 | 사용할 명령·확정 옵션 | 확인할 결과 |
 |---|---|---|
-| CMD-01 Root 키 생성 | `key generate-asymmetric-pair ec`, `--curve secp384r1`, `--private-attributes sign=true decrypt=false derive=false unwrap=false extractable=false sensitive=true token=true modifiable=false destroyable=false`, `--use-private-key-quorum-value 2`, `--manage-private-key-quorum-value 2` | EC P-384, 서명 전용·추출 불가·보호·잠금 속성, 사용/관리 quorum 각각 `2`, 승인 가능 집합 O·A·B |
-| CMD-05 First 키 생성 | `key generate-asymmetric-pair ec`, `--curve secp384r1`, `--private-attributes sign=true decrypt=false derive=false unwrap=false extractable=false sensitive=true token=true modifiable=false destroyable=false`, `--use-private-key-quorum-value 2`, `--manage-private-key-quorum-value 2` | EC P-384, Root와 다른 키, 서명 전용·추출 불가·보호·잠금 속성, 사용/관리 quorum 각각 `2`, 승인 가능 집합 O·A·B |
+| CMD-01 Root 키 생성 | `key generate-asymmetric-pair ec`, `--curve secp384r1`, `--private-attributes sign=true decrypt=false derive=false unwrap=false extractable=false sensitive=true token=true modifiable=false destroyable=false`, `--use-private-key-quorum-value 2`, `--manage-private-key-quorum-value 2` | EC P-384, 서명 전용·추출 불가·보호·잠금 속성, 사용/관리 quorum 각각 `2`, 승인 가능 집합 Key Custodians |
+| CMD-05 First 키 생성 | `key generate-asymmetric-pair ec`, `--curve secp384r1`, `--private-attributes sign=true decrypt=false derive=false unwrap=false extractable=false sensitive=true token=true modifiable=false destroyable=false`, `--use-private-key-quorum-value 2`, `--manage-private-key-quorum-value 2` | EC P-384, Root와 다른 키, 서명 전용·추출 불가·보호·잠금 속성, 사용/관리 quorum 각각 `2`, 승인 가능 집합 Key Custodians |
 | CMD-03 Root 자기서명 | `crypto sign ecdsa`, `--hash-function sha384`, 작업별 `--approval` 파일 | Root 키로 고정 Root 본문에 ECDSA + SHA-384 서명 |
 | CMD-06b First CSR 서명 | `crypto sign ecdsa`, `--hash-function sha384`, 작업별 `--approval` 파일 | First 키로 고정 CRI에 ECDSA + SHA-384 서명 |
 | CMD-09 First 인증서 서명 | `crypto sign ecdsa`, `--hash-function sha384`, 작업별 `--approval` 파일 | Root 키로 고정 First 본문에 ECDSA + SHA-384 서명 |
 
 CLI 서명 입력은 raw이면 고정 DER 본문, digest이면 그 본문의 SHA-384 digest입니다. 실제 명령에서 입력 방식과 `--data-type`을 명시하고 이중 해싱을 막도록 검사합니다. 원본 서명 응답을 보존한 뒤 ASN.1 DER 서명으로 변환하며, 조립 결과의 서명 식별자는 `ecdsa-with-SHA384`와 일치해야 합니다. 실제 전달·변환 명령과 독립 검사 도구는 후속 작성합니다.
 
-`extractable=false`, `sensitive=true`, `token=true`와 잠금 기본안 `modifiable=false`, `destroyable=false`를 생성 시 적용합니다. 키 소유 CU와 `--share-crypto-users`의 실제 계정을 O·A·B에 매핑하고, 생성 시 공유까지 설정해 사용/관리 승인 집합이 이 세 명과 일치하도록 작성합니다. 생성 직후 조회에서 불일치하면 중단합니다. 테스트 키로 충분한 승인과 정상 세션에서도 일반 wrap/export·금지 용도·잠긴 속성 변경·소유자의 삭제가 거부되는지 확인합니다. private key에 생성 시 설정할 수 없는 `wrap` 속성은 인자로 전달하지 않습니다. 복원 후 동일 공개키·속성 잠금·현재 승인 집합·quorum·접속 정책 대조를 B01에 연결합니다. 실제 명령·시험 결과는 아직 미작성입니다.
+`extractable=false`, `sensitive=true`, `token=true`와 잠금 기본안 `modifiable=false`, `destroyable=false`를 생성 시 적용합니다. 키 소유 CU와 `--share-crypto-users`의 실제 계정을 Key Custodians에 매핑하고, 생성 시 공유까지 설정해 사용/관리 승인 집합이 이 세 명과 일치하도록 작성합니다. 생성 직후 조회에서 불일치하면 중단합니다. 테스트 키로 충분한 승인과 정상 세션에서도 일반 wrap/export·금지 용도·잠긴 속성 변경·소유자의 삭제가 거부되는지 확인합니다. private key에 생성 시 설정할 수 없는 `wrap` 속성은 인자로 전달하지 않습니다. 복원 후 동일 공개키·속성 잠금·현재 승인 집합·quorum·접속 정책 대조를 B01에 연결합니다. 실제 명령·시험 결과는 아직 미작성입니다.
 
 ## 생성과 서명 및 관리 통제의 결정 상태
 
 | 구분 | 현재 결정 | 실행 정의에 반영할 내용 |
 |---|---|---|
-| CMD-01 / CMD-05 키 생성 | 별도 다인 승인과 제한된 CLI 생성 방향 반영. 정족수·인증 수단·구현 상세는 미확정 | [키 생성 승인 검토안](key-generation-control-review.md#3-제안하는-절차)의 3인 승인 숫자를 자동 채택하지 않음. 실제 승인 검사·CLI 호출·G01/G05 작성. 생성 시 설정하는 이후 quorum과 생성 요청 승인을 구분 |
-| CMD-03 / CMD-06b / CMD-09 서명 | AWS CloudHSM `key-usage` quorum, 작업자 O를 포함한 O·A·B 중 2명 승인으로 확정 | Q01–Q08과 [확정 규칙](settings.md#서명-quorum-결정)을 적용. Root·First 개인키의 사용 quorum 값 `2`, 승인 가능한 집합 O·A·B를 실제 계정·키 설정·명령에 반영 |
-| 키 관리 | O·A·B의 관리 `2 of 3`, 속성 잠금 기본안 잠정 반영 | 별도 key-management 토큰, 작업 계획과 소유자 권한, 전후 조회와 우회 시험. 금지 연산·잠긴 속성은 승인으로 허용하지 않음 |
+| CMD-01 / CMD-05 키 생성 | Key Custodians 중 서로 다른 2명의 생성 계획 서명을 앱이 검증하는 방식 확정. 동일 승인키를 CU quorum에 연결하며 구현 상세는 후속 작성 | [키 생성 승인 정책](settings.md#n02-키-생성-승인과-생성-시-quorum-설정의-구분)에 따라 세 보유자 중 어느 두 명의 조합도 허용. 실제 승인 검사·CLI 호출·G01/G05 작성. 생성 시 설정하는 이후 quorum과 생성 요청 승인을 구분 |
+| CMD-03 / CMD-06b / CMD-09 서명 | AWS CloudHSM `key-usage` quorum, 작업자 Crypto Officer를 포함한 Key Custodians 중 2명 승인으로 확정 | Q01–Q08과 [확정 규칙](settings.md#서명-quorum-결정)을 적용. Root·First 개인키의 사용 quorum 값 `2`, 승인 가능한 집합 Key Custodians를 실제 계정·키 설정·명령에 반영 |
+| 키 관리 | Key Custodians의 관리 `2 of 3`, 속성 잠금 기본안 잠정 반영 | 별도 key-management 토큰, 작업 계획과 소유자 권한, 전후 조회와 우회 시험. 금지 연산·잠긴 속성은 승인으로 허용하지 않음 |
 | HSM 관리자 | user·quorum·cluster 각 값 `2`와 관리자 3명 기본안 잠정 반영 | B00에서 개인별 등록키·최종값 인수. 단독 변경·정족수 낮추기·MFA/mTLS 변경 거부 시험 |
 | 키 삭제·AWS API·호스트/코드·승인키 변경 | 별도 통제 방향 잠정 반영 | 삭제 자체에 네이티브 quorum이 있다고 가정하지 않음. 폐기 계획과 별도 승인 실행·직접 우회 차단 구현 |
 
@@ -55,15 +61,15 @@ CLI 서명 입력은 raw이면 고정 DER 본문, digest이면 그 본문의 SHA
 
 1. **계획 고정:** 작업 ID, 대상 키/클러스터, 서비스, 현재값·변경값, 정확한 명령, 승인자 명단·공개키 지문, 기한, 검사·실패 처리를 고정합니다. 키 공유 변경은 승인자 집합 변경으로 검토합니다.
 2. **권한과 시행 조건 확인:** 개인키 관리는 소유자 전용 명령인지 확인하고 개인 CU와 명단을 대조합니다. 잠긴 속성 변경·일반 반출·금지 암호 연산·개별 삭제를 정상 관리 작업으로 허용하지 않습니다. 잠금된 키에서 공유·승인자 교체가 가능한지는 사전 시험 결과를 참조합니다.
-3. **서비스별 토큰과 승인:** 개인키 관리는 `key-management`, 관리자는 해당 `user`·`quorum`·`cluster` 토큰을 사용합니다. 키 관리에는 O·A·B 중 서로 다른 2명, 관리자에는 지정 관리자 3명 중 서로 다른 2명의 유효한 승인 서명을 확인합니다. 키 사용 토큰을 재사용하지 않습니다.
+3. **서비스별 토큰과 승인:** 개인키 관리는 `key-management`, 관리자는 해당 `user`·`quorum`·`cluster` 토큰을 사용합니다. 키 관리에는 Key Custodians 중 서로 다른 2명, 관리자에는 지정 관리자 3명 중 서로 다른 2명의 유효한 승인 서명을 확인합니다. 키 사용 토큰을 재사용하지 않습니다.
 4. **실행 직전 대조:** 승인한 명령·현재 상태·대상·명단·기한을 다시 확인합니다. 토큰 자체가 변경값 전체를 고정한다고 가정하지 않습니다. 실행자의 명시적 지시와 요청 시작을 기록하고 실제 명령이 지원하는 `--approval`로 전달합니다.
 5. **결과 조회와 보존:** 요청·응답·토큰 상태·실제 승인자와 조합을 보존합니다. 속성·소유/공유·quorum·등록키·관리자 서비스 값 중 해당 항목을 전후 조회하고 계획과 대조합니다. 실패·부분 성공·결과 불명은 자동 재시도하지 않습니다.
-6. **별도 통제 경로:** 생성·AWS API·호스트/코드·승인키 등록/교체는 네이티브 quorum 적용을 가정하지 않습니다. 별도 계획의 다인 승인 검사와 제한된 실행 권한을 연결하고 직접 CLI/API·다른 호스트/SDK·관리자·권한 정책·코드 변경의 우회를 차단합니다. 정족수·인증 수단·실제 실행 프로그램은 후속 정의합니다.
+6. **별도 통제 경로:** 생성·AWS API·호스트/코드·승인키 등록/교체는 네이티브 quorum 적용을 가정하지 않습니다. 별도 계획의 다인 승인 검사와 제한된 실행 권한을 연결하고 직접 CLI/API·다른 호스트/SDK·관리자·권한 정책·코드 변경의 우회를 차단합니다. 생성 정족수는 2 of 3으로 확정했으며, 그 외 별도 작업 정족수·인증 수단·실제 실행 프로그램은 후속 정의합니다.
 
 | 실행 정의 | 반영할 값과 증거 | 현재 상태 |
 |---|---|---|
 | B00 관리자 설정·인수 | 최종 user·quorum·cluster 각각 `2`, 관리자 3명의 신원·계정·등록키, 노드별 조회, 초기 설정 보호와 단독 변경 거부 시험 | {{B00_관리자_실제명령과_시험참조}} |
-| 키 관리 작업 | 대상·현재값·변경값·명령·서비스별 토큰·O/A/B의 2명 승인·전후 조회·실패 처리 | {{키관리_실제명령과_입출력_버전해시}} |
+| 키 관리 작업 | 대상·현재값·변경값·명령·서비스별 토큰·Key Custodians의 2명 승인·전후 조회·실패 처리 | {{키관리_실제명령과_입출력_버전해시}} |
 | 별도 통제 작업 | 다인 승인·정족수·IAM/SCP/호스트 권한·제한된 실행 경로·직접 우회 차단·코드/정책 변경 보호 | {{별도통제_실행정의와_우회시험}} |
 | B01 복원 검증 | 백업 당시 사용자·등록키·소유/공유·두 키 quorum·잠금·관리자 서비스·접속 정책을 현재 승인본과 대조. 대조 전 복원 환경 사용 금지 | {{복원_격리_검사와_사용허가}} |
 | 폐기 검증 | 리허설 환경에서 개별 잠금의 제약, 필요한 전체 폐기 경로, 관련 백업/사본과 공유 클러스터 영향 확인 | {{폐기_계획과_시험_승인참조}} |
@@ -122,14 +128,14 @@ CLI 서명 입력은 raw이면 고정 DER 본문, digest이면 그 본문의 SHA
 | S04 | First | CertificationRequestInfo DER, {{First_CRI경로}} | CMD-06a → Q01–Q08 / CMD-06b·07 |
 | S05 | Root | TBSCertificate DER, {{First_본문경로}} | CMD-08 → Q01–Q08 / CMD-09·10 |
 
-1. **Q01 — O/V와 O/A/B 중 실제 승인자:** 작업 ID·발급 serial 예약과 중복 검사를 원장에 남깁니다. 정확한 DER·내용표·증거용 SHA-256·서명용 알고리즘·raw/digest 선택·키 지문·프로파일·기한을 고정하고, 해당 작업을 승인하는 서로 다른 2명 이상이 같은 본문에 대한 승인을 기록합니다. CSR에는 serial 대신 CSR 작업 ID를 사용합니다.
-2. **Q02 — O/V:** 대상 계정·클러스터·키 소유/공유·사용 quorum·승인키 등록을 확인합니다. Root·First 개인키의 사용 quorum이 `2`이고 승인 가능한 집합이 서로 다른 사람 O·A·B의 개인 CU 계정·등록키와 일치하는지 확인합니다. 신원·계정·등록키 매핑 미확정, quorum 미설정 또는 승인값 불일치 상태에서는 서명을 진행하지 않습니다. O가 현재 CLI 로그인 세션을 유지하며 기록용 세션 식별자를 작업과 연결합니다.
-3. **Q03 — O:** 해당 키의 key-usage 토큰을 생성합니다. service·key-reference·토큰 식별 해시·생성/만료시각·세션·작업 ID를 기록하고 승인된 전달 경로로 보냅니다.
-4. **Q04 — O/A/B 중 실제 승인자:** 받은 토큰과 본문 승인 묶음의 작업·키·기한을 대조한 뒤 각자에게 등록된 승인용 개인키로 토큰에 서명합니다. O도 본인의 승인키로 자기 토큰에 서명할 수 있습니다. O가 승인 서명을 취합합니다. 실제 서명 입력 변환은 고정 명령 파일을 따릅니다.
-5. **Q05 — V:** 승인자 개인 계정·등록 공개키·허용 집합·필요 수와 만료/세션 유효성을 검사합니다. O+A, O+B, A+B 중 하나 또는 세 명 모두의 유효한 승인 서명을 확인합니다. 서로 다른 2명 이상이어야 하며 O의 실행 지시만으로 승인 1명으로 세지 않습니다. 승인 0명·1명, 동일인의 중복, 집합 밖 승인으로 인원 충족은 거부합니다. 실제 승인자·조합·검사 결과를 기록합니다.
-6. **Q06 — O/V:** 현재 DER·digest·서명 키가 승인값과 같은지 재대조합니다. O의 명시적 실행 지시와 `요청 시작`을 내구 저장한 뒤 승인 토큰을 `--approval`로 전달해 해당 ECDSA 작업을 실행합니다. 원본 응답의 보존 실패를 감지합니다.
-7. **Q07 — O/R:** 반환한 서명값을 포함한 응답을 통제된 저장소에 즉시 보존하고 응답 해시·명령 상태·세션·토큰의 사용/실패 상태를 기록합니다. 성공 토큰을 재사용하지 않으며 실패 응답만으로 재사용 가능하다고 판단하지 않습니다.
-8. **Q08 — O/V/R:** raw r||s와 ASN.1 DER 서명 형식 변환 후 고정 본문으로 인증서/CSR을 조립합니다. 독립 도구로 서명·본문 바이트·키·프로파일을 검사하고 산출물과 원장·증거를 확정 저장합니다. 원본 응답이 이미 있으면 이 단계부터 복구하며 HSM 서명을 반복하지 않습니다.
+1. **Q01 — Crypto Officer·Administrator와 Key Custodians 중 실제 승인자:** 작업 ID·발급 serial 예약과 중복 검사를 원장에 남깁니다. 정확한 DER·내용표·증거용 SHA-256·서명용 알고리즘·raw/digest 선택·키 지문·프로파일·기한을 고정하고, 해당 작업을 승인하는 서로 다른 2명 이상이 같은 본문에 대한 승인을 기록합니다. CSR에는 serial 대신 CSR 작업 ID를 사용합니다.
+2. **Q02 — Crypto Officer·Administrator:** 대상 계정·클러스터·키 소유/공유·사용 quorum·승인키 등록을 확인합니다. Root·First 개인키의 사용 quorum이 `2`이고 승인 가능한 집합이 서로 다른 사람 Key Custodians의 개인 CU 계정·등록키와 일치하는지 확인합니다. 신원·계정·등록키 매핑 미확정, quorum 미설정 또는 승인값 불일치 상태에서는 서명을 진행하지 않습니다. Crypto Officer가 현재 CLI 로그인 세션을 유지하며 기록용 세션 식별자를 작업과 연결합니다.
+3. **Q03 — Crypto Officer:** 해당 키의 key-usage 토큰을 생성합니다. service·key-reference·토큰 식별 해시·생성/만료시각·세션·작업 ID를 기록하고 승인된 전달 경로로 보냅니다.
+4. **Q04 — Key Custodians 중 실제 승인자:** 받은 토큰과 본문 승인 묶음의 작업·키·기한을 대조한 뒤 각자에게 등록된 승인용 개인키로 토큰에 서명합니다. Crypto Officer도 본인의 승인키로 자기 토큰에 서명할 수 있습니다. Crypto Officer가 승인 서명을 취합합니다. 실제 서명 입력 변환은 고정 명령 파일을 따릅니다.
+5. **Q05 — Administrator:** 승인자 개인 계정·등록 공개키·허용 집합·필요 수와 만료/세션 유효성을 검사합니다. Crypto Officer·Key Custodian 2, Crypto Officer·Key Custodian 3, Key Custodian 2·Key Custodian 3 중 하나 또는 세 명 모두의 유효한 승인 서명을 확인합니다. 서로 다른 2명 이상이어야 하며 Crypto Officer의 실행 지시만으로 승인 1명으로 세지 않습니다. 승인 0명·1명, 동일인의 중복, 집합 밖 승인으로 인원 충족은 거부합니다. 실제 승인자·조합·검사 결과를 기록합니다.
+6. **Q06 — Crypto Officer·Administrator:** 현재 DER·digest·서명 키가 승인값과 같은지 재대조합니다. Crypto Officer의 명시적 실행 지시와 `요청 시작`을 내구 저장한 뒤 승인 토큰을 `--approval`로 전달해 해당 ECDSA 작업을 실행합니다. 원본 응답의 보존 실패를 감지합니다.
+7. **Q07 — Crypto Officer·Administrator:** 반환한 서명값을 포함한 응답을 통제된 저장소에 즉시 보존하고 응답 해시·명령 상태·세션·토큰의 사용/실패 상태를 기록합니다. 성공 토큰을 재사용하지 않으며 실패 응답만으로 재사용 가능하다고 판단하지 않습니다.
+8. **Q08 — Crypto Officer·Administrator:** raw r||s와 ASN.1 DER 서명 형식 변환 후 고정 본문으로 인증서/CSR을 조립합니다. 독립 도구로 서명·본문 바이트·키·프로파일을 검사하고 산출물과 원장·증거를 확정 저장합니다. 원본 응답이 이미 있으면 이 단계부터 복구하며 HSM 서명을 반복하지 않습니다.
 
 본문 승인과 토큰 승인은 별도 기록이며 작업 ID로 연결합니다. 토큰 서명만으로 본문 바이트의 불변성이 보장된다고 간주하지 않습니다. 어느 단계든 연결 단절·만료·입력 변경·기록 실패는 중단하고 아래 상태표로 판정합니다.
 

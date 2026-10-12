@@ -1,0 +1,7 @@
+[
+  {"id":"자료 1","title":"행사 개요·수행 승인·승인본 목록","presenter":"Administrator","contents":"행사 ID·범위·일시/장소, 행사 수행 승인자/기록, 문서·도구·설정 버전/해시, 같은 인쇄 묶음 ID","pass":"수행 승인 기록이 있고 실제 배포본·행사 범위가 승인본과 일치","record":"S00.1 Administrator, S00.4 Administrator"},
+  {"id":"자료 2","title":"승인 명부·역할 적격성","presenter":"Administrator, 본인 확인은 각 참여자","contents":"성명·소속·직책·역할/겸임·임명/교육 근거, 보유자 3명의 신원·CU/등록 공개키 연결, Witness 독립성/관찰 범위","pass":"배정된 5명의 본인 확인, 세 보유자의 신원 구분, 실행/검증 분리와 Witness 독립성 충족","record":"S00.2 각자, S00.4 Administrator"},
+  {"id":"자료 3","title":"실제 환경 대조표","presenter":"Crypto Officer","contents":"AWS 계정·리전·클러스터·각 HSM 상태/모델/모드, 호스트·CLI·코드/설정 해시, 노드별 상태/지연의 승인값·실제값·조회 시각·원문","pass":"실제 환경이 승인값과 일치하고 현재 조회 근거와 노드별 상태/지연 기준이 확인됨","record":"S00.3 Crypto Officer, S00.4 Administrator"},
+  {"id":"자료 4","title":"승인 체계·필수 시험과 외부 확인","presenter":"Crypto Officer, 승인/외부 확인 근거는 Administrator가 인수","contents":"생성 앱과 서명 quorum 각각 2 of 3의 승인자/등록키 연결, 관리자 최종 설정·별도 작업 권한, 시험 대상 버전/결과·미비점 해소, N01 외부 수용과 N03 폐기/잠금·관리 통제 검토","pass":"실제 설정·등록키·권한이 승인값과 일치하고 필수 시험·외부 확인·폐기/잠금 조건 및 미비점 해소 증거 확보","record":"S00.3 Crypto Officer, S00.4 Key Custodian 2·3 및 Administrator"},
+  {"id":"자료 5","title":"기록·백업·생성 직후 보호 계획","presenter":"Crypto Officer(시험 결과), Administrator(보관·보호 계획)","contents":"로그 원천/입증 범위·시각 오차/누락·쓰기/조회 시험, 원본 보관/담당·종이와 전자 증거 연결, 신규 키 백업 포함 확인 방법·대기/임시 접근 종료·보호 인수 계획","pass":"로그·저장/조회 준비와 보호 책임·백업 포함 확인/대기 절차 확보. 신규 키 백업 자체는 생성 후 별도 확인","record":"S00.3 각 제시자, S00.4 Key Custodian 2·3 및 Administrator, S00.5 보호 인수"}
+]
